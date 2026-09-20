@@ -1,6 +1,11 @@
 
 
 
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,91 +18,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Mulish:wght@400;500;600&display=swap">
 <style>
-/* skins/meridian/tokens.css
-   Base oklch values originally extracted from the live reference build
-   (plumb-shine-forge.lovable.app, assets/styles-DlVAQt4p.css) — that
-   reference site is dark-throughout. Abdirahman, 2026-09-20: a
-   contractor site should read as a local business, not a dark/agency/
-   premium tech product, so LIGHT is now the default tone. The original
-   dark palette is preserved exactly, not deleted — selectable per site
-   via `sitegen.py demo/real --theme dark` (:root[data-theme="dark"]),
-   and always applied to a couple of accent sections (.tone-dark, e.g.
-   the hero) for contrast, so even a dark-themed page alternates rather
-   than being dark throughout (see the template's `accent_tone`/
-   `alt_tone` usage).
-   Fonts: Fraunces (display) + Inter Tight (body) + JetBrains Mono
-   (labels). JetBrains Mono is loaded via the Google Fonts link but the
-   compiled bundle had no --font-mono custom property (Tailwind's
-   ui-monospace default was used at the class level) — declared
-   explicitly here since CLAUDE.md names it as part of this skin's stack
-   and the font is loaded. */
+/* skins/jmj/tokens.css
+   Extracted from the live reference build (jmj-sewer-stars.lovable.app,
+   assets/styles-BED0D9s5.css) — real hex values (this skin doesn't use
+   oklch), not approximated. Fonts: Libre Baskerville (display/serif) +
+   IBM Plex Sans (body). */
 
-:root, .tone-light {
-  --radius: .5rem;
+:root {
+  --radius: .625rem;
 
-  --background: oklch(96% .015 80);
-  --foreground: oklch(15% .03 240);
-  --ink: oklch(11% .03 240);
-  --cream: oklch(96% .015 80);
-  --copper: oklch(48% .15 45);
-  --copper-glow: oklch(62% .16 50);
-  --card: oklch(99% .005 80);
-  --card-foreground: oklch(15% .03 240);
-  --popover: oklch(99% .005 80);
-  --popover-foreground: oklch(15% .03 240);
-  --primary: oklch(48% .15 45);
-  --primary-foreground: oklch(98% .01 80);
-  --secondary: oklch(90% .02 80);
-  --secondary-foreground: oklch(15% .03 240);
-  --muted: oklch(92% .015 80);
-  --muted-foreground: oklch(40% .02 90);
-  --accent: oklch(48% .15 45);
-  --accent-foreground: oklch(98% .01 80);
-  --border: oklch(85% .02 80);
-  --input: oklch(85% .02 80);
-  --ring: oklch(48% .15 45);
+  --background: #faf7f2;
+  --foreground: #0b1220;
+  --card: #faf7f2;
+  --card-foreground: #0b1220;
+  --popover: #faf7f2;
+  --popover-foreground: #0b1220;
+  --primary: #14245c;
+  --primary-foreground: #faf7f2;
+  --secondary: #f0ebe1;
+  --secondary-foreground: #0b1220;
+  --muted: #f0ebe1;
+  --muted-foreground: #4b5568;
+  --accent: #c47a3c;
+  --accent-foreground: #faf7f2;
+  --border: #e5e0d5;
+  --input: #e5e0d5;
+  --ring: #14245c;
 
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Libre Baskerville", ui-serif, Georgia, serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 }
-/* !important on just these two properties: several section rules in
-   styles.css (e.g. .testimonial-section's translucent color-mix
-   background) target the same element at equal specificity and would
-   otherwise win by source order, silently defeating the tone override
-   even though the underlying custom properties are correctly scoped —
-   confirmed while implementing this (2026-09-20), not a defensive
-   guess. */
-.tone-light { background: var(--background) !important; color: var(--foreground) !important; }
 
-/* Dark tone — the ORIGINAL reference palette, kept selectable rather
-   than deleted. :root[data-theme="dark"] and .tone-dark share this one
-   rule so a page-wide theme choice and a single accent section can
-   never drift out of sync with each other. */
-:root[data-theme="dark"], .tone-dark {
-  --background: oklch(15% .03 240);
-  --foreground: oklch(96% .02 80);
-  --card: oklch(19% .03 240);
-  --card-foreground: oklch(96% .02 80);
-  --popover: oklch(19% .03 240);
-  --popover-foreground: oklch(96% .02 80);
-  --copper: oklch(68% .14 45);
-  --copper-glow: oklch(78% .16 55);
-  --primary: oklch(68% .14 45);
-  --primary-foreground: oklch(11% .03 240);
-  --secondary: oklch(24% .03 240);
-  --secondary-foreground: oklch(96% .02 80);
-  --muted: oklch(22% .03 240);
-  --muted-foreground: oklch(70% .02 80);
-  --accent: oklch(68% .14 45);
-  --accent-foreground: oklch(11% .03 240);
-  --border: oklch(28% .03 240);
-  --input: oklch(28% .03 240);
-  --ring: oklch(68% .14 45);
-}
-.tone-dark { background: var(--background) !important; color: var(--foreground) !important; }
-
-/* Scroll reveal — common to all four skins (CLAUDE.md design system). */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -111,21 +62,40 @@
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* Signature move: grain texture (extracted verbatim from the source .grain
-   rule — an inline SVG fractal-noise overlay, not a raster asset). */
-.grain { position: relative; }
-.grain::after {
-  content: "";
-  pointer-events: none;
-  opacity: .08;
-  mix-blend-mode: overlay;
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+/* Signature move: infinite marquee ticker. The original site drives this
+   with JS (a continuous transform, no CSS @keyframes existed in the
+   compiled bundle); a pure-CSS duplicated-track animation is the
+   self-contained equivalent for a no-build-step static site. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
-/* skins/meridian/styles.css — hand-authored, using tokens.css custom properties.
-   Signature move: editorial. § markers, numbered 01/02 articles, italic
-   mid-headline emphasis, mono uppercase labels, grain + blurred orbs. */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* Signature move: ping dots on live/available indicators (Tailwind's
+   `animate-ping`, used verbatim in the source). */
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.ping-dot { position: relative; display: inline-flex; }
+.ping-dot::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: .6;
+  animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+/* skins/jmj/styles.css — hand-authored, using tokens.css custom properties.
+   Signature move: motion. Infinite marquee ticker, ping dots on live
+   indicators, numbered process cards with a connecting line. */
 
 * { box-sizing: border-box; }
 body {
@@ -135,293 +105,442 @@ body {
   font-family: var(--font-sans);
   line-height: 1.5;
 }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; }
-em, .italic { font-style: italic; color: var(--copper); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; text-wrap: balance; }
+em, .italic { font-style: italic; color: var(--primary); }
 p { margin: 0; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
-.container { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
-@media (min-width: 1024px) { .container { padding: 0 2.5rem; } }
+.container { max-width: 80rem; margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 640px) { .container { padding: 0 1.5rem; } }
 
-.mono-label {
-  display: flex; align-items: center; gap: .75rem;
-  font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .2em; color: var(--muted-foreground);
-}
-.mono-label .rule { height: 1px; width: 2rem; background: var(--copper); }
-.mono-label .mark { color: var(--copper); }
+.eyebrow { display: inline-flex; align-items: center; gap: .5rem; align-self: flex-start; border-radius: 999px; background: var(--secondary); padding: .25rem .75rem; font-size: .6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+.eyebrow .dot { width: .375rem; height: .375rem; border-radius: 999px; background: var(--accent); }
+.btn { display: inline-flex; align-items: center; gap: .625rem; padding: .875rem 1.5rem; font-weight: 500; font-size: 1rem; }
+.btn-primary { background: var(--foreground); color: var(--primary-foreground); box-shadow: 0 10px 30px -10px rgba(0,0,0,.3); }
+.btn-outline { border: 1px solid var(--border); color: var(--foreground); }
 
-/* Header */
-.site-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-  backdrop-filter: blur(10px);
-  background: color-mix(in oklch, var(--background) 70%, transparent);
-  border-bottom: 1px solid color-mix(in oklch, var(--border) 50%, transparent);
-}
-.nav-inner { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; height: 4rem; display: flex; align-items: center; justify-content: space-between; }
-.brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-size: 1.125rem; }
-.brand .dot { height: .625rem; width: .625rem; border-radius: 999px; background: var(--copper); box-shadow: 0 0 20px var(--copper); }
-.nav-links { display: none; align-items: center; gap: 2rem; font-size: .875rem; color: var(--muted-foreground); }
-@media (min-width: 768px) { .nav-links { display: flex; } }
-.nav-links a:hover { color: var(--foreground); }
-.phone-pill { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; background: var(--copper); color: var(--primary-foreground); padding: .5rem 1rem; font-size: .875rem; font-weight: 500; }
-.phone-pill:hover { background: var(--copper-glow); }
-.pulse-dot { height: .375rem; width: .375rem; border-radius: 999px; background: currentColor; animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite; }
-@keyframes pulse { 50% { opacity: .5; } }
+/* Nav */
+.site-header { position: sticky; top: 0; z-index: 50; width: 100%; border-bottom: 1px solid color-mix(in srgb, var(--foreground) 5%, transparent); background: color-mix(in srgb, var(--background) 80%, transparent); backdrop-filter: blur(10px); }
+.nav-inner { margin: 0 auto; max-width: 80rem; padding: 0 1rem; height: 4rem; display: flex; align-items: center; justify-content: space-between; }
+@media (min-width: 640px) { .nav-inner { padding: 0 1.5rem; } }
+.brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+.phone-pill { display: flex; align-items: center; gap: .5rem; background: var(--primary); padding: .625rem .75rem .625rem .625rem; font-size: .875rem; font-weight: 500; color: var(--primary-foreground); box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--primary) 50%, transparent); }
 
 /* Hero — full-bleed photo (2026-09-20: a demo's hero is the first thing
    a prospect sees; a color block with text isn't enough, every skin
-   needs to lead with a real, dominant photo). The photo sits behind the
-   whole section (.hero-bg), orbs still glow on top of it (signature
-   move, kept, just layered differently), and a scrim graduated from the
-   active tone's own --background keeps the bottom-aligned text legible
-   regardless of which photo or theme is active.
+   needs to lead with a real, dominant photo). Text sits directly on a
+   dark-scrimmed photo now instead of a light color block, so
+   .hero-copy fixes its text to white/light and locally lightens
+   --primary to the same light-blue (#93c5fd) jmj already uses elsewhere
+   for text-on-dark (.hero-image .cap .eyebrow-cap, .promise-banner,
+   .final-cta-micro) — reusing an existing convention, not inventing a
+   new one. .rating-row keeps its own light chip background regardless,
+   so it stays explicitly dark-text-on-light rather than inheriting the
+   hero's white.
 
-   isolation:isolate is load-bearing, not decoration: .tone-dark/
-   .tone-light paint an !important opaque background directly on .hero
-   itself, and .hero-bg sits behind it at z-index:-2. Without a forced
-   stacking context here, that negative-z-index child ends up painted
-   BEHIND .hero's own background in every browser tested — confirmed
-   live 2026-09-20 (the photo loaded correctly, 200, real pixels, but
-   was completely invisible on the deployed page until this was added).
-   jaro already had this on its equivalent element for the same reason;
-   clearpath needed the identical fix once its own .hero picked up the
-   same tone-background rule. */
-.hero { position: relative; overflow: hidden; isolation: isolate; min-height: 88svh; display: flex; align-items: flex-end; padding: 8rem 0 4rem; }
-@media (min-width: 1024px) { .hero { padding: 10rem 0 5rem; } }
+   isolation:isolate is load-bearing here too: without it, .hero-bg's
+   negative z-index photo paints BEHIND .hero's own background instead
+   of in front of it — see the fuller note in skins/meridian/styles.css. */
+.hero { position: relative; overflow: hidden; isolation: isolate; min-height: 82svh; display: flex; align-items: flex-end; padding: 6rem 0 3rem; }
+@media (min-width: 640px) { .hero { padding: 7rem 0 4rem; } }
 .hero-bg { position: absolute; inset: 0; z-index: -2; }
 .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
-.hero-bg-scrim { position: absolute; inset: 0; background: linear-gradient(to top, var(--background) 0%, color-mix(in oklch, var(--background) 78%, transparent) 28%, color-mix(in oklch, var(--background) 30%, transparent) 60%, color-mix(in oklch, var(--background) 8%, transparent) 100%); }
-.hero-orbs { position: absolute; inset: 0; z-index: -1; }
-.orb-a { position: absolute; top: 33%; left: -10rem; height: 500px; width: 500px; border-radius: 999px; background: color-mix(in oklch, var(--copper) 20%, transparent); filter: blur(120px); }
-.orb-b { position: absolute; bottom: 0; right: 0; height: 400px; width: 400px; border-radius: 999px; background: color-mix(in oklch, var(--copper) 10%, transparent); filter: blur(100px); }
-.hero-copy { max-width: 42rem; }
-.hero h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); line-height: .95; margin-top: 2rem; }
-.hero .lede { margin-top: 2rem; max-width: 34rem; font-size: 1.125rem; color: var(--muted-foreground); line-height: 1.7; }
-.hero-ctas { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: .75rem; }
-.btn { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; padding: .875rem 1.5rem; font-weight: 500; font-size: .9375rem; }
-.btn-primary { background: var(--copper); color: var(--primary-foreground); }
-.btn-primary:hover { background: var(--copper-glow); }
-.btn-outline { border: 1px solid var(--border); }
-.btn-outline:hover { background: var(--secondary); }
+.hero-bg-scrim { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--foreground) 90%, transparent) 0%, color-mix(in srgb, var(--foreground) 60%, transparent) 32%, color-mix(in srgb, var(--foreground) 15%, transparent) 68%, transparent 100%); }
+.hero-orbs { position: absolute; inset: 0; z-index: -1; opacity: .7; pointer-events: none; background: radial-gradient(60% 60% at 15% 10%, color-mix(in srgb, var(--primary) 18%, transparent) 0%, transparent 60%), radial-gradient(50% 50% at 85% 20%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 60%); }
+.hero-copy { display: flex; flex-direction: column; gap: 1.75rem; max-width: 40rem; color: #fff; --primary: #93c5fd; }
+.rating-row { display: inline-flex; align-items: center; gap: .5rem; align-self: flex-start; border-radius: 999px; background: var(--secondary); padding: .375rem .75rem; color: var(--foreground); }
+.rating-row .stars { display: flex; gap: 1px; color: var(--primary); }
+.rating-row .stars svg { width: .75rem; height: .75rem; fill: currentColor; }
+.rating-row .label { font-size: .6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.rating-row .rule { height: .75rem; width: 1px; background: color-mix(in srgb, var(--foreground) 10%, transparent); }
+.hero h1 { max-width: 16ch; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.02; }
+.underline-accent { position: relative; display: inline-block; }
+.underline-accent::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px; border-radius: 2px; background: var(--accent); }
+.hero .lede { max-width: 52ch; font-size: 1.125rem; line-height: 1.6; color: color-mix(in srgb, #fff 80%, transparent); }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.hero-ctas .btn-primary { background: #fff; color: var(--foreground); }
+.ping-dot-sm { width: 1rem; height: 1rem; display: inline-flex; align-items: center; justify-content: center; color: var(--accent); }
+.ping-dot-sm svg { position: relative; z-index: 1; width: 1rem; height: 1rem; }
+.availability { display: flex; align-items: center; gap: .5rem; padding: .75rem 1rem; font-weight: 500; color: var(--primary); }
+.availability .ping-dot { width: .5rem; height: .5rem; border-radius: 999px; background: var(--primary); color: var(--primary); }
+.hero-stats { margin-top: .5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem 1.5rem; max-width: 28rem; }
+@media (min-width: 640px) { .hero-stats { grid-template-columns: repeat(4, 1fr); } }
+.hero-stats .stat { border-left: 1px solid color-mix(in srgb, #fff 20%, transparent); padding-left: .75rem; }
+.hero-stats .value { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--primary); }
+.hero-stats .label { margin-top: .125rem; font-size: .6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: color-mix(in srgb, #fff 65%, transparent); }
+.hero-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; display: none; max-width: 15rem; gap: .75rem; background: var(--background); padding: 1rem; box-shadow: 0 20px 40px -12px rgba(0,0,0,.25); }
+@media (min-width: 640px) { .hero-badge { display: flex; } }
+.hero-badge svg { flex-shrink: 0; width: 1.5rem; height: 1.5rem; color: var(--primary); }
+.hero-badge .t1 { font-size: .875rem; font-weight: 600; }
+.hero-badge .t2 { font-size: .75rem; color: var(--muted-foreground); }
 
-/* Stats */
-.stats-bar { border-top: 1px solid color-mix(in oklch, var(--border) 60%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--border) 60%, transparent); background: color-mix(in oklch, var(--secondary) 30%, transparent); }
-.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); } }
-.stat { padding: 2rem 1rem; border-left: 1px solid color-mix(in oklch, var(--border) 60%, transparent); }
-.stat:first-child { border-left: none; }
-.stat .value { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); color: var(--copper); }
-.stat .label { margin-top: .5rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted-foreground); }
+/* Marquee */
+.marquee-wrap { position: relative; overflow: hidden; border-top: 1px solid color-mix(in srgb, var(--foreground) 5%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--foreground) 5%, transparent); background: var(--foreground); color: var(--primary-foreground); padding: 1rem 0; }
+.marquee-item { display: flex; align-items: center; gap: .75rem; padding: 0 1.5rem; font-size: .875rem; font-weight: 500; white-space: nowrap; text-transform: uppercase; letter-spacing: .1em; }
+.marquee-item svg { width: .875rem; height: .875rem; color: var(--accent); flex-shrink: 0; }
 
-/* Section shell */
-section.editorial { padding: 6rem 0; }
-@media (min-width: 1024px) { section.editorial { padding: 9rem 0; } }
-.section-head { display: grid; gap: 2.5rem; margin-bottom: 4rem; }
-@media (min-width: 1024px) { .section-head { grid-template-columns: 5fr 7fr; align-items: end; } }
-.section-head h2 { font-size: clamp(2.5rem, 5vw, 3.75rem); line-height: 1; }
-.section-head .intro { color: var(--muted-foreground); font-size: 1.125rem; line-height: 1.7; }
+/* Sections */
+section.block { padding: 3.5rem 0; background: var(--background); }
+@media (min-width: 640px) { section.block { padding: 5rem 0; } }
+.block-head { display: flex; flex-direction: column; gap: 1rem; max-width: 52rem; }
+.block-head h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; }
+.block-head p { color: var(--muted-foreground); max-width: 52ch; }
 
 /* Services */
-.articles-grid { display: grid; gap: 1px; background: var(--border); }
-@media (min-width: 768px) { .articles-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .articles-grid { grid-template-columns: repeat(3, 1fr); } }
-.article-card { background: var(--background); padding: 2rem; transition: background-color .15s ease; }
-.article-card:hover { background: color-mix(in oklch, var(--secondary) 40%, transparent); }
-.article-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2rem; }
-.article-num { font-family: var(--font-mono); font-size: .75rem; color: var(--copper); }
-.article-arrow { color: var(--muted-foreground); }
-.article-card h3 { font-size: 1.5rem; margin-bottom: .75rem; }
-.article-card p { color: var(--muted-foreground); line-height: 1.6; }
+.services-grid { margin-top: 3rem; display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+.service-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 2px; background: var(--secondary); }
+.service-media { position: relative; aspect-ratio: 16/10; overflow: hidden; }
+.service-media img { width: 100%; height: 100%; object-fit: cover; }
+.service-media .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.5), transparent); }
+.service-num { position: absolute; top: 1rem; left: 1rem; display: flex; align-items: center; gap: .5rem; background: color-mix(in srgb, var(--background) 95%, transparent); padding: .25rem .5rem; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); }
+.service-body { display: flex; flex: 1; flex-direction: column; gap: 1rem; padding: 1.5rem; }
+.service-body h3 { font-size: 1.375rem; }
+.service-body p { font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+
+/* Promise banner (Tier 3 gated) */
+.promise-banner { position: relative; overflow: hidden; border-radius: 2px; }
+.promise-banner img { width: 100%; height: 22rem; object-fit: cover; }
+.promise-banner .scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55), transparent 55%); }
+.promise-banner .cap { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; color: #fff; }
+.promise-banner .eyebrow-cap { font-size: .625rem; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; color: #93c5fd; }
+.promise-banner .headline { margin-top: .25rem; font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); }
+.promise-banner .text { max-width: 22rem; font-size: .875rem; color: rgba(255,255,255,.85); }
 
 /* Service area */
-.area-list { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-family: var(--font-mono); font-size: .875rem; color: var(--muted-foreground); }
-.area-list span::before { content: "·"; margin-right: .5rem; color: var(--copper); }
-.area-list span:first-child::before { content: none; }
+.area-panel { background: var(--primary); color: var(--primary-foreground); border-radius: 2px; padding: 3rem 1.5rem; }
+@media (min-width: 640px) { .area-panel { padding: 4rem 2.5rem; } }
+.area-grid { display: grid; gap: 3rem; }
+@media (min-width: 1024px) { .area-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+.area-panel h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; }
+.area-panel .lede { margin-top: 1rem; max-width: 52ch; color: color-mix(in srgb, var(--primary-foreground) 80%, transparent); }
+.area-panel img { margin-top: 1.5rem; width: 100%; aspect-ratio: 16/10; object-fit: cover; border-radius: 2px; }
+.area-chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+.area-chips span { display: flex; align-items: center; gap: .5rem; background: color-mix(in srgb, var(--primary-foreground) 10%, transparent); padding: .75rem 1rem; font-size: .875rem; font-weight: 500; }
+.area-chips .dot { width: .375rem; height: .375rem; border-radius: 999px; background: #93c5fd; }
+.area-cta-row { grid-column: 1 / -1; margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: color-mix(in srgb, var(--background) 95%, transparent); color: var(--foreground); padding: 1rem 1.25rem; }
+.area-cta-row a { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--primary); text-decoration: underline; text-underline-offset: 4px; }
 
-/* Story (Tier 3 gated) */
-.story-grid { display: grid; gap: 2.5rem; align-items: center; }
-@media (min-width: 1024px) { .story-grid { grid-template-columns: 5fr 7fr; } }
-.story-grid img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px; }
-.story-body { display: flex; flex-direction: column; gap: 1.25rem; color: var(--muted-foreground); font-size: 1.125rem; line-height: 1.7; margin-top: 1.5rem; }
-.story-byline { margin-top: 2.5rem; display: flex; align-items: center; gap: 1rem; font-family: var(--font-mono); font-size: .875rem; color: var(--muted-foreground); }
-.story-byline .rule { height: 1px; flex: 1; background: var(--border); }
+/* Process */
+.process-grid { position: relative; margin-top: 3.5rem; display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .process-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .process-grid { grid-template-columns: repeat(4, 1fr); } }
+.process-line { position: absolute; top: 2rem; left: 0; right: 0; height: 1px; display: none; background: linear-gradient(to right, transparent, color-mix(in srgb, var(--foreground) 15%, transparent), transparent); }
+@media (min-width: 1024px) { .process-line { display: block; } }
+.process-card { position: relative; display: flex; flex-direction: column; gap: .75rem; background: color-mix(in srgb, var(--secondary) 60%, transparent); padding: 1.5rem; }
+.process-badge { display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; background: var(--primary); font-family: var(--font-display); font-size: .875rem; font-weight: 700; color: var(--primary-foreground); }
+.process-card h3 { font-size: 1.25rem; }
+.process-card p { font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
 
-/* Testimonial (Tier 3 gated) */
-.testimonial-section { border-top: 1px solid color-mix(in oklch, var(--border) 60%, transparent); border-bottom: 1px solid color-mix(in oklch, var(--border) 60%, transparent); background: color-mix(in oklch, var(--secondary) 20%, transparent); text-align: center; }
-.testimonial-mark { font-family: var(--font-display); font-size: 3rem; color: var(--copper); margin-bottom: 1.5rem; }
-.testimonial-quote { max-width: 48rem; margin: 0 auto; font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.3; }
-.testimonial-attr { margin-top: 2.5rem; font-family: var(--font-mono); font-size: .875rem; text-transform: uppercase; letter-spacing: .15em; color: var(--muted-foreground); }
+/* Testimonials (Tier 3 gated) */
+.testimonial-section { position: relative; overflow: hidden; background: var(--foreground); color: var(--background); }
+.testimonial-grid { margin-top: 3rem; display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 1024px) { .testimonial-grid { grid-template-columns: repeat(3, 1fr); } }
+.testimonial-card { display: flex; flex-direction: column; gap: 1.25rem; background: color-mix(in srgb, var(--background) 5%, transparent); padding: 1.5rem; }
+.testimonial-card svg { width: 1.5rem; height: 1.5rem; color: var(--accent); }
+.testimonial-card blockquote { font-size: 1rem; line-height: 1.6; color: color-mix(in srgb, var(--background) 90%, transparent); }
+.testimonial-attr { margin-top: auto; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid color-mix(in srgb, var(--background) 10%, transparent); padding-top: 1rem; }
+.testimonial-attr .name { font-size: .875rem; font-weight: 600; }
+.testimonial-attr .city { font-size: .75rem; color: color-mix(in srgb, var(--background) 60%, transparent); }
 
-/* Contact */
-.contact-grid { display: grid; gap: 2.5rem; }
-@media (min-width: 1024px) { .contact-grid { grid-template-columns: repeat(2, 1fr); } }
-.contact-grid h2 { font-size: clamp(2.5rem, 6vw, 4.25rem); line-height: .95; }
-.contact-grid .lede { margin-top: 1.5rem; max-width: 28rem; font-size: 1.125rem; color: var(--muted-foreground); }
-.contact-rows { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; font-family: var(--font-mono); font-size: .875rem; }
-.contact-rows .row { display: flex; align-items: center; gap: 1rem; }
-.contact-rows .key { width: 5rem; color: var(--copper); flex-shrink: 0; }
-.contact-rows a:hover { color: var(--copper); }
+/* Why us */
+.why-grid { display: grid; gap: 3rem; }
+@media (min-width: 1024px) { .why-grid { grid-template-columns: repeat(2, 1fr); align-items: center; } }
+.why-image-wrap { position: relative; }
+.why-image-wrap img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 2px; }
+.why-list { margin-top: .5rem; display: flex; flex-direction: column; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.why-list li { display: flex; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+.why-list li:last-child { border-bottom: none; }
+.why-icon { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 999px; background: color-mix(in srgb, var(--primary) 10%, transparent); color: var(--primary); margin-top: .125rem; }
+.why-icon svg { width: 1rem; height: 1rem; }
+.why-list h3 { font-size: 1.125rem; }
+.why-list p { margin-top: .125rem; font-size: .875rem; color: var(--muted-foreground); }
 
-.contact-form { background: color-mix(in oklch, var(--secondary) 30%, transparent); border: 1px solid var(--border); border-radius: 2px; padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
-.contact-form .row2 { display: grid; gap: 1.25rem; }
-@media (min-width: 640px) { .contact-form .row2 { grid-template-columns: repeat(2, 1fr); } }
-.contact-form label { display: block; }
-.contact-form .field-label { font-family: var(--font-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted-foreground); }
-.contact-form input, .contact-form select, .contact-form textarea {
-  margin-top: .5rem; width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border);
-  padding: .5rem 0; font: inherit; color: inherit;
-}
-.contact-form select option { background: var(--background); }
-.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: var(--copper); }
-.contact-form textarea { resize: none; }
-.contact-form button { border: none; cursor: pointer; border-radius: 999px; background: var(--copper); color: var(--primary-foreground); padding: .875rem; font-weight: 500; }
-.contact-form button:hover { background: var(--copper-glow); }
-
-.phone-only-card { border: 1px solid var(--border); background: color-mix(in oklch, var(--secondary) 30%, transparent); border-radius: 2px; padding: 2.5rem; text-align: center; }
-.phone-only-card .number { display: block; margin-top: .75rem; font-family: var(--font-display); font-size: 2rem; color: var(--copper); }
+/* Final CTA */
+.final-cta { position: relative; overflow: hidden; background: var(--primary); color: var(--primary-foreground); border-radius: 2px; padding: 3.5rem 1.5rem; text-align: center; }
+@media (min-width: 640px) { .final-cta { padding: 5rem 2rem; } }
+.final-cta h2 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1; }
+.final-cta p { margin: 1rem auto 0; max-width: 52ch; color: color-mix(in srgb, var(--primary-foreground) 80%, transparent); }
+.final-cta-btn { margin-top: 2rem; display: inline-flex; align-items: center; gap: .75rem; background: var(--background); color: var(--primary); padding: 1rem 1.5rem; font-size: 1.25rem; font-weight: 700; box-shadow: 0 20px 40px -12px rgba(0,0,0,.3); }
+.final-cta-micro { margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #93c5fd; }
+.final-cta-micro .sep { width: .25rem; height: .25rem; border-radius: 999px; background: rgba(147,197,253,.4); }
 
 /* Footer */
-.site-footer { border-top: 1px solid color-mix(in oklch, var(--border) 60%, transparent); padding: 2.5rem 0; }
-.footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-size: .875rem; color: var(--muted-foreground); }
-.footer-brand { display: flex; align-items: center; gap: .5rem; }
-.footer-brand .dot { height: .5rem; width: .5rem; border-radius: 999px; background: var(--copper); }
-.footer-brand span:last-child { font-family: var(--font-display); }
-.footer-meta { font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
+.site-footer { background: var(--secondary); padding: 3.5rem 0; }
+.footer-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .footer-grid { grid-template-columns: repeat(3, 1fr); } }
+.footer-brand { display: flex; flex-direction: column; gap: .75rem; }
+.footer-brand .name { font-family: var(--font-display); font-size: 1.125rem; font-weight: 700; color: var(--primary); }
+.footer-brand p { max-width: 40ch; font-size: .875rem; color: var(--muted-foreground); }
+.footer-brand .phone { margin-top: .5rem; display: inline-flex; align-self: flex-start; align-items: center; gap: .5rem; font-size: .875rem; font-weight: 600; color: var(--primary); }
+.footer-col h4 { font-size: .6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted-foreground); }
+.footer-col ul { margin: .75rem 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .375rem; font-size: .875rem; color: color-mix(in srgb, var(--foreground) 80%, transparent); }
+.footer-meta { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; }
+@media (min-width: 640px) { .footer-meta { align-items: flex-end; } }
+.footer-meta .stars { display: flex; gap: 1px; color: var(--primary); }
+.footer-meta .stars svg { width: 1rem; height: 1rem; fill: currentColor; }
+.footer-meta .label { font-size: .6875rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted-foreground); }
+.footer-meta .copy { font-size: .75rem; color: var(--muted-foreground); }
+
+/* Contact form */
+.quote-form { margin-top: 2.5rem; max-width: 28rem; text-align: left; display: flex; flex-direction: column; gap: 1rem; background: color-mix(in srgb, var(--background) 95%, transparent); color: var(--foreground); padding: 1.5rem; border-radius: 2px; }
+.quote-form label { display: block; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted-foreground); }
+.quote-form input, .quote-form textarea { margin-top: .375rem; width: 100%; border: 1px solid var(--border); background: var(--background); padding: .625rem .875rem; font: inherit; color: inherit; }
+.quote-form textarea { resize: none; }
+.quote-form button { border: none; cursor: pointer; }
 
 .demo-badge {
   position: fixed; bottom: 1rem; left: 1rem; z-index: 1000;
-  background: var(--copper); color: var(--primary-foreground);
-  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
-  padding: .5rem .875rem; border-radius: 999px; box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  background: var(--primary); color: var(--primary-foreground);
+  font-family: var(--font-display); font-size: .75rem; letter-spacing: .04em;
+  padding: .5rem .875rem; border-radius: 999px; box-shadow: 0 4px 12px rgba(0,0,0,.3);
 }
-:root { --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif; --font-sans: "Mulish", ui-sans-serif, system-ui, sans-serif; --font-mono: ui-monospace, monospace; }
+:root { --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif; --font-sans: "Mulish", ui-sans-serif, system-ui, sans-serif; }
 
-:root { --copper: oklch(0.50 0.08 250); --copper-glow: oklch(0.50 0.08 250); --primary: oklch(0.50 0.08 250); --ring: oklch(0.50 0.08 250); }
+:root { --primary: oklch(0.50 0.08 250); --ring: oklch(0.50 0.08 250); }
 
 </style>
 </head>
 <body>
 <header class="site-header">
   <div class="nav-inner">
-    <a href="#" class="brand"><span class="dot"></span><span>Crawford Roofing Solutions</span></a>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#area">Area</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a href="tel:+19523735348" class="phone-pill"><span class="pulse-dot"></span>(952) 373-5348</a>
+    <span class="brand">Crawford Roofing Solutions</span>
+    <a href="tel:+19523735348" class="phone-pill">
+      <span class="ping-dot-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+      <span>(952) 373-5348</span>
+    </a>
   </div>
 </header>
 
-<section class="hero grain tone-dark">
+<section class="hero">
   <div class="hero-bg">
-    <img src="../_trade_images/roofing/hero.jpg" alt="Roofing work" width="1600" height="1200" loading="eager">
+    <img src="../_trade_images/roofing/hero.jpg" alt="Roofing in Bloomington, MN" loading="eager">
     <div class="hero-bg-scrim"></div>
   </div>
-  <div class="hero-orbs"><div class="orb-a"></div><div class="orb-b"></div></div>
+  <div class="hero-orbs"></div>
   <div class="container">
     <div class="hero-copy reveal">
-      <div class="mono-label"><span class="rule"></span>
-        <span class="mark">4.7★</span> Google · 7 reviews
+      
+      <div class="rating-row">
+        <span class="stars" role="img" aria-label="4.7 out of 5 stars"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></span>
+        <span class="label">Google Verified</span>
+        <span class="rule"></span>
+        <span class="label">4.7 · 7 Reviews</span>
       </div>
-      <h1>Roofing,<br><span class="italic">done</span> right.</h1>
-      <p class="lede">Crawford Roofing Solutions serves Bloomington, MN and the surrounding area — straightforward pricing, careful work.</p>
+      
+      <h1>Roofing,<br><span class="underline-accent italic">done right.</span></h1>
+      <p class="lede">Crawford Roofing Solutions provides roofing for Bloomington, MN and the surrounding area — rated 4.7 on Google.</p>
       <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary">Get a free estimate<span aria-hidden="true">→</span></a>
-        <a href="tel:+19523735348" class="btn btn-outline">Call (952) 373-5348</a>
+        <a href="tel:+19523735348" class="btn btn-primary"><span class="ping-dot-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>Call (952) 373-5348</a>
+        <div class="availability"><span class="ping-dot"></span>Serving Bloomington, MN &amp; the surrounding area</div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="value">4.7</div><div class="label">Google Rating</div></div>
+        <div class="stat"><div class="value">7</div><div class="label">Google Reviews</div></div>
+        <div class="stat"><div class="value">8+</div><div class="label">Cities Served</div></div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="stats-bar">
-  <div class="container stats-grid">
-    <div class="stat"><div class="value">4.7★</div><div class="label">Google rating</div></div>
-    <div class="stat"><div class="value">7</div><div class="label">Google reviews</div></div>
-    <div class="stat"><div class="value">8</div><div class="label">Cities served</div></div>
     
   </div>
 </section>
 
-<section id="services" class="editorial">
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>4.7 Google Rating</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Serving Bloomington, MN & the Surrounding Area</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Free Estimates</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Roof Replacement</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Roof Repair</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Storm Damage Repair</span>
+      
+    
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>4.7 Google Rating</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Serving Bloomington, MN & the Surrounding Area</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Free Estimates</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Roof Replacement</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Roof Repair</span>
+      
+      <span class="marquee-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/></svg>Storm Damage Repair</span>
+      
+    
+  </div>
+</div>
+
+
+
+<section id="services" class="block">
   <div class="container">
-    <div class="section-head reveal">
-      <div>
-        <div class="mono-label" style="color:var(--copper);margin-bottom:1rem"><span class="mark">§</span> Services</div>
-        <h2>Every job, treated <span class="italic">as if it were</span> our own.</h2>
+    <div class="block-head reveal">
+      <div class="eyebrow"><span class="dot"></span>Services</div>
+      <h2>The full scope of roofing.</h2>
+      <p>From routine work to critical fixes, Crawford Roofing Solutions arrives with the right equipment and the transparency to explain exactly what we found.</p>
+    </div>
+    <div class="services-grid">
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/roofing/detail.jpg" alt="Roof Replacement" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-num">01</div>
+        </div>
+        <div class="service-body">
+          <h3>Roof Replacement</h3>
+          <p>Full tear-off and replacement when repair no longer makes sense, with a clean job site when we're done.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/roofing/work.jpg" alt="Roof Repair" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-num">02</div>
+        </div>
+        <div class="service-body">
+          <h3>Roof Repair</h3>
+          <p>Targeted fixes for leaks, damaged flashing, or missing shingles -- no need to replace the whole roof.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/roofing/wide.jpg" alt="Storm Damage Repair" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-num">03</div>
+        </div>
+        <div class="service-body">
+          <h3>Storm Damage Repair</h3>
+          <p>Wind and hail damage assessed and repaired, with documentation for your insurance claim.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/roofing/detail.jpg" alt="Roof Inspections" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-num">04</div>
+        </div>
+        <div class="service-body">
+          <h3>Roof Inspections</h3>
+          <p>A thorough look at your roof's condition, with straightforward findings and photos.</p>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+<section id="area" class="block">
+  <div class="container">
+    <div class="area-panel reveal">
+      <div class="area-grid">
+        <div>
+          <div class="eyebrow" style="background:color-mix(in srgb, var(--primary-foreground) 10%, transparent)"><span class="dot"></span>Local Service Area</div>
+          <h2 style="margin-top:1rem">Rooted in Bloomington, MN. <span class="italic" style="color:#93c5fd">Working across the area.</span></h2>
+          <p class="lede">Crawford Roofing Solutions is based in Bloomington, MN and serves the surrounding communities for both scheduled work and calls.</p>
+          <img src="../_trade_images/roofing/wide.jpg" alt="A home in Bloomington, MN">
+        </div>
+        <div class="area-chips">
+          <span><span class="dot"></span>Bloomington</span><span><span class="dot"></span>Eden Prairie</span><span><span class="dot"></span>Edina</span><span><span class="dot"></span>Richfield</span><span><span class="dot"></span>Burnsville</span><span><span class="dot"></span>Savage</span><span><span class="dot"></span>Apple Valley</span><span><span class="dot"></span>Prior Lake</span>
+          <div class="area-cta-row">
+            <div style="display:flex;align-items:center;gap:.75rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span style="font-size:.875rem;font-weight:600">Get a free estimate</span></div>
+            <a href="tel:+19523735348">Call now</a>
+          </div>
+        </div>
       </div>
-      <p class="intro">Every job gets the same attention, start to finish — no shortcuts, no surprises on the invoice.</p>
-    </div>
-    <div class="articles-grid">
-      
-      <article class="article-card reveal">
-        <div class="article-top"><span class="article-num">01</span><span class="article-arrow" aria-hidden="true">→</span></div>
-        <h3>Roof Replacement</h3>
-        <p>Full tear-off and replacement when repair no longer makes sense, with a clean job site when we're done.</p>
-      </article>
-      
-      <article class="article-card reveal">
-        <div class="article-top"><span class="article-num">02</span><span class="article-arrow" aria-hidden="true">→</span></div>
-        <h3>Roof Repair</h3>
-        <p>Targeted fixes for leaks, damaged flashing, or missing shingles -- no need to replace the whole roof.</p>
-      </article>
-      
-      <article class="article-card reveal">
-        <div class="article-top"><span class="article-num">03</span><span class="article-arrow" aria-hidden="true">→</span></div>
-        <h3>Storm Damage Repair</h3>
-        <p>Wind and hail damage assessed and repaired, with documentation for your insurance claim.</p>
-      </article>
-      
-      <article class="article-card reveal">
-        <div class="article-top"><span class="article-num">04</span><span class="article-arrow" aria-hidden="true">→</span></div>
-        <h3>Roof Inspections</h3>
-        <p>A thorough look at your roof's condition, with straightforward findings and photos.</p>
-      </article>
-      
     </div>
   </div>
 </section>
 
-<section id="area" class="editorial" style="border-top:1px solid color-mix(in oklch, var(--border) 60%, transparent); border-bottom:1px solid color-mix(in oklch, var(--border) 60%, transparent); background:color-mix(in oklch, var(--secondary) 20%, transparent)">
-  <div class="container reveal">
-    <div class="mono-label" style="color:var(--copper);margin-bottom:1rem"><span class="mark">§</span> Service Area</div>
-    <h2>Working across Bloomington, MN <span class="italic">and beyond</span>.</h2>
-    <div class="area-list">
-      <span>Bloomington</span><span>Eden Prairie</span><span>Edina</span><span>Richfield</span><span>Burnsville</span><span>Savage</span><span>Apple Valley</span><span>Prior Lake</span>
+<section id="process" class="block">
+  <div class="container">
+    <div class="block-head reveal">
+      <div class="eyebrow"><span class="dot"></span>Our Process</div>
+      <h2>Four steps. Zero guesswork.</h2>
+      <p>Here&#8217;s exactly how a Crawford Roofing Solutions service call goes.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-line"></div>
+      <div class="process-card reveal"><div class="process-badge">01</div><h3>Call &amp; schedule</h3><p>One call to (952) 373-5348 and we&#8217;ll find a time that works.</p></div>
+      <div class="process-card reveal"><div class="process-badge">02</div><h3>Diagnose</h3><p>We take a look and explain exactly what&#8217;s going on, in plain language.</p></div>
+      <div class="process-card reveal"><div class="process-badge">03</div><h3>Upfront quote</h3><p>You approve a clear price before any work begins.</p></div>
+      <div class="process-card reveal"><div class="process-badge">04</div><h3>Finish &amp; confirm</h3><p>We do the work and leave the space cleaner than we found it.</p></div>
     </div>
   </div>
 </section>
 
 
 
+<section class="block">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-image-wrap reveal">
+        <img src="../_trade_images/roofing/work.jpg" alt="Crawford Roofing Solutions at work">
+      </div>
+      <div class="reveal">
+        <div class="eyebrow"><span class="dot"></span>Why Crawford Roofing Solutions</div>
+        <h2 style="margin-top:1rem">A standard you can count on.</h2>
+        <ul class="why-list">
+          
+          <li><span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></span><div><h3>4.7 Google Rating</h3><p>7 reviews on Google.</p></div></li>
+          
+          
+          <li><span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><div><h3>Straightforward communication</h3><p>We explain what we find, in plain language.</p></div></li>
+          
+          <li><span class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></span><div><h3>Professional-grade equipment</h3><p>We show up with the right tools for the job.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-<section id="contact" class="editorial">
-  <div class="container contact-grid">
-    <div class="reveal">
-      <div class="mono-label" style="color:var(--copper);margin-bottom:1rem"><span class="mark">§</span> Contact</div>
-      <h2>Ready when <span class="italic">you</span> are.</h2>
-      <p class="lede">Call anytime, or send a note and we&#8217;ll get back to you.</p>
-      <div class="contact-rows">
-        <div class="row"><span class="key">TEL</span><a href="tel:+19523735348">(952) 373-5348</a></div>
-        <div class="row"><span class="key">MAPS</span><a href="https://maps.google.com/?cid=1988739954147630336&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA" target="_blank" rel="noopener">View on Google Maps</a></div>
-        
+<section id="quote" class="block">
+  <div class="container">
+    <div class="final-cta reveal">
+      <div class="eyebrow" style="background:color-mix(in srgb, var(--primary-foreground) 10%, transparent);margin:0 auto 1rem"><span class="dot"></span>Get In Touch</div>
+      <h2>Ready to get started?</h2>
+      <p>Crawford Roofing Solutions serves Bloomington, MN and the surrounding area.</p>
+      
+      <a href="tel:+19523735348" class="final-cta-btn"><span class="ping-dot-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>(952) 373-5348</a>
+      
+      <div class="final-cta-micro">
+        <span>Get a free estimate</span>
         
       </div>
     </div>
-    
-    <div class="phone-only-card reveal">
-      <p class="mono-label" style="justify-content:center">Fastest way to reach us</p>
-      <a class="number" href="tel:+19523735348">(952) 373-5348</a>
-    </div>
-    
   </div>
 </section>
 
-<footer class="site-footer tone-dark">
-  <div class="container footer-inner">
-    <div class="footer-brand"><span class="dot"></span><span>Crawford Roofing Solutions</span></div>
-    <div class="footer-meta">Bloomington, MN · © 2026</div>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <span class="name">Crawford Roofing Solutions</span>
+      <p>Roofing in Bloomington, MN and the surrounding area.</p>
+      <a class="phone" href="tel:+19523735348"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(952) 373-5348</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul><li>Roof Replacement</li><li>Roof Repair</li><li>Storm Damage Repair</li><li>Roof Inspections</li></ul>
+      
+    </div>
+    <div class="footer-meta">
+      
+      <div class="stars" role="img" aria-label="4.7 out of 5 stars"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></div>
+      <span class="label">Google 4.7 · 7 reviews</span>
+      
+      <span class="copy">&copy; 2026 Crawford Roofing Solutions. All rights reserved.</span>
+    </div>
   </div>
 </footer>
 
