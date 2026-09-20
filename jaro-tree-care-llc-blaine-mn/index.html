@@ -475,7 +475,17 @@ button, input, textarea, select { font: inherit; color: inherit; }
   --motion-scale: 1.35;
 }
 
-:root { --primary: oklch(0.45 0.10 160); --ring: oklch(0.45 0.10 160); --accent: oklch(0.45 0.10 160); }
+/* Also reasserted on .tone-dark/.tone-light/.tone-tint, not just :root
+   (found live, 2026-09-20): those classes redeclare --primary
+   themselves (their own tuned per-tone default), and CSS custom
+   properties inherit from the NEAREST ancestor that sets them, not
+   from :root specifically -- so a hero (or any accent band) carrying
+   .tone-dark silently shadowed the trade-palette override for every
+   descendant, showing the personality's own default color instead of
+   the accent that was supposed to override it everywhere. Confirmed by
+   checking a deployed page's actual computed background-color, not
+   just the :root custom property value -- the two had diverged. */
+:root, .tone-dark, .tone-light, .tone-tint { --primary: oklch(0.45 0.10 160); --ring: oklch(0.45 0.10 160); --accent: oklch(0.45 0.10 160); }
 
 </style>
 </head>

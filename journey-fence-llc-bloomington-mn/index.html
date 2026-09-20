@@ -211,7 +211,15 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .hero-stats { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; }
 .hero-stats .stat .value { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; }
 .hero-stats .stat .label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, var(--foreground) 70%, transparent); }
-.hero-split-aside { align-self: end; }
+/* Hidden below 900px, not just visually de-emphasized: at mobile width
+   the grid falls back to single-column stacking, so this block would
+   otherwise land BELOW the CTAs, making the hero very tall and
+   repeating the rating the hero-content's own rating-chip already
+   shows at the top — a real mobile-layout bug caught by testing the
+   live deployed page at a real phone width (2026-09-20), not by a
+   computed-style check. */
+.hero-split-aside { display: none; }
+@media (min-width: 900px) { .hero-split-aside { display: block; align-self: end; } }
 
 /* ── Trust ───────────────────────────────────────────────────────── */
 /* No background/color set here on purpose: the section partial applies
@@ -467,7 +475,17 @@ button, input, textarea, select { font: inherit; color: inherit; }
   --motion-scale: 1.35;
 }
 
-:root { --primary: oklch(0.48 0.07 80); --ring: oklch(0.48 0.07 80); --accent: oklch(0.48 0.07 80); }
+/* Also reasserted on .tone-dark/.tone-light/.tone-tint, not just :root
+   (found live, 2026-09-20): those classes redeclare --primary
+   themselves (their own tuned per-tone default), and CSS custom
+   properties inherit from the NEAREST ancestor that sets them, not
+   from :root specifically -- so a hero (or any accent band) carrying
+   .tone-dark silently shadowed the trade-palette override for every
+   descendant, showing the personality's own default color instead of
+   the accent that was supposed to override it everywhere. Confirmed by
+   checking a deployed page's actual computed background-color, not
+   just the :root custom property value -- the two had diverged. */
+:root, .tone-dark, .tone-light, .tone-tint { --primary: oklch(0.48 0.07 80); --ring: oklch(0.48 0.07 80); --accent: oklch(0.48 0.07 80); }
 
 </style>
 </head>
