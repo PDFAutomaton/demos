@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +11,78 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
 /* skins/clearpath/tokens.css
-   Extracted from the live reference build (clearpath-shines.lovable.app,
-   assets/styles-ChjukmoE.css) — real oklch values, not approximated.
+   Base oklch values originally extracted from the live reference build
+   (clearpath-shines.lovable.app, assets/styles-ChjukmoE.css) — that
+   reference site is dark-throughout. Abdirahman, 2026-09-20: a
+   contractor site should read as a local business, not a dark/agency/
+   premium tech product, so LIGHT is now the default tone. The original
+   dark navy palette is preserved exactly, not deleted — selectable per
+   site via `sitegen.py demo/real --theme dark` (:root[data-theme="dark"]),
+   and always applied to a couple of accent sections (.tone-dark, e.g.
+   the photo-backed hero) for contrast, so even a dark-themed page
+   alternates rather than being dark throughout (see the template's
+   `accent_tone`/`alt_tone` usage).
    Fonts: Barlow Condensed (display) + Inter (body). */
 
-:root {
+:root, .tone-light {
   --radius: .5rem;
 
+  /* Theme-independent fixed reference colors, declared once here and
+     NOT redeclared in the dark tone below — they're used as button/
+     icon text paired with an --aqua fill (navy-deep stays legible
+     against either tone's --aqua, since both are meaningfully lighter
+     than near-black) or as a caption color on a photo the hero always
+     keeps dark-scrimmed regardless of page tone (bone). --navy isn't
+     currently referenced in styles.css but is kept for parity with the
+     original extraction. */
   --navy-deep: oklch(11% .02 250);
   --navy: oklch(17% .03 245);
-  --aqua: oklch(78% .16 220);
-  --aqua-glow: oklch(86% .14 215);
   --bone: oklch(98% .005 90);
 
+  --aqua: oklch(48% .14 220);
+  --aqua-glow: oklch(62% .15 218);
+  --background: oklch(98% .005 90);
+  --foreground: oklch(11% .02 250);
+  --card: oklch(100% .002 90);
+  --card-foreground: oklch(11% .02 250);
+  --primary: oklch(48% .14 220);
+  --primary-foreground: oklch(98% .005 90);
+  --secondary: oklch(93% .01 90);
+  --secondary-foreground: oklch(11% .02 250);
+  --muted: oklch(94% .008 90);
+  --muted-foreground: oklch(42% .02 240);
+  --accent: oklch(48% .14 220);
+  --accent-foreground: oklch(98% .005 90);
+  --border: oklch(20% .02 250 / .12);
+  --input: oklch(20% .02 250 / .12);
+  --ring: oklch(48% .14 220);
+
+  --font-display: "Barlow Condensed", "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+/* !important on just these two properties: several section rules in
+   styles.css (e.g. .final-cta's var(--card) background, .site-footer's
+   var(--background) background) target the same element at equal
+   specificity and could otherwise silently win by source order — see
+   the identical note in skins/meridian/tokens.css, where this was
+   confirmed to actually matter for .testimonial-section. */
+.tone-light { background: var(--background) !important; color: var(--foreground) !important; }
+
+/* Dark tone — the ORIGINAL reference palette, kept selectable rather
+   than deleted. :root[data-theme="dark"] and .tone-dark share this one
+   rule so a page-wide theme choice and a single accent section can
+   never drift out of sync with each other. --aqua/--aqua-glow DO need
+   a per-tone value here (unlike navy-deep/navy/bone above) since
+   styles.css uses --aqua directly as TEXT/icon color throughout
+   (.accent, .eyebrow, stat values, trust icons) — the muted light-tone
+   aqua above wouldn't have enough contrast rendered as text on this
+   dark background. */
+:root[data-theme="dark"], .tone-dark {
+  --aqua: oklch(78% .16 220);
+  --aqua-glow: oklch(86% .14 215);
   --background: oklch(9% .015 250);
   --foreground: oklch(97% .005 90);
   --card: oklch(13% .02 248);
@@ -41,10 +98,8 @@
   --border: oklch(100% 0 0 / .08);
   --input: oklch(100% 0 0 / .08);
   --ring: oklch(78% .16 220);
-
-  --font-display: "Barlow Condensed", "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
+.tone-dark { background: var(--background) !important; color: var(--foreground) !important; }
 
 .reveal {
   opacity: 0;
@@ -242,6 +297,7 @@ section.block { padding: 6rem 0; }
   font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: .75rem;
   padding: .5rem .875rem; border-radius: .375rem; box-shadow: 0 4px 12px rgba(0,0,0,.4);
 }
+:root { --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif; }
 
 :root { --aqua: oklch(0.45 0.10 160); --aqua-glow: oklch(0.45 0.10 160); --primary: oklch(0.45 0.10 160); --accent: oklch(0.45 0.10 160); --ring: oklch(0.45 0.10 160); }
 
@@ -261,7 +317,7 @@ section.block { padding: 6rem 0; }
   </div>
 </header>
 
-<section id="top" class="hero">
+<section id="top" class="hero tone-dark">
   <div class="hero-bg">
     <img src="../_trade_images/tree_service/hero.jpg" alt="Tree Service in Blaine, MN">
     <div class="scrim-1"></div>
@@ -344,9 +400,7 @@ section.block { padding: 6rem 0; }
           <div class="service-icon">01</div>
           <h3>Tree Removal</h3>
         </div>
-        <div class="service-body">
-          <p>Reliable tree removal for homes and businesses in Blaine, MN and the surrounding area.</p>
-        </div>
+        <div class="service-body"><p>Full removal of hazardous, dead, or unwanted trees, including full cleanup.</p></div>
       </article>
       
       <article class="service-card reveal">
@@ -356,9 +410,7 @@ section.block { padding: 6rem 0; }
           <div class="service-icon">02</div>
           <h3>Tree Trimming & Pruning</h3>
         </div>
-        <div class="service-body">
-          <p>Reliable tree trimming & pruning for homes and businesses in Blaine, MN and the surrounding area.</p>
-        </div>
+        <div class="service-body"><p>Canopy shaping and deadwood removal to keep trees healthy and safe.</p></div>
       </article>
       
       <article class="service-card reveal">
@@ -368,9 +420,7 @@ section.block { padding: 6rem 0; }
           <div class="service-icon">03</div>
           <h3>Stump Grinding</h3>
         </div>
-        <div class="service-body">
-          <p>Reliable stump grinding for homes and businesses in Blaine, MN and the surrounding area.</p>
-        </div>
+        <div class="service-body"><p>Grinding stumps below grade so the area is ready to reseed or landscape.</p></div>
       </article>
       
       <article class="service-card reveal">
@@ -380,33 +430,7 @@ section.block { padding: 6rem 0; }
           <div class="service-icon">04</div>
           <h3>Emergency Tree Removal</h3>
         </div>
-        <div class="service-body">
-          <p>Reliable emergency tree removal for homes and businesses in Blaine, MN and the surrounding area.</p>
-        </div>
-      </article>
-      
-      <article class="service-card reveal">
-        <div class="service-media">
-          <img src="../_trade_images/tree_service/wide.jpg" alt="Land Clearing" loading="lazy">
-          <div class="scrim"></div>
-          <div class="service-icon">05</div>
-          <h3>Land Clearing</h3>
-        </div>
-        <div class="service-body">
-          <p>Reliable land clearing for homes and businesses in Blaine, MN and the surrounding area.</p>
-        </div>
-      </article>
-      
-      <article class="service-card reveal">
-        <div class="service-media">
-          <img src="../_trade_images/tree_service/work.jpg" alt="Tree Health Assessments" loading="lazy">
-          <div class="scrim"></div>
-          <div class="service-icon">06</div>
-          <h3>Tree Health Assessments</h3>
-        </div>
-        <div class="service-body">
-          <p>Reliable tree health assessments for homes and businesses in Blaine, MN and the surrounding area.</p>
-        </div>
+        <div class="service-body"><p>Storm-damaged or leaning trees handled quickly and safely.</p></div>
       </article>
       
     </div>
@@ -476,7 +500,7 @@ section.block { padding: 6rem 0; }
 
 <section id="quote" class="block">
   <div class="container">
-    <div class="final-cta reveal">
+    <div class="final-cta reveal tone-dark">
       <div class="final-cta-inner">
         <div class="eyebrow" style="justify-content:center"><span class="rule"></span>Get A Free Quote<span class="rule"></span></div>
         <h2>Ready To<br><span class="accent">Get Started?</span></h2>
@@ -492,7 +516,7 @@ section.block { padding: 6rem 0; }
   </div>
 </section>
 
-<footer class="site-footer">
+<footer class="site-footer tone-dark">
   <div class="container footer-grid">
     <div class="footer-brand">
       <a href="#top" class="brand"><span class="brand-mark">J</span><span>JARO TREE CARE LLC.</span></a>
