@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jaro Tree Care LLC. | Tree Service in Blaine, MN</title>
+<meta name="description" content="Tree Service in Blaine, MN and the surrounding area. Rated 5.0 stars on Google (22 reviews). Call (612) 636-4931.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* skins/clearpath/tokens.css
+   Extracted from the live reference build (clearpath-shines.lovable.app,
+   assets/styles-ChjukmoE.css) — real oklch values, not approximated.
+   Fonts: Barlow Condensed (display) + Inter (body). */
+
+:root {
+  --radius: .5rem;
+
+  --navy-deep: oklch(11% .02 250);
+  --navy: oklch(17% .03 245);
+  --aqua: oklch(78% .16 220);
+  --aqua-glow: oklch(86% .14 215);
+  --bone: oklch(98% .005 90);
+
+  --background: oklch(9% .015 250);
+  --foreground: oklch(97% .005 90);
+  --card: oklch(13% .02 248);
+  --card-foreground: oklch(97% .005 90);
+  --primary: oklch(78% .16 220);
+  --primary-foreground: oklch(11% .02 250);
+  --secondary: oklch(17% .03 245);
+  --secondary-foreground: oklch(97% .005 90);
+  --muted: oklch(16% .02 248);
+  --muted-foreground: oklch(68% .02 240);
+  --accent: oklch(78% .16 220);
+  --accent-foreground: oklch(11% .02 250);
+  --border: oklch(100% 0 0 / .08);
+  --input: oklch(100% 0 0 / .08);
+  --ring: oklch(78% .16 220);
+
+  --font-display: "Barlow Condensed", "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease-out, transform .6s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Signature move: animated particle dots (extracted keyframe, real values). */
+@keyframes float-drop {
+  0%, 100% { opacity: .6; transform: translateY(0) scale(1); }
+  50% { opacity: 1; transform: translateY(-12px) scale(1.05); }
+}
+.particle-dot {
+  position: absolute;
+  width: .375rem; height: .375rem;
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--aqua) 50%, transparent);
+  filter: blur(1px);
+  animation: float-drop 4s ease-in-out infinite;
+}
+/* skins/clearpath/styles.css — hand-authored, using tokens.css custom properties.
+   Signature move: scale. Oversized condensed display type, before/after
+   slider, animated particle dots. */
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; font-weight: 800; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.container { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
+.accent { color: var(--aqua); }
+
+.eyebrow { display: flex; align-items: center; gap: .75rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .25em; color: var(--aqua); margin-bottom: 1rem; }
+.eyebrow .rule { width: 2rem; height: 1px; background: var(--aqua); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: .5rem; padding: 1rem 1.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: .875rem; }
+.btn-primary { background: var(--aqua); color: var(--navy-deep); }
+.btn-primary:hover { background: var(--aqua-glow); }
+.btn-outline { border: 1px solid var(--border); color: var(--foreground); }
+.btn-outline:hover { border-color: var(--aqua); color: var(--aqua); }
+
+/* Header */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; backdrop-filter: blur(20px); background: color-mix(in oklch, var(--background) 75%, transparent); border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 80rem; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: .625rem; font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; text-transform: uppercase; letter-spacing: .02em; }
+.brand-mark { width: 2.25rem; height: 2.25rem; border-radius: .5rem; background: var(--aqua); display: grid; place-items: center; color: var(--navy-deep); font-weight: 800; flex-shrink: 0; }
+.nav-links { display: none; align-items: center; gap: 2.25rem; font-size: .8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, var(--foreground) 70%, transparent); }
+@media (min-width: 768px) { .nav-links { display: flex; } }
+.nav-links a:hover { color: var(--aqua); }
+.nav-cta { display: none; }
+@media (min-width: 768px) { .nav-cta { display: inline-flex; } }
+
+/* Hero */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding-top: 6rem; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; z-index: -2; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero-bg .scrim-1 { position: absolute; inset: 0; background: linear-gradient(to right, var(--background), color-mix(in oklch, var(--background) 85%, transparent), color-mix(in oklch, var(--background) 40%, transparent)); }
+.hero-bg .scrim-2 { position: absolute; inset: 0; background: linear-gradient(to top, var(--background), transparent, color-mix(in oklch, var(--background) 60%, transparent)); }
+.hero-dots { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.hero-grid { position: relative; z-index: 1; display: grid; gap: 3rem; padding: 5rem 0; align-items: center; }
+@media (min-width: 1024px) { .hero-grid { grid-template-columns: 7fr 5fr; } }
+.hero-pill { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem 1rem; border-radius: .25rem; border: 1px solid color-mix(in oklch, var(--aqua) 40%, transparent); background: color-mix(in oklch, var(--aqua) 5%, transparent); color: var(--aqua); font-size: .6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .2em; margin-bottom: 2rem; }
+.hero-pill .dot { width: .375rem; height: .375rem; border-radius: 999px; background: var(--aqua); animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite; }
+@keyframes pulse { 50% { opacity: .5; } }
+.hero h1 { font-size: clamp(3rem, 9vw, 8.5rem); line-height: .88; margin-bottom: 2rem; }
+.hero .lede { font-size: clamp(1.0625rem, 1.5vw, 1.25rem); color: color-mix(in oklch, var(--foreground) 70%, transparent); max-width: 36rem; margin-bottom: 2.5rem; line-height: 1.6; }
+.hero .lede strong { color: var(--foreground); font-weight: 600; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
+.hero-stats { margin-top: 4rem; display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem; max-width: 32rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+.hero-stats .stat .value { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.75rem, 3vw, 2.25rem); color: var(--aqua); }
+.hero-stats .stat .label { font-size: .625rem; text-transform: uppercase; letter-spacing: .12em; color: color-mix(in oklch, var(--foreground) 50%, transparent); font-weight: 600; margin-top: .25rem; }
+.hero-image-wrap { position: relative; display: none; }
+@media (min-width: 1024px) { .hero-image-wrap { display: block; } }
+.hero-image-glow { position: absolute; inset: -1rem; background: color-mix(in oklch, var(--aqua) 20%, transparent); filter: blur(48px); border-radius: 999px; }
+.hero-image { position: relative; border-radius: .5rem; overflow: hidden; border: 1px solid var(--border); }
+.hero-image img { width: 100%; height: 35rem; object-fit: cover; }
+.hero-image .scrim { position: absolute; inset: 0; background: linear-gradient(to top, var(--background), transparent 50%); }
+.hero-image .cap { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; font-size: .6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, var(--bone) 85%, transparent); }
+
+/* Trust bar */
+.trust-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: color-mix(in oklch, var(--card) 50%, transparent); }
+.trust-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem 3rem; padding: 1.5rem 0; }
+.trust-item { display: flex; align-items: center; gap: .75rem; font-size: .8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: color-mix(in oklch, var(--foreground) 80%, transparent); }
+.trust-item svg { color: var(--aqua); flex-shrink: 0; width: 1.125rem; height: 1.125rem; }
+
+/* Sections */
+section.block { padding: 6rem 0; }
+@media (min-width: 768px) { section.block { padding: 8rem 0; } }
+.block-intro { max-width: 48rem; margin-bottom: 4rem; }
+.block-intro h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: .9; margin-bottom: 1.5rem; }
+.block-intro p { font-size: 1.125rem; color: color-mix(in oklch, var(--foreground) 70%, transparent); line-height: 1.6; }
+
+/* Services */
+.services-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+.service-card { border-radius: .5rem; overflow: hidden; background: var(--card); border: 1px solid var(--border); transition: border-color .2s ease; }
+.service-card:hover { border-color: color-mix(in oklch, var(--aqua) 60%, transparent); }
+.service-media { position: relative; height: 14rem; overflow: hidden; }
+.service-media img { width: 100%; height: 100%; object-fit: cover; }
+.service-media .scrim { position: absolute; inset: 0; background: linear-gradient(to top, var(--card), color-mix(in oklch, var(--card) 40%, transparent), transparent); }
+.service-icon { position: absolute; top: 1rem; left: 1rem; width: 2.75rem; height: 2.75rem; border-radius: .5rem; background: var(--aqua); color: var(--navy-deep); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; }
+.service-media h3 { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; font-size: 1.5rem; }
+.service-body { padding: 1.5rem; }
+.service-body p { font-size: .875rem; color: color-mix(in oklch, var(--foreground) 70%, transparent); line-height: 1.6; }
+
+/* Pricing (no fabricated numbers) */
+.pricing-panel { border-radius: .5rem; border: 1px solid color-mix(in oklch, var(--aqua) 30%, transparent); background: var(--card); padding: 3rem; text-align: center; }
+.pricing-panel p { max-width: 34rem; margin: 1rem auto 2rem; color: color-mix(in oklch, var(--foreground) 70%, transparent); font-size: 1.0625rem; line-height: 1.6; }
+
+/* Slider (Tier 3 gated) */
+.slider-frame { position: relative; border-radius: .5rem; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 4/3; user-select: none; }
+.slider-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slider-clip { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 50% 0 0); }
+.slider-clip img { filter: grayscale(1) contrast(.75) brightness(.75); }
+.slider-clip .tint { position: absolute; inset: 0; background: color-mix(in oklch, var(--navy-deep) 30%, transparent); }
+.slider-tag { position: absolute; top: 1rem; padding: .25rem .75rem; border-radius: .25rem; font-size: .625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+.slider-tag.before { left: 1rem; background: color-mix(in oklch, var(--background) 85%, transparent); color: var(--foreground); }
+.slider-tag.after { right: 1rem; background: var(--aqua); color: var(--navy-deep); }
+.slider-input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 20; }
+.slider-handle { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--aqua); left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 10; }
+.slider-grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 2.75rem; height: 2.75rem; border-radius: 999px; background: var(--aqua); border: 2px solid var(--background); display: grid; place-items: center; }
+.slider-grip span { display: flex; gap: 2px; }
+.slider-grip span i { width: 3px; height: 1rem; border-radius: 999px; background: var(--navy-deep); }
+
+/* Process */
+.process-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .process-grid { grid-template-columns: repeat(4, 1fr); } }
+.process-card { border-radius: .5rem; border: 1px solid var(--border); background: color-mix(in oklch, var(--background) 60%, transparent); padding: 1.75rem; }
+.process-num { font-family: var(--font-display); font-weight: 800; font-size: 3.5rem; color: color-mix(in oklch, var(--aqua) 30%, transparent); margin-bottom: 1rem; line-height: 1; }
+.process-card h3 { font-size: 1.25rem; margin-bottom: .75rem; }
+.process-card p { font-size: .875rem; color: color-mix(in oklch, var(--foreground) 70%, transparent); line-height: 1.6; }
+
+/* Areas */
+.areas-grid { display: grid; gap: 3rem; align-items: center; }
+@media (min-width: 1024px) { .areas-grid { grid-template-columns: 1fr 1fr; } }
+.area-chips { display: flex; flex-wrap: wrap; gap: .75rem; }
+.area-chips span { padding: .75rem 1.25rem; border-radius: .5rem; background: var(--card); border: 1px solid var(--border); font-size: .875rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; display: inline-flex; align-items: center; gap: .5rem; }
+.area-chips svg { width: .875rem; height: .875rem; color: var(--aqua); }
+
+/* Reviews (Tier 3 gated) */
+.reviews-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+.review-card { border-radius: .5rem; border: 1px solid var(--border); background: color-mix(in oklch, var(--background) 60%, transparent); padding: 1.5rem; }
+.review-card p { font-size: .875rem; color: color-mix(in oklch, var(--foreground) 85%, transparent); line-height: 1.6; }
+.review-author { margin-top: 1.25rem; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+.review-city { font-size: .6875rem; color: color-mix(in oklch, var(--foreground) 50%, transparent); text-transform: uppercase; letter-spacing: .1em; margin-top: .125rem; }
+
+/* Final CTA */
+.final-cta { border-radius: .5rem; border: 1px solid color-mix(in oklch, var(--aqua) 30%, transparent); background: var(--card); padding: 3rem 1.5rem; text-align: center; position: relative; overflow: hidden; }
+@media (min-width: 768px) { .final-cta { padding: 5rem 3rem; } }
+.final-cta-inner { position: relative; max-width: 40rem; margin: 0 auto; }
+.final-cta h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1.5rem; }
+.final-cta p { color: color-mix(in oklch, var(--foreground) 70%, transparent); font-size: 1.125rem; margin-bottom: 2.5rem; }
+.final-cta-btns { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+
+/* Footer */
+.site-footer { background: var(--background); border-top: 1px solid var(--border); }
+.footer-grid { display: grid; gap: 2.5rem; padding: 3.5rem 0; }
+@media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+.footer-brand p { margin-top: 1rem; max-width: 24rem; font-size: .875rem; color: color-mix(in oklch, var(--foreground) 60%, transparent); line-height: 1.6; }
+.footer-col h4 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; font-size: .875rem; margin-bottom: 1rem; }
+.footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .625rem; font-size: .875rem; color: color-mix(in oklch, var(--foreground) 70%, transparent); }
+.footer-col li { display: flex; align-items: center; gap: .5rem; }
+.footer-col svg { width: 1rem; height: 1rem; color: var(--aqua); flex-shrink: 0; }
+.footer-bottom { border-top: 1px solid var(--border); }
+.footer-bottom-inner { max-width: 80rem; margin: 0 auto; padding: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; font-size: .6875rem; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, var(--foreground) 40%, transparent); font-weight: 600; }
+
+/* Contact form */
+.quote-form { border-radius: .5rem; border: 1px solid var(--border); background: var(--card); padding: 2rem; text-align: left; display: flex; flex-direction: column; gap: 1.25rem; max-width: 32rem; margin: 2rem auto 0; }
+.quote-form label { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: color-mix(in oklch, var(--foreground) 60%, transparent); }
+.quote-form input, .quote-form textarea { margin-top: .5rem; width: 100%; background: var(--background); border: 1px solid var(--border); border-radius: .375rem; padding: .75rem 1rem; font: inherit; color: inherit; }
+.quote-form input:focus, .quote-form textarea:focus { outline: none; border-color: var(--aqua); }
+.quote-form textarea { resize: none; }
+.quote-form button { border: none; cursor: pointer; }
+
+.demo-badge {
+  position: fixed; bottom: 1rem; left: 1rem; z-index: 1000;
+  background: var(--aqua); color: var(--navy-deep);
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: .75rem;
+  padding: .5rem .875rem; border-radius: .375rem; box-shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+:root { --aqua: oklch(0.45 0.10 160); --aqua-glow: oklch(0.45 0.10 160); --primary: oklch(0.45 0.10 160); --accent: oklch(0.45 0.10 160); --ring: oklch(0.45 0.10 160); }
+
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="brand-mark">J</span><span>Jaro Tree Care LLC.</span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#areas">Areas</a>
+      
+      <a href="#quote">Contact</a>
+    </nav>
+    <a href="tel:+16126364931" class="btn btn-primary nav-cta">Text or Call</a>
+  </div>
+</header>
+
+<section id="top" class="hero">
+  <div class="hero-bg">
+    <img src="../_trade_images/tree_service/hero.jpg" alt="Tree Service in Blaine, MN">
+    <div class="scrim-1"></div>
+    <div class="scrim-2"></div>
+  </div>
+  <div class="hero-dots">
+    
+    <div class="particle-dot" style="left:0%; top:0%; animation-delay:0.0s"></div>
+    
+    <div class="particle-dot" style="left:37%; top:53%; animation-delay:0.4s"></div>
+    
+    <div class="particle-dot" style="left:74%; top:17%; animation-delay:0.8s"></div>
+    
+    <div class="particle-dot" style="left:14%; top:70%; animation-delay:1.2000000000000002s"></div>
+    
+    <div class="particle-dot" style="left:51%; top:34%; animation-delay:1.6s"></div>
+    
+    <div class="particle-dot" style="left:88%; top:87%; animation-delay:0.0s"></div>
+    
+    <div class="particle-dot" style="left:28%; top:51%; animation-delay:0.4s"></div>
+    
+    <div class="particle-dot" style="left:65%; top:15%; animation-delay:0.8s"></div>
+    
+    <div class="particle-dot" style="left:5%; top:68%; animation-delay:1.2000000000000002s"></div>
+    
+    <div class="particle-dot" style="left:42%; top:32%; animation-delay:1.6s"></div>
+    
+  </div>
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-pill"><span class="dot"></span>Now serving Blaine, MN &amp; the surrounding area</div>
+      <h1>Tree Service<br><span class="accent">Done Right.</span></h1>
+      <p class="lede">Jaro Tree Care LLC. provides <strong>tree service</strong> for homeowners in Blaine, MN and the surrounding area.</p>
+      <div class="hero-ctas">
+        <a href="tel:+16126364931" class="btn btn-primary">Text or Call (612) 636-4931</a>
+        <a href="#services" class="btn btn-outline">See Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="value">5.0★</div><div class="label">Google rating</div></div>
+        <div class="stat"><div class="value">22</div><div class="label">Google reviews</div></div>
+        <div class="stat"><div class="value">8</div><div class="label">Cities served</div></div>
+      </div>
+    </div>
+    <div class="hero-image-wrap reveal">
+      <div class="hero-image-glow"></div>
+      <div class="hero-image">
+        <img src="../_trade_images/tree_service/work.jpg" alt="Tree Service technician at work">
+        <div class="scrim"></div>
+        <div class="cap">Tree Service · Blaine, MN</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust-bar">
+  <div class="container trust-grid">
+    
+    
+    
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Free Estimates</div>
+    
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Firm On-Site Pricing</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Local to Blaine, MN</div>
+  </div>
+</section>
+
+<section id="services" class="block">
+  <div class="container">
+    <div class="block-intro reveal">
+      <div class="eyebrow"><span class="rule"></span>What We Do</div>
+      <h2>Every Job.<br><span class="accent">Done Right.</span></h2>
+      <p>Tree Service for homeowners across Blaine, MN and the surrounding area.</p>
+    </div>
+    <div class="services-grid">
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/tree_service/detail.jpg" alt="Tree Removal" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-icon">01</div>
+          <h3>Tree Removal</h3>
+        </div>
+        <div class="service-body">
+          <p>Reliable tree removal for homes and businesses in Blaine, MN and the surrounding area.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/tree_service/wide.jpg" alt="Tree Trimming & Pruning" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-icon">02</div>
+          <h3>Tree Trimming & Pruning</h3>
+        </div>
+        <div class="service-body">
+          <p>Reliable tree trimming & pruning for homes and businesses in Blaine, MN and the surrounding area.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/tree_service/work.jpg" alt="Stump Grinding" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-icon">03</div>
+          <h3>Stump Grinding</h3>
+        </div>
+        <div class="service-body">
+          <p>Reliable stump grinding for homes and businesses in Blaine, MN and the surrounding area.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/tree_service/detail.jpg" alt="Emergency Tree Removal" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-icon">04</div>
+          <h3>Emergency Tree Removal</h3>
+        </div>
+        <div class="service-body">
+          <p>Reliable emergency tree removal for homes and businesses in Blaine, MN and the surrounding area.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/tree_service/wide.jpg" alt="Land Clearing" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-icon">05</div>
+          <h3>Land Clearing</h3>
+        </div>
+        <div class="service-body">
+          <p>Reliable land clearing for homes and businesses in Blaine, MN and the surrounding area.</p>
+        </div>
+      </article>
+      
+      <article class="service-card reveal">
+        <div class="service-media">
+          <img src="../_trade_images/tree_service/work.jpg" alt="Tree Health Assessments" loading="lazy">
+          <div class="scrim"></div>
+          <div class="service-icon">06</div>
+          <h3>Tree Health Assessments</h3>
+        </div>
+        <div class="service-body">
+          <p>Reliable tree health assessments for homes and businesses in Blaine, MN and the surrounding area.</p>
+        </div>
+      </article>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<section id="pricing" class="block" style="border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="pricing-panel reveal">
+      <div class="eyebrow" style="justify-content:center"><span class="rule"></span>Transparent Pricing<span class="rule"></span></div>
+      <h2>Fair Prices.<br><span class="accent">No Surprises.</span></h2>
+      <p>Pricing is based on the size and scope of the job. Jaro Tree Care LLC. gives you a clear price before any work starts — no hidden fees.</p>
+      
+      <a href="tel:+16126364931" class="btn btn-primary">Get a free estimate</a>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="block" style="background:color-mix(in oklch, var(--card) 30%, transparent)">
+  <div class="container">
+    <div class="block-intro reveal">
+      <div class="eyebrow"><span class="rule"></span>Our Process</div>
+      <h2>Four Steps.<br><span class="accent">Done Right.</span></h2>
+      <p>No mystery, no surprises — the same sequence every time.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-card reveal"><div class="process-num">01</div><h3>Get a free estimate</h3><p>We look at the job and give you a clear price before we start.</p></div>
+      <div class="process-card reveal"><div class="process-num">02</div><h3>Prep the Site</h3><p>We protect your property and get everything ready for the work.</p></div>
+      <div class="process-card reveal"><div class="process-num">03</div><h3>Do the Work</h3><p>Careful, professional tree service — done right the first time.</p></div>
+      <div class="process-card reveal"><div class="process-num">04</div><h3>Final Walkthrough</h3><p>We walk the job with you before we call it done.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="areas" class="block">
+  <div class="container areas-grid">
+    <div class="reveal">
+      <div class="eyebrow"><span class="rule"></span>Service Area</div>
+      <h2>We Come<br><span class="accent">To You.</span></h2>
+      <p style="margin-top:1rem;margin-bottom:2rem;color:color-mix(in oklch, var(--foreground) 70%, transparent);line-height:1.6">Serving Blaine, MN and the surrounding area. Not sure if we cover your area? <a href="sms:+16126364931" class="accent" style="text-decoration:underline">Text us your zip code</a>.</p>
+    </div>
+    <div class="area-chips reveal">
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Blaine</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Coon Rapids</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Andover</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Ham Lake</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Lino Lakes</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Spring Lake Park</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Fridley</span>
+      
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Circle Pines</span>
+      
+    </div>
+  </div>
+</section>
+
+
+
+<section id="quote" class="block">
+  <div class="container">
+    <div class="final-cta reveal">
+      <div class="final-cta-inner">
+        <div class="eyebrow" style="justify-content:center"><span class="rule"></span>Get A Free Quote<span class="rule"></span></div>
+        <h2>Ready To<br><span class="accent">Get Started?</span></h2>
+        <p>Text or call for a quote. We&#8217;ll tell you the price before we start — no surprises.</p>
+        
+        <div class="final-cta-btns">
+          <a href="tel:+16126364931" class="btn btn-primary">Call (612) 636-4931</a>
+          <a href="sms:+16126364931" class="btn btn-outline">Send Us A Text</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="#top" class="brand"><span class="brand-mark">J</span><span>JARO TREE CARE LLC.</span></a>
+      <p>Tree Service for homeowners in Blaine, MN and the surrounding area.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+16126364931">(612) 636-4931</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg><a href="sms:+16126364931">Text us anytime</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Blaine, MN</li>
+      </ul>
+    </div>
+    
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <div>&copy; 2026 JARO TREE CARE LLC.</div>
+      
+    </div>
+  </div>
+</footer>
+
+<div class="demo-badge">Demo preview</div>
+
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || !els.length) {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>
