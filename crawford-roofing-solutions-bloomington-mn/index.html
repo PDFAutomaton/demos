@@ -174,8 +174,19 @@ img { display: block; max-width: 100%; }
    whole section (.hero-bg), orbs still glow on top of it (signature
    move, kept, just layered differently), and a scrim graduated from the
    active tone's own --background keeps the bottom-aligned text legible
-   regardless of which photo or theme is active. */
-.hero { position: relative; overflow: hidden; min-height: 88svh; display: flex; align-items: flex-end; padding: 8rem 0 4rem; }
+   regardless of which photo or theme is active.
+
+   isolation:isolate is load-bearing, not decoration: .tone-dark/
+   .tone-light paint an !important opaque background directly on .hero
+   itself, and .hero-bg sits behind it at z-index:-2. Without a forced
+   stacking context here, that negative-z-index child ends up painted
+   BEHIND .hero's own background in every browser tested — confirmed
+   live 2026-09-20 (the photo loaded correctly, 200, real pixels, but
+   was completely invisible on the deployed page until this was added).
+   jaro already had this on its equivalent element for the same reason;
+   clearpath needed the identical fix once its own .hero picked up the
+   same tone-background rule. */
+.hero { position: relative; overflow: hidden; isolation: isolate; min-height: 88svh; display: flex; align-items: flex-end; padding: 8rem 0 4rem; }
 @media (min-width: 1024px) { .hero { padding: 10rem 0 5rem; } }
 .hero-bg { position: absolute; inset: 0; z-index: -2; }
 .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
