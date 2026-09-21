@@ -265,38 +265,81 @@ button, input, textarea, select { font: inherit; color: inherit; }
    2026-09-20): .tone-dark/.tone-light paint an !important opaque
    background on .hero itself; .hero-bg sits behind it at z-index:-2.
    Without a forced stacking context here, that negative-z-index child
-   paints BEHIND .hero's own background in every real browser. */
+   paints BEHIND .hero's own background in every real browser.
+
+   2026-09-21, found live (second, deeper bug in the same family):
+   .hero-bg-scrim must be a DIRECT CHILD of .hero (a sibling of
+   .hero-bg), never nested INSIDE .hero-bg — see skins/_sections/hero/
+   full_bleed_photo.html.j2 and full_bleed_split.html.j2. .hero-bg
+   itself has a z-index (-2, right below), which makes IT a stacking
+   context too. Nesting the scrim inside .hero-bg used to put the
+   scrim's z-index:-1 in COMPETITION with .hero-bg's own plain,
+   non-positioned <img> child -- and a negative-z-index descendant
+   paints BEHIND normal-flow content within its own stacking context,
+   so the scrim was rendering behind the very photo it was supposed to
+   sit on top of. Every computed-style check agreed with the CSS
+   (`background: oklch(1 0 0 / .68)`, `opacity: 1`, correct rect) --
+   this was invisible to computed-style inspection and only surfaced by
+   comparing the real hero's photo against the identical photo+scrim
+   markup rendered flat (outside the nested context) side by side.
+   Confirmed this was NEVER actually working, on every personality and
+   theme, since the scrim was introduced 2026-09-20 -- it read as "fine"
+   on Jaro/Crawford/Journey purely because their specific photos/text
+   pairings didn't need the scrim's help as badly as Tilden Auto
+   Towing's did, not because the scrim was doing anything. */
 .hero { position: relative; overflow: hidden; isolation: isolate; min-height: 90svh; display: flex; }
 .hero-bg { position: absolute; inset: 0; z-index: -2; }
-/* Flat darken on the photo itself (2026-09-20: found live — bright sky/
-   siding photos left hero text hard to read even with the scrim below).
-   --hero-image-brightness is set per-theme in base.html.j2 (light theme
-   needs more darkening than dark theme — see the --hero-scrim comment). */
-.hero-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(var(--hero-image-brightness, .85)); }
-/* Scrim: near-black at the text baseline (bottom), fading toward the
-   top, strength set by --hero-scrim (a 0-1 opacity, NOT a color — kept
-   neutral/near-black rather than tied to --background so it darkens
-   reliably regardless of the photo's own color or which accent hue is
-   active). base.html.j2 sets --hero-scrim per theme: light theme higher
-   (photos read brighter against light-theme's own light UI chrome, so
-   need more separation), dark theme lower. A personality can still
-   override --hero-scrim in its own tokens.css if one particular
-   personality's photography needs more/less.
-   tests/test_hero_contrast.py checks the resulting text/scrim contrast
-   ratio meets WCAG AA (4.5:1 body, 3:1 display) for every personality x
-   theme combination — not just eyeballed. */
+/* 2026-09-21: NO filter on the photo itself anymore -- the photo is
+   what sells the site, so it renders at its own native brightness and
+   color, full stop (Abdirahman). Two earlier rounds both darkened the
+   whole image (a flat brightness() filter, then a whole-hero scrim) to
+   buy contrast everywhere; both made the photo worse to look at
+   everywhere to fix legibility in the one region text actually sits.
+   See .hero-bg-scrim below for where readability comes from instead. */
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+/* Scrim: a LOCALIZED gradient anchored to the bottom edge, where
+   .hero-content is anchored too (`margin-top: auto` in both hero
+   variants bottom-anchors it -- see .hero-content below). Strong right
+   at that edge, fading to FULLY TRANSPARENT by ~34% of the hero's
+   height, so roughly two-thirds of the photo (everything above the
+   fade line) is completely untouched -- this reads as a natural shadow
+   falling across the bottom of the frame, not a filter over the whole
+   photo. --hero-scrim-base (set in base.html.j2) is a deep near-black
+   or near-white (by hero_tone) with a slight accent tint via
+   color-mix(), never a flat mid-grey -- a mid-grey scrim washes the
+   photo's own color out instead of framing it. --hero-scrim is the PEAK
+   alpha at the very bottom edge only (0.85/0.9 -- pushed higher than
+   the old flat 0.68/0.86 specifically because it's local now: being
+   strong right at the anchor doesn't cost the rest of the photo
+   anything). Each gradient stop below is expressed as
+   color-mix(in oklch, BASE <alpha%>, transparent) -- mixing toward
+   transparent by a percentage is the color-mix idiom for "this color at
+   this alpha" used elsewhere in this file (.hero-no-image, .tone-tint).
+   2026-09-21 history: the ORIGINAL gradient here (2026-09-20) also
+   faded toward the top, but was paired with a full-strength assumption
+   the WCAG test never actually verified (it only checked the peak), so
+   real text well inside the faded zone failed contrast live -- fixed
+   for a while by flattening the gradient into a uniform whole-hero
+   wash, which then became THIS bug report (photo quality sacrificed).
+   The difference this time: tests/test_hero_contrast.py now checks
+   contrast specifically at the gradient's anchor point (the region the
+   design actually commits to protecting), not an assumed-uniform value
+   -- see that file's module docstring for exactly what is and isn't
+   covered here. */
 .hero-bg-scrim {
   position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(to top,
-    oklch(var(--hero-scrim-color, 0% 0 0) / var(--hero-scrim, .7)) 0%,
-    oklch(var(--hero-scrim-color, 0% 0 0) / calc(var(--hero-scrim, .7) * .55)) 45%,
-    oklch(var(--hero-scrim-color, 0% 0 0) / calc(var(--hero-scrim, .7) * .29)) 100%);
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 45%), transparent) 16%,
+    transparent 34%);
 }
 .hero-no-image { background: linear-gradient(155deg, color-mix(in oklch, var(--primary) 30%, var(--background)), var(--background)); }
-/* Second layer of insurance on top of the scrim (2026-09-20 ask):
-   every direct hero text element gets its own soft shadow so it stays
-   legible even over a locally bright patch of photo the gradient scrim
-   alone doesn't fully cover. */
+/* Second layer of insurance on top of the scrim (2026-09-20 ask, kept
+   2026-09-21): every direct hero text element gets its own soft shadow
+   so it stays legible even over a locally bright patch of photo the
+   gradient alone doesn't fully cover. Uses the untinted
+   --hero-scrim-color (not --hero-scrim-base) -- a text outline doesn't
+   need the accent tint, it just needs to read as a shadow. */
 .hero-content, .hero-stats { text-shadow: 0 2px 16px oklch(var(--hero-scrim-color, 0% 0 0) / .45); }
 /* Hero text is neutral only, never the accent color (2026-09-20 fix):
    a colored headline word can land directly over a same-hued patch of
@@ -697,25 +740,49 @@ button, input, textarea, select { font: inherit; color: inherit; }
   --space-scale: 1;
   --type-scale: 1.14;
   --motion-scale: 1.35;
-  /* 2026-09-20 hero-contrast fix. hero_tone (not the raw page `theme`)
-     is what actually determines the hero's own text color: it's always
-     the OPPOSITE of the page theme, and each tone's --foreground is
-     tuned for ITS OWN background (light text on the dark tone, dark
-     text on the light tone) -- so a light-theme page (the default,
-     hero_tone=tone-dark) gets LIGHT hero text and needs a DARK scrim,
-     while a --theme dark page (hero_tone=tone-light) gets DARK hero
-     text and needs the opposite: a LIGHT scrim, not just a lighter
-     black one. A near-black scrim under dark text would make the
-     exact bug this fix targets WORSE for --theme dark sites, so the
-     scrim's base color flips with hero_tone, not just its opacity --
-     see sections.css's .hero-bg-scrim, which reads --hero-scrim-color
-     as raw oklch L/C/H components. This still lands on "light-theme
-     scrim darker than dark-theme's" for the common case (light is the
-     default tone for every personality per CLAUDE.md), just via the
-     mechanism that's actually correct for both. */
-  --hero-scrim: 0.86;
+  /* 2026-09-20 hero-contrast fix, REDESIGNED 2026-09-21 (Abdirahman:
+     "the photo is what sells the site — it can't be the thing we
+     sacrifice"). hero_tone (not the raw page `theme`) still determines
+     the hero's own text color -- always the OPPOSITE of the page theme,
+     each tone's --foreground tuned for its OWN background (light text
+     on the dark tone, dark text on the light tone) -- so a light-theme
+     page (the default, hero_tone=tone-dark) gets LIGHT hero text and
+     needs a DARK scrim behind it, while a --theme dark page
+     (hero_tone=tone-light) gets DARK hero text and needs a LIGHT one.
+     That color-flip logic is unchanged.
+
+     What changed: there is no whole-image wash anymore. Two earlier
+     rounds (flat scrim at 0.58/0.68, then a taller-coverage gradient)
+     both greyed out the ENTIRE photo to buy contrast everywhere, which
+     is the wrong trade for a business whose photo is the product.
+     --hero-image-brightness is gone -- the photo now renders at its own
+     native brightness/color, filter-free (see sections.css's
+     .hero-bg img, which no longer has a filter at all). Readability
+     instead comes from a gradient confined to sections.css's
+     .hero-bg-scrim: strong at the very bottom edge (where the text
+     block is anchored -- .hero-content's `margin-top: auto` bottom-
+     anchors it in both hero variants), fading to fully transparent by
+     roughly a third of the way up, so most of the photo (everything
+     above that line) is completely untouched.
+     --hero-scrim is now the PEAK alpha at that bottom edge only, not a
+     uniform value applied everywhere -- pushed higher (0.85/0.9) than
+     the old flat values (0.68/0.86) specifically because it's now
+     LOCAL: being strong right at the anchor no longer costs the rest of
+     the photo anything. --hero-scrim-base is the gradient's actual
+     color -- deep near-black (or near-white for tone-light) with a
+     slight accent tint via color-mix, never a flat mid-grey, which is
+     what makes it read as a shadow the photo casts rather than a filter
+     laid over it. --hero-scrim-color (raw oklch L/C/H, untinted) is
+     kept separately for the text-shadow secondary-insurance layer below
+     -- that one doesn't need the tint, it's just an outline.
+     tests/test_hero_contrast.py now checks contrast at the gradient's
+     anchor point specifically (the "text region" the design actually
+     commits to protecting), not against a fictional globally-dimmed
+     image -- see that file's module docstring for what's deliberately
+     NOT covered above the fade line, and why. */
+  --hero-scrim: 0.9;
   --hero-scrim-color: 0% 0 0;
-  --hero-image-brightness: 0.78;
+  --hero-scrim-base: color-mix(in oklch, var(--primary, oklch(0% 0 0)) 12%, black);
 }
 
 /* Also reasserted on .tone-dark/.tone-light/.tone-tint, not just :root
@@ -873,8 +940,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
   
   <div class="hero-bg">
     <img src="../_trade_images/tree_service/tree_service_hero_3.jpg" alt="Tree Service in Blaine, MN" width="1600" height="1200" loading="eager">
-    <div class="hero-bg-scrim"></div>
   </div>
+  <div class="hero-bg-scrim"></div>
   
   
   <div class="hero-dots">
@@ -931,7 +998,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       
       <a id="service-1" href="./services/tree-removal/" class="photo-card reveal">
         <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_wide_4.jpg" alt="Tree Removal" loading="lazy">
+          <img src="../_trade_images/tree_service/tree_service_jobsite_2.jpg" alt="Tree Removal" loading="lazy">
           <div class="scrim"></div>
           <div class="num">01</div>
           <h3>Tree Removal</h3>
@@ -942,7 +1009,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       
       <a id="service-2" href="./services/tree-trimming-pruning/" class="photo-card reveal">
         <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_wide_1.jpg" alt="Tree Trimming & Pruning" loading="lazy">
+          <img src="../_trade_images/tree_service/tree_service_detail_2.jpg" alt="Tree Trimming & Pruning" loading="lazy">
           <div class="scrim"></div>
           <div class="num">02</div>
           <h3>Tree Trimming & Pruning</h3>
@@ -953,7 +1020,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       
       <a id="service-3" href="./services/stump-grinding/" class="photo-card reveal">
         <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_jobsite_2.jpg" alt="Stump Grinding" loading="lazy">
+          <img src="../_trade_images/tree_service/tree_service_wide_4.jpg" alt="Stump Grinding" loading="lazy">
           <div class="scrim"></div>
           <div class="num">03</div>
           <h3>Stump Grinding</h3>
@@ -964,7 +1031,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
       
       <a id="service-4" href="./services/emergency-tree-removal/" class="photo-card reveal">
         <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_wide_3.jpg" alt="Emergency Tree Removal" loading="lazy">
+          <img src="../_trade_images/tree_service/tree_service_jobsite_3.jpg" alt="Emergency Tree Removal" loading="lazy">
           <div class="scrim"></div>
           <div class="num">04</div>
           <h3>Emergency Tree Removal</h3>
