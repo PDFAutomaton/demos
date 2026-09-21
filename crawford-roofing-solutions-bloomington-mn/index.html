@@ -154,13 +154,23 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 .site-nav .nav-inner { max-width: 76rem; margin: 0 auto; padding: 0 1.25rem; height: 4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 @media (min-width: 640px) { .site-nav .nav-inner { padding: 0 2rem; } }
-/* min-width:0 is load-bearing, not decorative: a flex item's default
-   min-width:auto refuses to shrink below its own content's intrinsic
-   width, so overflow:hidden/text-overflow:ellipsis silently never
-   engages and the phone pill just overlaps the brand text instead of
-   the brand eliding gracefully -- found live at 375px on a long
-   business name (2026-09-20), classic flexbox truncation gotcha. */
-.site-nav .brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex-shrink: 1; }
+/* Two flexbox truncation gotchas fixed together here, both found live
+   at 375px on a real business name (2026-09-20) -- min-width:0 alone
+   (first attempted fix) was NOT enough:
+     1. min-width:0 on .brand -- a flex item's default min-width:auto
+        refuses to shrink below its own content's intrinsic width, so
+        the whole brand block wouldn't shrink at all without this.
+     2. text-overflow/white-space/overflow must go on the INNER text
+        span, not on .brand itself -- .brand is display:flex, and
+        text-overflow only truncates an element's OWN direct text
+        content; putting it on a flex container whose text lives in a
+        nested child span (needed for the separate .dot bullet) does
+        nothing; that child span needs the truncation properties (and
+        its own min-width:0, since it's itself now a flex item) --
+        confirmed by watching the name get silently covered by the
+        phone pill instead of eliding, even after fix #1 alone. */
+.site-nav .brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; min-width: 0; flex-shrink: 1; }
+.site-nav .brand span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .site-nav .brand .dot { height: .5rem; width: .5rem; border-radius: 999px; background: var(--primary); flex-shrink: 0; }
 .site-nav .nav-links { display: none; align-items: center; gap: 1.75rem; font-size: .875rem; color: var(--muted-foreground); }
 @media (min-width: 900px) { .site-nav .nav-links { display: flex; } }
@@ -216,7 +226,19 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .nav-mobile-toggle svg { width: 1.5rem; height: 1.5rem; }
 @media (min-width: 900px) { .nav-mobile-toggle { display: none; } }
 .nav-mobile-panel {
-  display: none; position: fixed; top: 4rem; left: 0; right: 0; bottom: 0; z-index: 99;
+  /* height: calc(...) explicitly, not top+bottom auto-stretch (found
+     live, 2026-09-20: the panel's computed height collapsed to just
+     its own padding instead of filling the viewport below the nav bar
+     -- top/bottom-driven fixed-element stretch has known cross-browser
+     inconsistencies, and real mobile browsers' dynamic address-bar
+     resizing makes it worse; an explicit height sidesteps the whole
+     class of quirk rather than chasing this one engine's specific
+     behavior). 100dvh (dynamic viewport height) tracks the real
+     visible viewport as a mobile browser's chrome shows/hides; svh as
+     a safety-net fallback for a browser that has one but not the
+     other, then a plain vh last-resort for anything older. */
+  display: none; position: fixed; top: 4rem; left: 0; right: 0; z-index: 99;
+  height: calc(100vh - 4rem); height: calc(100svh - 4rem); height: calc(100dvh - 4rem);
   background: var(--background); color: var(--foreground); overflow-y: auto;
   padding: 1.5rem 1.25rem 3rem;
 }
