@@ -267,7 +267,28 @@ button, input, textarea, select { font: inherit; color: inherit; }
    2026-09-20): .tone-dark/.tone-light paint an !important opaque
    background on .hero itself; .hero-bg sits behind it at z-index:-2.
    Without a forced stacking context here, that negative-z-index child
-   paints BEHIND .hero's own background in every real browser. */
+   paints BEHIND .hero's own background in every real browser.
+
+   2026-09-21, found live (second, deeper bug in the same family):
+   .hero-bg-scrim must be a DIRECT CHILD of .hero (a sibling of
+   .hero-bg), never nested INSIDE .hero-bg — see skins/_sections/hero/
+   full_bleed_photo.html.j2 and full_bleed_split.html.j2. .hero-bg
+   itself has a z-index (-2, right below), which makes IT a stacking
+   context too. Nesting the scrim inside .hero-bg used to put the
+   scrim's z-index:-1 in COMPETITION with .hero-bg's own plain,
+   non-positioned <img> child -- and a negative-z-index descendant
+   paints BEHIND normal-flow content within its own stacking context,
+   so the scrim was rendering behind the very photo it was supposed to
+   sit on top of. Every computed-style check agreed with the CSS
+   (`background: oklch(1 0 0 / .68)`, `opacity: 1`, correct rect) --
+   this was invisible to computed-style inspection and only surfaced by
+   comparing the real hero's photo against the identical photo+scrim
+   markup rendered flat (outside the nested context) side by side.
+   Confirmed this was NEVER actually working, on every personality and
+   theme, since the scrim was introduced 2026-09-20 -- it read as "fine"
+   on Jaro/Crawford/Journey purely because their specific photos/text
+   pairings didn't need the scrim's help as badly as Tilden Auto
+   Towing's did, not because the scrim was doing anything. */
 .hero { position: relative; overflow: hidden; isolation: isolate; min-height: 90svh; display: flex; }
 .hero-bg { position: absolute; inset: 0; z-index: -2; }
 /* Flat darken on the photo itself (2026-09-20: found live — bright sky/
@@ -887,8 +908,8 @@ button, input, textarea, select { font: inherit; color: inherit; }
   
   <div class="hero-bg">
     <img src="../_trade_images/towing/towing_hero_2.jpg" alt="Towing work" width="1600" height="1200" loading="eager">
-    <div class="hero-bg-scrim"></div>
   </div>
+  <div class="hero-bg-scrim"></div>
   
   
   
