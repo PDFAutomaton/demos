@@ -733,8 +733,19 @@ button, input, textarea, select { font: inherit; color: inherit; }
      as raw oklch L/C/H components. This still lands on "light-theme
      scrim darker than dark-theme's" for the common case (light is the
      default tone for every personality per CLAUDE.md), just via the
-     mechanism that's actually correct for both. */
-  --hero-scrim: 0.58;
+     mechanism that's actually correct for both.
+     tone-light's 0.68 (was 0.58 until 2026-09-21) has real margin above
+     the WORST personality's actual requirement, not a bare pass:
+     tests/test_hero_contrast.py computes each personality's true
+     required alpha under the CORRECT (empirically-verified encoded-sRGB)
+     compositing model -- jaro needs >=0.512, so 0.58 only cleared it by
+     0.068, and live text (Tilden Auto Towing's hero lede) still read
+     soft over a genuinely dark, detailed photo patch even after fixing
+     the gradient bug that caused the original near-zero-scrim failure.
+     0.68 gives >=0.168 of margin over every personality's requirement
+     instead. tone-dark's 0.86 already had real margin (needs >=0.566)
+     and is unchanged. */
+  --hero-scrim: 0.68;
   --hero-scrim-color: 100% 0 0;
   --hero-image-brightness: 1.1;
 }
