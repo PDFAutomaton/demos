@@ -152,7 +152,13 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 .site-nav .nav-inner { max-width: 76rem; margin: 0 auto; padding: 0 1.25rem; height: 4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 @media (min-width: 640px) { .site-nav .nav-inner { padding: 0 2rem; } }
-.site-nav .brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* min-width:0 is load-bearing, not decorative: a flex item's default
+   min-width:auto refuses to shrink below its own content's intrinsic
+   width, so overflow:hidden/text-overflow:ellipsis silently never
+   engages and the phone pill just overlaps the brand text instead of
+   the brand eliding gracefully -- found live at 375px on a long
+   business name (2026-09-20), classic flexbox truncation gotcha. */
+.site-nav .brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex-shrink: 1; }
 .site-nav .brand .dot { height: .5rem; width: .5rem; border-radius: 999px; background: var(--primary); flex-shrink: 0; }
 .site-nav .nav-links { display: none; align-items: center; gap: 1.75rem; font-size: .875rem; color: var(--muted-foreground); }
 @media (min-width: 900px) { .site-nav .nav-links { display: flex; } }
@@ -173,7 +179,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .nav-dropdown-menu li a { display: block; padding: .5rem .75rem; border-radius: calc(var(--radius) - .25rem); font-size: .875rem; color: var(--card-foreground); }
 .nav-dropdown-menu li a:hover { background: var(--secondary); }
 
-.site-nav .nav-actions { display: flex; align-items: center; gap: .625rem; }
+.site-nav .nav-actions { display: flex; align-items: center; gap: .625rem; flex-shrink: 0; }
 .site-nav .phone-pill {
   display: inline-flex; align-items: center; gap: .5rem;
   border-radius: 999px; background: var(--primary); color: var(--primary-foreground);
