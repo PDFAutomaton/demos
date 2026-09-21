@@ -275,24 +275,37 @@ button, input, textarea, select { font: inherit; color: inherit; }
    --hero-image-brightness is set per-theme in base.html.j2 (light theme
    needs more darkening than dark theme — see the --hero-scrim comment). */
 .hero-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(var(--hero-image-brightness, .85)); }
-/* Scrim: near-black at the text baseline (bottom), fading toward the
-   top, strength set by --hero-scrim (a 0-1 opacity, NOT a color — kept
-   neutral/near-black rather than tied to --background so it darkens
-   reliably regardless of the photo's own color or which accent hue is
-   active). base.html.j2 sets --hero-scrim per theme: light theme higher
-   (photos read brighter against light-theme's own light UI chrome, so
-   need more separation), dark theme lower. A personality can still
-   override --hero-scrim in its own tokens.css if one particular
-   personality's photography needs more/less.
-   tests/test_hero_contrast.py checks the resulting text/scrim contrast
-   ratio meets WCAG AA (4.5:1 body, 3:1 display) for every personality x
-   theme combination — not just eyeballed. */
+/* Scrim: a FLAT, uniform-opacity overlay across the entire hero,
+   strength set by --hero-scrim (a 0-1 opacity, NOT a color — kept
+   neutral/near-black-or-white rather than tied to --background so it
+   darkens/lightens reliably regardless of the photo's own color or
+   which accent hue is active). base.html.j2 sets --hero-scrim per
+   hero_tone (see that file's comment) so the value tests/test_hero_
+   contrast.py checks is EXACTLY the value every hero pixel actually
+   gets — not a peak that only applies near one edge.
+   2026-09-21, root-caused live (Tilden Auto Towing, towing trade, jmj
+   personality, --theme dark -> hero_tone=tone-light): this used to be a
+   linear-gradient fading from --hero-scrim at the bottom down to ~29%
+   of it at the top, "near-black at the text baseline, fading toward the
+   top" on the assumption hero text only ever sits at the very bottom.
+   It doesn't -- the rating chip and stat labels sit as high as ~20% down
+   the hero, well inside the faded zone. The WCAG test only ever checked
+   the gradient's PEAK alpha (matching the design assumption, not the
+   actual rendered CSS), so it passed while real text at real-world
+   photo positions failed contrast -- confirmed by computing the required
+   alpha for every personality's actual foreground color: tone-dark needs
+   >=0.84 of base alpha to clear 4.5:1 for body text, and the gradient's
+   faded top stop only delivered ~0.25 of it. There is essentially no
+   room to fade this and stay correct (tone-dark's own PEAK of 0.86 only
+   clears the 0.84 requirement by ~0.02 to begin with) -- so the fade is
+   gone, not rebalanced. tests/test_hero_contrast.py now parses every
+   alpha value actually present in this rule (not an assumed one) and
+   checks each against WCAG AA (4.5:1 body, 3:1 display) for every
+   personality x theme combination, so a gradient reintroduced here
+   without re-deriving this math would fail the suite immediately. */
 .hero-bg-scrim {
   position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top,
-    oklch(var(--hero-scrim-color, 0% 0 0) / var(--hero-scrim, .7)) 0%,
-    oklch(var(--hero-scrim-color, 0% 0 0) / calc(var(--hero-scrim, .7) * .55)) 45%,
-    oklch(var(--hero-scrim-color, 0% 0 0) / calc(var(--hero-scrim, .7) * .29)) 100%);
+  background: oklch(var(--hero-scrim-color, 0% 0 0) / var(--hero-scrim, .7));
 }
 .hero-no-image { background: linear-gradient(155deg, color-mix(in oklch, var(--primary) 30%, var(--background)), var(--background)); }
 /* Second layer of insurance on top of the scrim (2026-09-20 ask):
