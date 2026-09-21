@@ -295,44 +295,9 @@ button, input, textarea, select { font: inherit; color: inherit; }
    whole image (a flat brightness() filter, then a whole-hero scrim) to
    buy contrast everywhere; both made the photo worse to look at
    everywhere to fix legibility in the one region text actually sits.
-   See .hero-bg-scrim below for where readability comes from instead. */
+   See .hero-content::before below for where readability comes from
+   instead. */
 .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
-/* Scrim: a LOCALIZED gradient anchored to the bottom edge, where
-   .hero-content is anchored too (`margin-top: auto` in both hero
-   variants bottom-anchors it -- see .hero-content below). Strong right
-   at that edge, fading to FULLY TRANSPARENT by ~34% of the hero's
-   height, so roughly two-thirds of the photo (everything above the
-   fade line) is completely untouched -- this reads as a natural shadow
-   falling across the bottom of the frame, not a filter over the whole
-   photo. --hero-scrim-base (set in base.html.j2) is a deep near-black
-   or near-white (by hero_tone) with a slight accent tint via
-   color-mix(), never a flat mid-grey -- a mid-grey scrim washes the
-   photo's own color out instead of framing it. --hero-scrim is the PEAK
-   alpha at the very bottom edge only (0.85/0.9 -- pushed higher than
-   the old flat 0.68/0.86 specifically because it's local now: being
-   strong right at the anchor doesn't cost the rest of the photo
-   anything). Each gradient stop below is expressed as
-   color-mix(in oklch, BASE <alpha%>, transparent) -- mixing toward
-   transparent by a percentage is the color-mix idiom for "this color at
-   this alpha" used elsewhere in this file (.hero-no-image, .tone-tint).
-   2026-09-21 history: the ORIGINAL gradient here (2026-09-20) also
-   faded toward the top, but was paired with a full-strength assumption
-   the WCAG test never actually verified (it only checked the peak), so
-   real text well inside the faded zone failed contrast live -- fixed
-   for a while by flattening the gradient into a uniform whole-hero
-   wash, which then became THIS bug report (photo quality sacrificed).
-   The difference this time: tests/test_hero_contrast.py now checks
-   contrast specifically at the gradient's anchor point (the region the
-   design actually commits to protecting), not an assumed-uniform value
-   -- see that file's module docstring for exactly what is and isn't
-   covered here. */
-.hero-bg-scrim {
-  position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top,
-    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
-    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 45%), transparent) 16%,
-    transparent 34%);
-}
 .hero-no-image { background: linear-gradient(155deg, color-mix(in oklch, var(--primary) 30%, var(--background)), var(--background)); }
 /* Second layer of insurance on top of the scrim (2026-09-20 ask, kept
    2026-09-21): every direct hero text element gets its own soft shadow
@@ -365,9 +330,59 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .hero .underline-accent { text-decoration-color: currentColor; }
 
 .hero-inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; width: 100%; padding: 0 0 calc(3rem * var(--space-scale)); }
-.hero-content { margin-top: auto; max-width: 46rem; padding-top: 4rem; }
+/* 2026-09-21, THIRD redesign of hero readability (Abdirahman: "the
+   gradient is positioned behind the big headline but not the text
+   underneath it"). The previous round anchored the scrim to a fixed
+   fraction of the HERO's own height (0%-34%) -- wrong unit. .hero-
+   content is one group (eyebrow/rating chip, h1, lede, CTA row, and in
+   the split layout the stats aside too -- all of them, see the
+   templates: hero-stats/.hero-split-aside is always a descendant of
+   .hero-content, never a sibling), and that group's real height varies
+   by content length, personality, and viewport (mobile wraps to more
+   lines and the split layout collapses to one column below 900px --
+   see .hero-split-aside below) -- a fraction of the HERO's height has
+   no relationship to where that group actually ends. Fixed by anchoring
+   the scrim to .hero-content's OWN box via ::before, sized with `inset`
+   relative to it (isolation:isolate makes this self-contained -- same
+   defensive reasoning as .hero's own isolation two redesigns ago: a
+   negative z-index child must never depend on assumptions about an
+   ancestor's stacking context). Because it's bound to the real box, not
+   a guessed percentage, this adapts automatically to however tall the
+   group actually renders -- including on mobile, with no separate
+   mobile-specific rule needed. */
+.hero-content { position: relative; isolation: isolate; margin-top: auto; max-width: 46rem; padding-top: 4rem; }
 .hero-content.hero-split { max-width: none; display: grid; gap: 2.5rem; align-items: end; }
 @media (min-width: 900px) { .hero-content.hero-split { grid-template-columns: 3fr 2fr; } }
+/* The scrim itself: full viewport width (100vw, centered via the
+   left:50%/-50% translate trick) so there is NEVER a left/right edge to
+   see regardless of .hero-content's own (narrower, left-aligned) box --
+   only ever a soft top fade, which reads as a shadow falling across the
+   frame, not a panel behind the text. Vertically: solid from the box's
+   own bottom (3rem BELOW .hero-content's real bottom edge -- so the
+   last CTA button sits well inside the solid zone, not right at its
+   boundary) up through to 8rem below the box's top edge, which --
+   because `top: -8rem` pushes that top edge 8rem ABOVE .hero-content's
+   real top -- lands the fade's start line EXACTLY at .hero-content's
+   real top edge (the eyebrow/rating chip). Only that extra 8rem ABOVE
+   the real content fades to transparent; every actual text element
+   (eyebrow through the CTA row, and the stats aside in the split
+   layout) sits in the solid part, not the fade, by construction --
+   not by guessing a percentage that happens to line up. */
+.hero-content::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -8rem;
+  bottom: -3rem;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(to top,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) calc(100% - 8rem),
+    transparent 100%);
+}
 
 .rating-chip {
   display: inline-flex; align-items: center; gap: .5rem;
