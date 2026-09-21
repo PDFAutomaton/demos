@@ -8,60 +8,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jaro Tree Care LLC. | Tree Service in Blaine, MN</title>
-<meta name="description" content="Tree Service in Blaine, MN and the surrounding area. Rated 5.0 stars on Google (22 reviews). Call (612) 636-4931.">
+<title>Storm Damage Repair | Crawford Roofing Solutions | Roofing in Bloomington, MN</title>
+<meta name="description" content="Storm Damage Repair from Crawford Roofing Solutions, roofing in Bloomington, MN and the surrounding area. Call (952) 373-5348.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Mulish:wght@400;500;600&display=swap">
 <style>
-/* skins/_personalities/clearpath/tokens.css — color tokens only.
-   Base oklch values extracted from the original reference build
-   (clearpath-shines.lovable.app). Aqua primary on bone/navy, LIGHT
-   default (2026-09-20 ruling) with the reference site's original DARK
-   navy palette preserved and selectable via --theme dark / .tone-dark. */
+/* skins/_personalities/jmj/tokens.css — color tokens only.
+   Base values extracted from the original reference build
+   (jmj-sewer-stars.lovable.app) — real hex values (this personality
+   never used oklch), navy primary on warm off-white. LIGHT default
+   (2026-09-20 ruling); a DARK palette is authored below (jmj was
+   light-only before this rebuild) so the hero tone-swap mechanism
+   works the same way it does for every other personality. */
 
 :root, .tone-light {
-  --background: oklch(98% .005 90);
-  --foreground: oklch(11% .02 250);
-  --card: oklch(100% .002 90);
-  --card-foreground: oklch(11% .02 250);
-  --primary: oklch(48% .14 220);
-  --primary-foreground: oklch(98% .005 90);
-  --primary-strong: oklch(40% .14 220);
-  --secondary: oklch(93% .01 90);
-  --secondary-foreground: oklch(11% .02 250);
-  --muted: oklch(94% .008 90);
-  --muted-foreground: oklch(38% .02 240);
-  --accent: oklch(48% .14 220);
-  --accent-foreground: oklch(98% .005 90);
-  --border: oklch(20% .02 250 / .12);
-  --input: oklch(20% .02 250 / .12);
-  --ring: oklch(48% .14 220);
+  --background: #faf7f2;
+  --foreground: #0b1220;
+  --card: #faf7f2;
+  --card-foreground: #0b1220;
+  --primary: #14245c;
+  --primary-foreground: #faf7f2;
+  --primary-strong: #0d1740;
+  --secondary: #f0ebe1;
+  --secondary-foreground: #0b1220;
+  --muted: #f0ebe1;
+  --muted-foreground: #4b5568;
+  --accent: #c47a3c;
+  --accent-foreground: #faf7f2;
+  --border: #e5e0d5;
+  --input: #e5e0d5;
+  --ring: #14245c;
 }
 .tone-light { background: var(--background) !important; color: var(--foreground) !important; }
 
 :root[data-theme="dark"], .tone-dark {
-  --background: oklch(9% .015 250);
-  --foreground: oklch(97% .005 90);
-  --card: oklch(13% .02 248);
-  --card-foreground: oklch(97% .005 90);
-  --primary: oklch(78% .16 220);
-  --primary-foreground: oklch(11% .02 250);
-  --primary-strong: oklch(86% .14 215);
-  --secondary: oklch(17% .03 245);
-  --secondary-foreground: oklch(97% .005 90);
-  --muted: oklch(16% .02 248);
-  --muted-foreground: oklch(66% .02 240);
-  --accent: oklch(78% .16 220);
-  --accent-foreground: oklch(11% .02 250);
-  --border: oklch(100% 0 0 / .08);
-  --input: oklch(100% 0 0 / .08);
-  --ring: oklch(78% .16 220);
+  --background: #0b1220;
+  --foreground: #faf7f2;
+  --card: #101a30;
+  --card-foreground: #faf7f2;
+  --primary: #c47a3c;
+  --primary-foreground: #0b1220;
+  --primary-strong: #d4924f;
+  --secondary: #1a2740;
+  --secondary-foreground: #faf7f2;
+  --muted: #17233a;
+  --muted-foreground: #b7c0d6;
+  --accent: #c47a3c;
+  --accent-foreground: #0b1220;
+  --border: #223151;
+  --input: #223151;
+  --ring: #c47a3c;
 }
 .tone-dark { background: var(--background) !important; color: var(--foreground) !important; }
 
-.tone-tint { background: color-mix(in oklch, var(--secondary) 45%, var(--background)) !important; color: var(--foreground) !important; }
+.tone-tint { background: color-mix(in oklch, var(--secondary) 55%, var(--background)) !important; color: var(--foreground) !important; }
 /* skins/_sections/sections.css — the ONE shared structural stylesheet
    for every section partial, used by all four (soon: more) personalities.
 
@@ -637,79 +639,56 @@ button, input, textarea, select { font: inherit; color: inherit; }
   font-size: .75rem; font-weight: 600; letter-spacing: .04em;
   padding: .5rem .875rem; border-radius: 999px; box-shadow: 0 4px 12px color-mix(in oklch, var(--foreground) 30%, transparent);
 }
-/* skins/_personalities/clearpath/flourish.css
-   Signature move: scale. Oversized condensed display type, animated
-   particle dots (CLAUDE.md). The before/after slider itself is shared
-   structure (skins/_sections/gallery/before_after.html.j2, used by
-   every personality) — clearpath's distinctiveness here is type scale
-   (type_scale: generous in config/skins.yaml) + radius: sharp + the
-   particle dots, not the slider mechanism itself. */
+/* skins/_personalities/jmj/flourish.css
+   Signature move: motion. Infinite marquee ticker, ping dots on live
+   indicators, numbered process cards with a connecting line (CLAUDE.md).
+   The connecting line itself is shared structure
+   (skins/_sections/process/timeline.html.j2) — jmj is simply the
+   personality whose config picks that variant; the marquee and ping
+   dots below are the true jmj-only decoration layered on top. */
 
-.hero h1, .section-intro h2, .cta-banner h2 { text-transform: uppercase; letter-spacing: -.01em; }
-.accent { color: var(--primary); }
+.underline-accent { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: .1em; text-underline-offset: .12em; }
 
-.eyebrow {
-  display: inline-flex; align-items: center; gap: .75rem;
-  font-size: .8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
-  color: var(--muted-foreground);
+/* Infinite marquee ticker — the original site drove this with JS; a
+   pure-CSS duplicated-track animation is the self-contained equivalent
+   for a no-build-step static site. */
+@keyframes jmj-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
-.eyebrow .rule { height: 1px; width: 2rem; background: var(--primary); }
-
-/* Animated particle dots, layered over the hero photo. */
-@keyframes cp-float-drop {
-  0%, 100% { opacity: .6; transform: translateY(0) scale(1); }
-  50% { opacity: 1; transform: translateY(-12px) scale(1.05); }
+.marquee-wrap { overflow: hidden; background: var(--secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: jmj-marquee calc(28s / var(--motion-scale, 1)) linear infinite;
 }
-.hero-dots { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.particle-dot {
-  position: absolute;
-  width: .375rem; height: .375rem;
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+.marquee-item { display: inline-flex; align-items: center; gap: .625rem; padding: .875rem 1.5rem; font-size: .875rem; font-weight: 600; white-space: nowrap; }
+.marquee-item svg { width: 1rem; height: 1rem; color: var(--accent); flex-shrink: 0; }
+
+/* Ping dots (Tailwind's animate-ping, used verbatim in the source). */
+@keyframes jmj-ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+.ping-dot, .ping-dot-sm { position: relative; display: inline-flex; }
+.ping-dot::before, .ping-dot-sm::before {
+  content: "";
+  position: absolute; inset: 0;
   border-radius: 999px;
-  background: color-mix(in oklch, var(--primary) 50%, transparent);
-  filter: blur(1px);
-  animation: cp-float-drop calc(4s / var(--motion-scale, 1)) ease-in-out infinite;
+  background: currentColor;
+  opacity: .6;
+  animation: jmj-ping calc(1.6s / var(--motion-scale, 1)) cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-@media (prefers-reduced-motion: reduce) { .particle-dot { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .ping-dot::before, .ping-dot-sm::before { animation: none; } }
 :root {
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Mulish", ui-sans-serif, system-ui, sans-serif;
   
-  --radius: .25rem;
+  --radius: .75rem;
   --space-scale: 1;
-  --type-scale: 1.14;
+  --type-scale: 1;
   --motion-scale: 1.35;
-  /* 2026-09-20 hero-contrast fix. hero_tone (not the raw page `theme`)
-     is what actually determines the hero's own text color: it's always
-     the OPPOSITE of the page theme, and each tone's --foreground is
-     tuned for ITS OWN background (light text on the dark tone, dark
-     text on the light tone) -- so a light-theme page (the default,
-     hero_tone=tone-dark) gets LIGHT hero text and needs a DARK scrim,
-     while a --theme dark page (hero_tone=tone-light) gets DARK hero
-     text and needs the opposite: a LIGHT scrim, not just a lighter
-     black one. A near-black scrim under dark text would make the
-     exact bug this fix targets WORSE for --theme dark sites, so the
-     scrim's base color flips with hero_tone, not just its opacity --
-     see sections.css's .hero-bg-scrim, which reads --hero-scrim-color
-     as raw oklch L/C/H components. This still lands on "light-theme
-     scrim darker than dark-theme's" for the common case (light is the
-     default tone for every personality per CLAUDE.md), just via the
-     mechanism that's actually correct for both. */
-  --hero-scrim: 0.86;
-  --hero-scrim-color: 0% 0 0;
-  --hero-image-brightness: 0.78;
 }
 
-/* Also reasserted on .tone-dark/.tone-light/.tone-tint, not just :root
-   (found live, 2026-09-20): those classes redeclare --primary
-   themselves (their own tuned per-tone default), and CSS custom
-   properties inherit from the NEAREST ancestor that sets them, not
-   from :root specifically -- so a hero (or any accent band) carrying
-   .tone-dark silently shadowed the trade-palette override for every
-   descendant, showing the personality's own default color instead of
-   the accent that was supposed to override it everywhere. Confirmed by
-   checking a deployed page's actual computed background-color, not
-   just the :root custom property value -- the two had diverged. */
-:root, .tone-dark, .tone-light, .tone-tint { --primary: oklch(0.45 0.10 160); --ring: oklch(0.45 0.10 160); --accent: oklch(0.45 0.10 160); }
+:root, .tone-dark, .tone-light, .tone-tint { --primary: oklch(0.55 0.14 30); --ring: oklch(0.55 0.14 30); --accent: oklch(0.55 0.14 30); }
 
 </style>
 </head>
@@ -717,7 +696,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 
 <nav class="site-nav site-nav-boxed">
   <div class="nav-inner">
-    <a href="./" class="brand"><span class="dot"></span><span>Jaro Tree Care LLC.</span></a>
+    <a href="../../" class="brand"><span class="dot"></span><span>Crawford Roofing Solutions</span></a>
     <div class="nav-links">
       <div class="nav-dropdown">
         <button type="button" class="nav-dropdown-trigger">Services
@@ -725,366 +704,221 @@ button, input, textarea, select { font: inherit; color: inherit; }
         </button>
         <ul class="nav-dropdown-menu">
   
-    <li><a href="./services/tree-removal/">Tree Removal</a></li>
+    <li><a href="../../services/roof-replacement/">Roof Replacement</a></li>
     
   
-    <li><a href="./services/tree-trimming-pruning/">Tree Trimming & Pruning</a></li>
+    <li><a href="../../services/roof-repair/">Roof Repair</a></li>
     
   
-    <li><a href="./services/stump-grinding/">Stump Grinding</a></li>
+    <li><a href="../../services/storm-damage-repair/">Storm Damage Repair</a></li>
     
   
-    <li><a href="./services/emergency-tree-removal/">Emergency Tree Removal</a></li>
+    <li><a href="../../services/roof-inspections/">Roof Inspections</a></li>
     
   
   
-    <li><a href="./services/tree-cabling-bracing/">Tree Cabling & Bracing</a></li>
+    <li><a href="../../services/shingle-roofing/">Shingle Roofing</a></li>
     
   
-    <li><a href="./services/land-clearing/">Land Clearing</a></li>
+    <li><a href="../../services/metal-roofing/">Metal Roofing</a></li>
     
   
-    <li><a href="./services/brush-removal/">Brush Removal</a></li>
+    <li><a href="../../services/flat-roof-repair/">Flat Roof Repair</a></li>
     
   
-    <li><a href="./services/deadwooding/">Deadwooding</a></li>
+    <li><a href="../../services/roof-ventilation/">Roof Ventilation</a></li>
     
   
-    <li><a href="./services/tree-health-assessments/">Tree Health Assessments</a></li>
+    <li><a href="../../services/skylight-installation/">Skylight Installation</a></li>
     
   
-    <li><a href="./services/storm-cleanup/">Storm Cleanup</a></li>
+    <li><a href="../../services/gutter-roof-tie-in/">Gutter & Roof Tie-In</a></li>
     
   
-    <li><a href="./services/firewood-splitting/">Firewood Splitting</a></li>
+    <li><a href="../../services/ice-dam-removal/">Ice Dam Removal</a></li>
     
   
-    <li><a href="./services/hedge-trimming/">Hedge Trimming</a></li>
+    <li><a href="../../services/chimney-flashing-repair/">Chimney Flashing Repair</a></li>
     
   
-    <li><a href="./services/root-removal/">Root Removal</a></li>
+    <li><a href="../../services/roof-coating/">Roof Coating</a></li>
     
   
-    <li><a href="./services/tree-planting/">Tree Planting</a></li>
+    <li><a href="../../services/emergency-tarping/">Emergency Tarping</a></li>
     
   
-    <li><a href="./services/crane-assisted-removal/">Crane-Assisted Removal</a></li>
+    <li><a href="../../services/attic-insulation-check/">Attic Insulation Check</a></li>
+    
+  
+    <li><a href="../../services/roof-maintenance-plans/">Roof Maintenance Plans</a></li>
     
   
 </ul>
       </div>
-      <a href="./#why">Why Us</a>
-      <a href="./#area">Service Area</a>
-      <a href="./#contact">Contact</a>
+      <a href="../../#why">Why Us</a>
+      <a href="../../#area">Service Area</a>
+      <a href="../../#contact">Contact</a>
     </div>
     <div class="nav-actions">
-      <a class="phone-pill" href="tel:+16126364931">
-        
+      <a class="phone-pill" href="tel:+19523735348">
+        <span class="ping-dot-sm"></span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <span>(612) 636-4931</span>
+        <span>(952) 373-5348</span>
       </a>
-      <a class="nav-quote-btn" href="./#contact">Get a Quote</a>
+      <a class="nav-quote-btn" href="../../#contact">Get a Quote</a>
     </div>
     <button type="button" class="nav-mobile-toggle" aria-label="Open menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </div>
   <div class="nav-mobile-panel">
-    <a class="mobile-link" href="./#why">Why Us</a>
-    <a class="mobile-link" href="./#area">Service Area</a>
-    <a class="mobile-link" href="./#contact">Contact</a>
+    <a class="mobile-link" href="../../#why">Why Us</a>
+    <a class="mobile-link" href="../../#area">Service Area</a>
+    <a class="mobile-link" href="../../#contact">Contact</a>
     <div class="mobile-services-head">Services</div>
     
   
-    <a class="mobile-service-link" href="./services/tree-removal/">Tree Removal</a>
+    <a class="mobile-service-link" href="../../services/roof-replacement/">Roof Replacement</a>
     
   
-    <a class="mobile-service-link" href="./services/tree-trimming-pruning/">Tree Trimming & Pruning</a>
+    <a class="mobile-service-link" href="../../services/roof-repair/">Roof Repair</a>
     
   
-    <a class="mobile-service-link" href="./services/stump-grinding/">Stump Grinding</a>
+    <a class="mobile-service-link" href="../../services/storm-damage-repair/">Storm Damage Repair</a>
     
   
-    <a class="mobile-service-link" href="./services/emergency-tree-removal/">Emergency Tree Removal</a>
+    <a class="mobile-service-link" href="../../services/roof-inspections/">Roof Inspections</a>
     
   
   
-    <a class="mobile-service-link" href="./services/tree-cabling-bracing/">Tree Cabling & Bracing</a>
+    <a class="mobile-service-link" href="../../services/shingle-roofing/">Shingle Roofing</a>
     
   
-    <a class="mobile-service-link" href="./services/land-clearing/">Land Clearing</a>
+    <a class="mobile-service-link" href="../../services/metal-roofing/">Metal Roofing</a>
     
   
-    <a class="mobile-service-link" href="./services/brush-removal/">Brush Removal</a>
+    <a class="mobile-service-link" href="../../services/flat-roof-repair/">Flat Roof Repair</a>
     
   
-    <a class="mobile-service-link" href="./services/deadwooding/">Deadwooding</a>
+    <a class="mobile-service-link" href="../../services/roof-ventilation/">Roof Ventilation</a>
     
   
-    <a class="mobile-service-link" href="./services/tree-health-assessments/">Tree Health Assessments</a>
+    <a class="mobile-service-link" href="../../services/skylight-installation/">Skylight Installation</a>
     
   
-    <a class="mobile-service-link" href="./services/storm-cleanup/">Storm Cleanup</a>
+    <a class="mobile-service-link" href="../../services/gutter-roof-tie-in/">Gutter & Roof Tie-In</a>
     
   
-    <a class="mobile-service-link" href="./services/firewood-splitting/">Firewood Splitting</a>
+    <a class="mobile-service-link" href="../../services/ice-dam-removal/">Ice Dam Removal</a>
     
   
-    <a class="mobile-service-link" href="./services/hedge-trimming/">Hedge Trimming</a>
+    <a class="mobile-service-link" href="../../services/chimney-flashing-repair/">Chimney Flashing Repair</a>
     
   
-    <a class="mobile-service-link" href="./services/root-removal/">Root Removal</a>
+    <a class="mobile-service-link" href="../../services/roof-coating/">Roof Coating</a>
     
   
-    <a class="mobile-service-link" href="./services/tree-planting/">Tree Planting</a>
+    <a class="mobile-service-link" href="../../services/emergency-tarping/">Emergency Tarping</a>
     
   
-    <a class="mobile-service-link" href="./services/crane-assisted-removal/">Crane-Assisted Removal</a>
+    <a class="mobile-service-link" href="../../services/attic-insulation-check/">Attic Insulation Check</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/roof-maintenance-plans/">Roof Maintenance Plans</a>
     
   
 
     <div class="mobile-actions">
-      <a class="btn btn-primary" href="tel:+16126364931">Call (612) 636-4931</a>
-      <a class="btn btn-outline" href="./#contact">Get a Quote</a>
+      <a class="btn btn-primary" href="tel:+19523735348">Call (952) 373-5348</a>
+      <a class="btn btn-outline" href="../../#contact">Get a Quote</a>
     </div>
   </div>
 </nav>
 
-<section class="hero tone-dark">
-  
-  <div class="hero-bg">
-    <img src="../_trade_images/tree_service/tree_service_hero_3.jpg" alt="Tree Service in Blaine, MN" width="1600" height="1200" loading="eager">
-    <div class="hero-bg-scrim"></div>
-  </div>
-  
-  
-  <div class="hero-dots">
-    <div class="particle-dot" style="left:0%; top:0%; animation-delay:0.0s"></div><div class="particle-dot" style="left:37%; top:53%; animation-delay:0.4s"></div><div class="particle-dot" style="left:74%; top:17%; animation-delay:0.8s"></div><div class="particle-dot" style="left:14%; top:70%; animation-delay:1.2000000000000002s"></div><div class="particle-dot" style="left:51%; top:34%; animation-delay:1.6s"></div><div class="particle-dot" style="left:88%; top:87%; animation-delay:0.0s"></div><div class="particle-dot" style="left:28%; top:51%; animation-delay:0.4s"></div><div class="particle-dot" style="left:65%; top:15%; animation-delay:0.8s"></div><div class="particle-dot" style="left:5%; top:68%; animation-delay:1.2000000000000002s"></div><div class="particle-dot" style="left:42%; top:32%; animation-delay:1.6s"></div>
-  </div>
-  
-  <div class="container hero-inner">
-    <div class="hero-content hero-split reveal">
-      <div>
-        
-        <div class="rating-chip">
-          <span class="stars" role="img" aria-label="5.0 out of 5 stars">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.94 6.26 6.56.84-4.82 4.57 1.25 6.5L12 17l-5.93 3.17 1.25-6.5L2.5 9.1l6.56-.84L12 2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.94 6.26 6.56.84-4.82 4.57 1.25 6.5L12 17l-5.93 3.17 1.25-6.5L2.5 9.1l6.56-.84L12 2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.94 6.26 6.56.84-4.82 4.57 1.25 6.5L12 17l-5.93 3.17 1.25-6.5L2.5 9.1l6.56-.84L12 2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.94 6.26 6.56.84-4.82 4.57 1.25 6.5L12 17l-5.93 3.17 1.25-6.5L2.5 9.1l6.56-.84L12 2z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.94 6.26 6.56.84-4.82 4.57 1.25 6.5L12 17l-5.93 3.17 1.25-6.5L2.5 9.1l6.56-.84L12 2z"/></svg>
-          </span>
-          <span>5.0 &middot; 22 Google reviews</span>
-        </div>
-        
-        <h1>Tree Service<br><span class="accent">Done Right.</span></h1>
-        <p class="lede">Jaro Tree Care LLC. provides <strong>tree service</strong> for homeowners in Blaine, MN and the surrounding area.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="tel:+16126364931">Call or Text (612) 636-4931</a>
-          <a class="btn btn-outline" href="#services">See Services</a>
-        </div>
-      </div>
-      <div class="hero-split-aside hero-stats">
-        <div class="stat"><div class="value">5.0&#9733;</div><div class="label">Google rating</div></div>
-        <div class="stat"><div class="value">22</div><div class="label">Google reviews</div></div>
-        <div class="stat"><div class="value">8</div><div class="label">Cities served</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="trust-badges">
-  <div class="container trust-grid">
-    
-    
-    
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Free Estimates</div>
-    
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Firm On-Site Pricing</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Local to Blaine, MN</div>
-  </div>
-</section>
-<section id="services" class="section">
+<header class="service-header section">
   <div class="container">
-    <div class="section-intro reveal">
-      <p class="section-label">What we do</p>
-      <h2>Every job. Done right.</h2>
-      <p class="intro">Tree Service for homeowners across Blaine, MN and the surrounding area.</p>
-    </div>
-    <div class="services-photo-cards">
-      
-      
-      <a id="service-1" href="./services/tree-removal/" class="photo-card reveal">
-        <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_work_in_progress_3.jpg" alt="Tree Removal" loading="lazy">
-          <div class="scrim"></div>
-          <div class="num">01</div>
-          <h3>Tree Removal</h3>
-        </div>
-        <div class="body"><p>Full removal of hazardous, dead, or unwanted trees, including full cleanup.</p></div>
-      </a>
-      
-      
-      <a id="service-2" href="./services/tree-trimming-pruning/" class="photo-card reveal">
-        <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_wide_4.jpg" alt="Tree Trimming & Pruning" loading="lazy">
-          <div class="scrim"></div>
-          <div class="num">02</div>
-          <h3>Tree Trimming & Pruning</h3>
-        </div>
-        <div class="body"><p>Canopy shaping and deadwood removal to keep trees healthy and safe.</p></div>
-      </a>
-      
-      
-      <a id="service-3" href="./services/stump-grinding/" class="photo-card reveal">
-        <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_wide_1.jpg" alt="Stump Grinding" loading="lazy">
-          <div class="scrim"></div>
-          <div class="num">03</div>
-          <h3>Stump Grinding</h3>
-        </div>
-        <div class="body"><p>Grinding stumps below grade so the area is ready to reseed or landscape.</p></div>
-      </a>
-      
-      
-      <a id="service-4" href="./services/emergency-tree-removal/" class="photo-card reveal">
-        <div class="media">
-          <img src="../_trade_images/tree_service/tree_service_work_in_progress_1.jpg" alt="Emergency Tree Removal" loading="lazy">
-          <div class="scrim"></div>
-          <div class="num">04</div>
-          <h3>Emergency Tree Removal</h3>
-        </div>
-        <div class="body"><p>Storm-damaged or leaning trees handled quickly and safely.</p></div>
-      </a>
-      
-    </div>
-    
+    <a class="service-back" href="../../">&larr; Roofing in Bloomington, MN</a>
+    <p class="section-label" style="margin-top:1.25rem">Service</p>
+    <h1 class="service-h1">Storm Damage Repair</h1>
+    <p class="service-lede">Wind and hail damage assessed and repaired, with documentation for your insurance claim.</p>
+  </div>
+</header>
 
-<div class="services-also reveal">
-  <p class="also-label">Also</p>
-  <ul class="also-list">
-    
-    <li id="service-5"><a href="./services/tree-cabling-bracing/">Tree Cabling & Bracing</a></li>
-    
-    <li id="service-6"><a href="./services/land-clearing/">Land Clearing</a></li>
-    
-    <li id="service-7"><a href="./services/brush-removal/">Brush Removal</a></li>
-    
-    <li id="service-8"><a href="./services/deadwooding/">Deadwooding</a></li>
-    
-    <li id="service-9"><a href="./services/tree-health-assessments/">Tree Health Assessments</a></li>
-    
-    <li id="service-10"><a href="./services/storm-cleanup/">Storm Cleanup</a></li>
-    
-    <li id="service-11"><a href="./services/firewood-splitting/">Firewood Splitting</a></li>
-    
-    <li id="service-12"><a href="./services/hedge-trimming/">Hedge Trimming</a></li>
-    
-    <li id="service-13"><a href="./services/root-removal/">Root Removal</a></li>
-    
-    <li id="service-14"><a href="./services/tree-planting/">Tree Planting</a></li>
-    
-    <li id="service-15"><a href="./services/crane-assisted-removal/">Crane-Assisted Removal</a></li>
-    
-  </ul>
+
+<div class="container">
+  <div class="service-header-image reveal">
+    <img src="../../../_trade_images/roofing/roofing_wide_1.jpg" alt="Storm Damage Repair" loading="eager" width="1600" height="900">
+  </div>
 </div>
 
-  </div>
-</section>
-<section id="why" class="section">
-  <div class="container why-checklist-wrap reveal">
-    <p class="section-label">Why Jaro Tree Care LLC.</p>
-    <h2>Neighbors trust us with their property</h2>
-    
-    
-<ul class="why-list">
-  <li>
-    <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
-    <div><h3>Local to Blaine, MN</h3><p>We know Blaine, MN and the surrounding communities.</p></div>
-  </li>
-  <li>
-    <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
-    <div><h3>Careful, professional work</h3><p>We treat your property with care from start to finish.</p></div>
-  </li>
-  
-  <li>
-    <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
-    <div><h3>Free on-site estimates</h3><p>We come out, look at the job, and give you a clear price. No pressure, no obligation.</p></div>
-  </li>
-  
-  
-  
-</ul>
-  </div>
-</section>
 
-<section id="process" class="section" style="background:color-mix(in oklch, var(--secondary) 25%, transparent)">
-  <div class="container">
-    <div class="section-intro reveal">
-      <p class="section-label">Our process</p>
-      <h2>No mystery, no surprises</h2>
-      <p class="intro">The same sequence every time.</p>
-    </div>
-    <div class="process-steps-grid">
-      <div class="process-card reveal"><div class="process-num">01</div><h3>Get a free estimate</h3><p>We look at the job and give you a clear price before we start.</p></div>
-      <div class="process-card reveal"><div class="process-num">02</div><h3>Prep the site</h3><p>We protect your property and get everything ready for the work.</p></div>
-      <div class="process-card reveal"><div class="process-num">03</div><h3>Do the work</h3><p>Careful, professional tree service &mdash; done right the first time.</p></div>
-      <div class="process-card reveal"><div class="process-num">04</div><h3>Final walkthrough</h3><p>We walk the job with you before we call it done.</p></div>
-    </div>
-  </div>
-</section>
-<section id="area" class="section area-chip-cloud">
-  <div class="container reveal">
-    <p class="section-label">Service area</p>
-    <h2>Proudly serving Blaine, MN &amp; the surrounding area</h2>
-    <p>Based in Blaine, MN and working throughout the surrounding communities.</p>
-    <div class="area-chips">
-      <span>Blaine</span><span>Coon Rapids</span><span>Andover</span><span>Ham Lake</span><span>Lino Lakes</span><span>Spring Lake Park</span><span>Fridley</span><span>Circle Pines</span>
-    </div>
-  </div>
-</section>
+<section class="section service-body">
+  <div class="container service-grid">
+    <div class="service-main">
+      <p class="service-detail reveal">Hail bruises shingles in ways that aren't always visible from the ground, and wind can lift tabs or strip granules without leaving an obvious hole. An inspection covers the roof plane by plane, with photos and notes written the way an adjuster expects, so a claim has real documentation behind it.</p>
 
-<section id="contact" class="section">
-  <div class="container">
-    <div class="contact-stacked reveal tone-dark">
-      <p class="section-label" style="justify-content:center">Get a free quote</p>
-      <h2>Ready to get started?</h2>
-      <p class="lede">Jaro Tree Care LLC. serves Blaine, MN and the surrounding area. We&#8217;ll follow up fast &mdash; no surprises.</p>
-      <form class="quote-form" data-contact-form data-sms-phone="+16126364931" data-fallback-id="sms-fallback"
-            >
-        
-        <div class="form-field"><label for="c-name">Name</label><input id="c-name" name="name" data-label="Name" type="text" required placeholder="Your name"></div>
-        <div class="form-field"><label for="c-phone">Phone</label><input id="c-phone" name="phone" data-label="Phone" type="tel" required placeholder="(555) 555-5555"></div>
-        <div class="form-field"><label for="c-city">City</label><input id="c-city" name="city" data-label="City" type="text" placeholder="Blaine, MN"></div>
-        <div class="form-field"><label for="c-job">What&#8217;s the job?</label><textarea id="c-job" name="message" data-label="Job" required rows="4" placeholder="Tell us a bit about it"></textarea></div>
-        <button type="submit" class="btn btn-primary form-submit">Get a free estimate</button>
-      </form>
-      <div id="sms-fallback" class="sms-fallback" hidden>
-        <p>Opening your messages app with those details filled in&hellip;</p>
-        <a class="btn btn-primary" href="tel:+16126364931">Call or text us: (612) 636-4931</a>
+      <div class="service-process reveal">
+        <h2>What to expect</h2>
+        <ol class="service-process-steps">
+          <li><span class="num">01</span><div><h3>Get a free estimate</h3><p>We look at the job and give you a clear price before we start.</p></div></li>
+          <li><span class="num">02</span><div><h3>Prep the site</h3><p>We protect your property and get everything ready for the work.</p></div></li>
+          <li><span class="num">03</span><div><h3>Do the work</h3><p>Careful, professional roofing &mdash; done right the first time.</p></div></li>
+          <li><span class="num">04</span><div><h3>Final walkthrough</h3><p>We walk the job with you before we call it done.</p></div></li>
+        </ol>
       </div>
+
+      
     </div>
+
+    <aside class="service-sidebar reveal">
+      <div class="service-sidebar-card">
+        <h3>Request a free estimate</h3>
+        <p class="sub">Sends a text to (952) 373-5348 with these details.</p>
+        <form class="quote-form" data-contact-form data-sms-phone="+19523735348" data-fallback-id="sms-fallback-storm-damage-repair"
+              >
+          
+          <input type="hidden" name="service" value="Storm Damage Repair">
+          <div class="form-field"><label for="sp-name-storm-damage-repair">Name</label><input id="sp-name-storm-damage-repair" name="name" data-label="Name" type="text" required autocomplete="name" placeholder="Your name"></div>
+          <div class="form-field"><label for="sp-phone-storm-damage-repair">Phone</label><input id="sp-phone-storm-damage-repair" name="phone" data-label="Phone" type="tel" required autocomplete="tel" placeholder="(555) 555-5555"></div>
+          <div class="form-field"><label for="sp-job-storm-damage-repair">Details</label><textarea id="sp-job-storm-damage-repair" name="message" data-label="Job" rows="3" placeholder="Anything we should know?"></textarea></div>
+          <button type="submit" class="btn btn-primary form-submit">Send my request</button>
+        </form>
+        <div id="sms-fallback-storm-damage-repair" class="sms-fallback" hidden>
+          <p>Opening your messages app&hellip;</p>
+          <a class="btn btn-primary" href="tel:+19523735348">Call or text us: (952) 373-5348</a>
+        </div>
+        <a class="service-sidebar-phone" href="tel:+19523735348">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (952) 373-5348
+        </a>
+      </div>
+    </aside>
   </div>
 </section>
-<footer class="footer-columns tone-dark">
+
+<footer class="footer-columns ">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <span style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem">JARO TREE CARE LLC.</span>
-      <p>Tree Service for homeowners in Blaine, MN and the surrounding area.</p>
+      <span style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem">Crawford Roofing Solutions</span>
+      <p>Roofing for homeowners in Bloomington, MN and the surrounding area.</p>
     </div>
     <div>
       <h4>Contact</h4>
       <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+16126364931">(612) 636-4931</a></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg><a href="sms:+16126364931">Text us anytime</a></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Blaine, MN</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+19523735348">(952) 373-5348</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg><a href="sms:+19523735348">Text us anytime</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Bloomington, MN</li>
       </ul>
     </div>
     <div>
       <h4>Services</h4>
-      <ul><li>Tree Removal</li><li>Tree Trimming & Pruning</li><li>Stump Grinding</li><li>Emergency Tree Removal</li></ul>
+      <ul><li>Roof Replacement</li><li>Roof Repair</li><li>Storm Damage Repair</li><li>Roof Inspections</li></ul>
       
     </div>
   </div>
   <div class="footer-bottom">
     <div class="container footer-bottom-inner">
-      <div>&copy; 2026 JARO TREE CARE LLC.</div>
+      <div>&copy; 2026 Crawford Roofing Solutions</div>
       
     </div>
   </div>
