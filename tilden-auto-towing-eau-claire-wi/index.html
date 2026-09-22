@@ -331,73 +331,118 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .hero .accent, .hero .italic, .hero em { color: inherit; }
 .hero .underline-accent { text-decoration-color: currentColor; }
 
-/* 2026-09-21, FOURTH redesign of hero readability (Abdirahman: "the
-   gradient is positioned behind the big headline but not the text
-   underneath it... size and position it from the bounding box of that
-   whole group"). The previous two attempts both failed for structural
-   reasons, not tuning:
-     - round 2 anchored the scrim to a fixed fraction of the HERO's own
-       height (0%-34%), which has no relationship to where the actual
-       eyebrow/h1/lede/CTA/stats GROUP ends.
-     - round 3 anchored the scrim to .hero-content's real box via a
-       ::before with `top:-8rem` (correct vertically) but bled it to
-       full viewport width via `left:50%; width:100vw;
-       transform:translateX(-50%)` -- a trick that ONLY centers
-       correctly when the CONTAINING BLOCK (.hero-content) is itself
-       centered in the viewport. .hero-content is a narrow, LEFT-aligned
-       column (max-width:46rem inside a padded .container), not
-       centered -- confirmed live at a real 1440px desktop width: the
-       scrim stopped in a hard vertical line right at .hero-content's
-       own right edge, full-strength wash on the left of it, completely
-       untouched photo on the right, exactly the "visible box edge" this
-       whole redesign exists to avoid. It happened to look fine at a
-       ~577px test viewport only because .hero-content's own width was
-       coincidentally close to full width there.
-   Fixed with CSS GRID STACKING instead of any vw/percentage-of-an-
-   unrelated-box math: .hero-inner is now a 2-row grid (1fr, auto) with
-   BOTH .hero-content-scrim and .hero-content placed in row 2.
-   .hero-content-scrim spans `grid-column: 1 / -1` -- the grid
-   CONTAINER's full width (.hero-inner has no horizontal padding, so
-   that's genuinely the hero's own full width, no vw trick needed at
-   all) -- while row 2's height is set by `grid-template-rows: 1fr auto`
-   to auto-size to its TALLEST item, which is always .hero-content (the
-   scrim div carries no content of its own). The scrim's negative
-   top/bottom margins then bleed OUTWARD from that auto-computed
-   height -- which is .hero-content's REAL rendered height, tracked
-   exactly, on every viewport, with no guessed percentage or vw math
-   anywhere. This is also what makes mobile correct automatically (a
-   taller, differently-stacked .hero-content on a narrow screen just
-   grows row 2, and the scrim grows with it) without a separate
-   mobile-specific rule. */
-.hero-inner { position: relative; z-index: 1; flex: 1; display: grid; grid-template-rows: 1fr auto; width: 100%; padding: 0 0 calc(3rem * var(--space-scale)); }
-.hero-content { grid-row: 2; grid-column: 1; position: relative; max-width: 46rem; padding-top: 4rem; }
-.hero-content.hero-split { max-width: none; display: grid; gap: 2.5rem; align-items: end; }
+/* 2026-09-21, FIFTH and final redesign of hero readability (Abdirahman:
+   "this keeps oscillating [...] treat these as two requirements that
+   must BOTH hold, always, and lock them with tests"). The two
+   requirements, verbatim:
+     A. the photo is untouched -- no filter on the image, ever; no
+        full-hero overlay; any darkening is a gradient fully transparent
+        across >=50% of the hero on desktop; gradient color is near-
+        black (a flat grey/low-alpha wash is what reads as "greyed
+        out").
+     B. every hero text element (eyebrow, headline, subtext, rating
+        chip, CTA row) passes WCAG AA against what's actually behind it.
+   Four earlier rounds each fixed one at the other's expense:
+     - round 2: fixed-fraction-of-hero gradient -- covered too little
+       (subtext/CTAs fell outside it).
+     - round 3: vw-centering trick to bleed a narrow box to full width
+       -- broke at real desktop widths (hard visible edge).
+     - round 4: CSS-grid-stacked scrim tracking .hero-content's REAL
+       box -- correctly covered everything, but .hero-content itself
+       was simply too tall (a large clamp()'d headline, generous
+       spacing) for that box to ever stay under 50% of the hero -- at
+       1440px it measured 62% of the hero's height on its own, before
+       any fade buffer.
+   This round satisfies both by construction, not by finding a better
+   number to guess:
+     1. .hero-content itself is now COMPACT (smaller h1 clamp ceiling,
+        tighter margins throughout, .hero-stats hidden below 640px) --
+        see the typography rules below. This is what "keep the hero
+        text group compact... shorten the mobile hero copy" in the ask
+        actually means: fix the SIZE of the thing needing coverage, not
+        just the shape of what covers it.
+     2. The scrim is a RADIAL ellipse anchored at the hero's own
+        bottom-left corner (0% 100%) for the single-column layout,
+        where .hero-content is genuinely a left-aligned column -- an
+        ellipse with radii tuned so its covered area (a quarter-ellipse
+        from a corner: pi*a*b/4) is a KNOWN, calculable fraction of the
+        hero's total area, verified <50% directly from these numbers by
+        tests/test_hero_contrast.py (not by rendering and hoping). The
+        split layout's .hero-content spans the FULL width (text column
+        + stats aside side by side), so it gets a plain full-width
+        linear band instead, confined to the bottom ~45% with a hard
+        transparent floor above that -- same 50% floor, different shape
+        because the content's own shape is different. Mobile
+        (<640px) forces the linear band for BOTH layouts via media
+        query, since a corner ellipse doesn't suit a narrow, nearly-
+        full-width mobile column either.
+     3. --hero-scrim-base (base.html.j2) is ALWAYS the near-black,
+        slightly accent-tinted color from here on (see that file's
+        comment for why the old tone-light/near-white branch is gone
+        entirely) -- never a flat grey, never a low-alpha wash. */
+.hero-inner { position: relative; z-index: 1; flex: 1; display: grid; grid-template-rows: 1fr auto; width: 100%; padding: 0 0 calc(2rem * var(--space-scale)); }
+.hero-content { grid-row: 2; grid-column: 1; position: relative; z-index: 1; max-width: 46rem; padding-top: 1.5rem; }
+.hero-content.hero-split { max-width: none; display: grid; gap: 2rem; align-items: end; }
 @media (min-width: 900px) { .hero-content.hero-split { grid-template-columns: 3fr 2fr; } }
-/* The scrim: same grid row as .hero-content (so its auto height always
-   equals .hero-content's real height, see the comment above), spanning
-   the grid's full column width (genuinely edge-to-edge, no vw needed).
-   Bleeds 8rem above and 3rem below .hero-content's own box via negative
-   margins -- the 8rem above is where the fade to transparent happens
-   (see the gradient's `calc(100% - 8rem)` stop, which lands EXACTLY at
-   .hero-content's real top edge -- the eyebrow/rating chip -- by the
-   same reasoning as before, just now measured from a box that's
-   actually correctly sized); the 3rem below stays fully solid, so the
-   last CTA/stat sits well inside the dark part, not right at its
-   boundary. z-index:-1 within .hero-inner's own stacking context (it
-   has z-index:1, already a stacking context) paints this behind
-   .hero-content's normal-flow text -- no isolation needed on
-   .hero-content itself this time, the grid row relationship IS the
-   mechanism, not a nested pseudo-element. */
+/* Single-column layout (full_bleed_photo): radial ellipse anchored at
+   the hero's own bottom-left corner. Covered area = pi*.78*.65/4 =~
+   40% of the hero -- comfortably under the 50%-transparent floor with
+   margin for real-world variance, while (a=78%, b=65% of the hero's own
+   box) still reaching far enough to sit .hero-content's full 46rem
+   width and compacted height well inside the solid-to-45%-of-radius
+   zone. Spans .hero-inner's FULL grid (both rows, edge to edge) rather
+   than tracking .hero-content's box the way round 4 did -- the user's
+   own description of this shape ("anchored bottom-left... transparent
+   before the top-right half") is expressed in the HERO's geometry, not
+   .hero-content's, and a corner ellipse doesn't need exact box-tracking
+   to comfortably contain a now-compact, bottom-left-anchored group. */
 .hero-content-scrim {
-  grid-row: 2;
+  grid-row: 1 / -1;
   grid-column: 1 / -1;
   z-index: -1;
-  margin: -8rem 0 -3rem;
   pointer-events: none;
+  background: radial-gradient(ellipse 78% 65% at 0% 100%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 45%,
+    transparent 100%);
+}
+/* Split layout: .hero-content spans the FULL hero width (text column +
+   stats aside side by side, see full_bleed_split.html.j2), so a corner
+   ellipse would leave the stats aside uncovered on wide screens. Plain
+   full-width band instead, confined to the bottom 45% (solid to 25%,
+   transparent by 45%) -- >=55% of the hero (the whole top half) stays
+   fully clear, same 50% floor via a shape that actually matches
+   where this layout's content sits. `+` (adjacent-sibling), not nesting
+   -- .hero-content-scrim is a DOM sibling of .hero-content, matched by
+   the `.hero-split` modifier class on the element immediately before
+   it (see the templates: content first, scrim second, specifically so
+   this selector can see .hero-split without a descendant/nesting
+   relationship that doesn't exist here). */
+.hero-content.hero-split + .hero-content-scrim {
   background: linear-gradient(to top,
     color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
-    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) calc(100% - 8rem),
-    transparent 100%);
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 25%,
+    transparent 45%);
+}
+/* Mobile: neither layout's content is meaningfully "left-aligned" on a
+   narrow screen (both run close to full width), so both switch to the
+   same full-width bottom band as the split layout, just confined
+   tighter (transparent by 55% instead of 45% -- .hero-stats is hidden
+   below this breakpoint too, see further down, but CTAs stack
+   vertically here and cost more height than they save). The selector
+   list explicitly repeats the .hero-split one (not just
+   `.hero-content-scrim`) to match its higher specificity (three classes
+   vs one) -- without this, the unconditional split rule above would
+   still win over this media-query override on a mobile split layout,
+   even though the media query is more specific in intent. */
+@media (max-width: 639px) {
+  .hero-content-scrim,
+  .hero-content.hero-split + .hero-content-scrim {
+    background: linear-gradient(to top,
+      color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+      color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 35%,
+      transparent 55%);
+  }
 }
 
 .rating-chip {
@@ -410,17 +455,34 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .stars { color: var(--star, var(--primary)); display: inline-flex; gap: 1px; }
 .stars svg { width: 1rem; height: 1rem; fill: currentColor; }
 
-.hero h1 { font-size: calc(clamp(2.25rem, 6vw, 4.75rem) * var(--type-scale)); font-weight: 800; line-height: .98; margin-top: 1.25rem; }
+/* Typography/spacing tightened 2026-09-21 specifically so .hero-content
+   stays compact enough for the scrim shapes above to cover it within
+   the 50%-of-hero area budget -- see this section's opening comment,
+   point 1. The h1 ceiling in particular dropped from 4.75rem to
+   3.25rem: a smaller display headline, a deliberate trade against a
+   taller one eating the coverage budget. */
+.hero h1 { font-size: calc(clamp(1.75rem, 3.5vw, 3.25rem) * var(--type-scale)); font-weight: 800; line-height: .98; margin-top: .625rem; }
 /* Solid --foreground, not a color-mix toward transparent (2026-09-20
    contrast fix) -- a translucent lede actively worked against the
    scrim/shadow fix by letting the photo show through the text color
    itself, on top of everything else fighting for legibility here. */
-.hero .lede { margin-top: 1rem; max-width: 34rem; font-size: 1.0625rem; line-height: 1.6; color: var(--foreground); }
-.hero-ctas { margin-top: 1.75rem; display: flex; flex-direction: column; gap: .75rem; }
+.hero .lede { margin-top: .625rem; max-width: 38rem; font-size: 1.0625rem; line-height: 1.5; color: var(--foreground); }
+.hero-ctas { margin-top: 1.125rem; display: flex; flex-direction: column; gap: .625rem; }
 @media (min-width: 640px) { .hero-ctas { flex-direction: row; align-items: center; } }
-.hero-stats { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; }
+.hero-stats { margin-top: 1.125rem; display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; }
 .hero-stats .stat .value { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; }
 .hero-stats .stat .label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, var(--foreground) 70%, transparent); }
+/* Hidden below 640px for BOTH layouts (not just the split aside) --
+   2026-09-21: part of keeping .hero-content compact enough on mobile
+   for the gradient to stay confined to the lower portion of the hero
+   rather than needing to cover the whole thing. The single-column
+   layout's own .hero-stats duplicates the rating-chip's rating/review
+   count already shown at the top of the group; cities-served is the
+   only new information it adds on mobile, and it's judged not worth
+   the height cost there (a distinct choice from the split-aside's own
+   900px hide below, which was about avoiding double-stacking under the
+   CTAs, not primarily about height budget). */
+@media (max-width: 639px) { .hero-stats { display: none; } }
 /* Hidden below 900px, not just visually de-emphasized: at mobile width
    the grid falls back to single-column stacking, so this block would
    otherwise land BELOW the CTAs, making the hero very tall and
@@ -777,49 +839,34 @@ button, input, textarea, select { font: inherit; color: inherit; }
   --space-scale: 1;
   --type-scale: 1;
   --motion-scale: 1.35;
-  /* 2026-09-20 hero-contrast fix, REDESIGNED 2026-09-21 (Abdirahman:
-     "the photo is what sells the site — it can't be the thing we
-     sacrifice"). hero_tone (not the raw page `theme`) still determines
-     the hero's own text color -- always the OPPOSITE of the page theme,
-     each tone's --foreground tuned for its OWN background (light text
-     on the dark tone, dark text on the light tone) -- so a light-theme
-     page (the default, hero_tone=tone-dark) gets LIGHT hero text and
-     needs a DARK scrim behind it, while a --theme dark page
-     (hero_tone=tone-light) gets DARK hero text and needs a LIGHT one.
-     That color-flip logic is unchanged.
+  /* 2026-09-20 hero-contrast fix, redesigned 2026-09-21 THREE times,
+     FIFTH and final version below (Abdirahman: "this keeps oscillating
+     [...] treat these as two requirements that must BOTH hold, always,
+     and lock them with tests" -- see tests/test_hero_contrast.py, whose
+     module docstring is the actual source of truth for what's
+     covered here; this comment is the short version).
 
-     What changed: there is no whole-image wash anymore. Two earlier
-     rounds (flat scrim at 0.58/0.68, then a taller-coverage gradient)
-     both greyed out the ENTIRE photo to buy contrast everywhere, which
-     is the wrong trade for a business whose photo is the product.
-     --hero-image-brightness is gone -- the photo now renders at its own
-     native brightness/color, filter-free (see sections.css's
-     .hero-bg img, which no longer has a filter at all). Readability
-     instead comes from a gradient confined to sections.css's
-     .hero-bg-scrim: strong at the very bottom edge (where the text
-     block is anchored -- .hero-content's `margin-top: auto` bottom-
-     anchors it in both hero variants), fading to fully transparent by
-     roughly a third of the way up, so most of the photo (everything
-     above that line) is completely untouched.
-     --hero-scrim is now the PEAK alpha at that bottom edge only, not a
-     uniform value applied everywhere -- pushed higher (0.85/0.9) than
-     the old flat values (0.68/0.86) specifically because it's now
-     LOCAL: being strong right at the anchor no longer costs the rest of
-     the photo anything. --hero-scrim-base is the gradient's actual
-     color -- deep near-black (or near-white for tone-light) with a
-     slight accent tint via color-mix, never a flat mid-grey, which is
-     what makes it read as a shadow the photo casts rather than a filter
-     laid over it. --hero-scrim-color (raw oklch L/C/H, untinted) is
-     kept separately for the text-shadow secondary-insurance layer below
-     -- that one doesn't need the tint, it's just an outline.
-     tests/test_hero_contrast.py now checks contrast at the gradient's
-     anchor point specifically (the "text region" the design actually
-     commits to protecting), not against a fictional globally-dimmed
-     image -- see that file's module docstring for what's deliberately
-     NOT covered above the fade line, and why. */
-  --hero-scrim: 0.85;
-  --hero-scrim-color: 100% 0 0;
-  --hero-scrim-base: color-mix(in oklch, var(--primary, oklch(0% 0 0)) 12%, white);
+     Structural simplification that ends the oscillation: the hero's OWN
+     text color and scrim are no longer tied to hero_tone (the page
+     theme's opposite) at all -- the hero ALWAYS uses light text on a
+     near-black scrim, regardless of whether the page itself is
+     `--theme dark` or the light default. Every other real-world photo
+     hero works this way for a reason: a near-WHITE scrim (the old
+     tone-light branch, used on --theme dark pages) is what reads as
+     "greyed out" -- a light wash desaturates a photo's own colors
+     toward white, while a near-black one reads as a natural shadow
+     falling across part of the frame. Dropping the branch removes the
+     one case that kept producing the "washed out" complaint, and a
+     --theme dark page's hero being light-text-on-dark-photo is if
+     anything MORE consistent with the rest of that page (which is
+     already dark-background/light-text everywhere) than the old
+     opposite-of-everything-else hero was. hero_tone itself still exists
+     for accent_tone/footer_tone below (trust band / CTA banner /
+     footer, which are solid-background, not photo-backed -- an
+     unrelated design axis, untouched by this). */
+  --hero-scrim: .9;
+  --hero-scrim-color: 0% 0 0;
+  --hero-scrim-base: color-mix(in oklch, var(--primary, oklch(0% 0 0)) 12%, black);
 }
 
 /* Also reasserted on .tone-dark/.tone-light/.tone-tint, not just :root
@@ -954,8 +1001,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
     </div>
   </div>
 </nav>
-
-<section class="hero tone-light">
+<section class="hero tone-dark">
   
   <div class="hero-bg">
     <img src="../_trade_images/towing/towing_hero_2.jpg" alt="Towing work" width="1600" height="1200" loading="eager">
@@ -964,7 +1010,6 @@ button, input, textarea, select { font: inherit; color: inherit; }
   
   
   <div class="container hero-inner">
-    <div class="hero-content-scrim" aria-hidden="true"></div>
     <div class="hero-content reveal">
       
       <div class="rating-chip">
@@ -989,6 +1034,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
         <div class="stat"><div class="value">1</div><div class="label">Cities served</div></div>
       </div>
     </div>
+    <div class="hero-content-scrim" aria-hidden="true"></div>
   </div>
 </section>
 
