@@ -329,54 +329,68 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .hero .accent, .hero .italic, .hero em { color: inherit; }
 .hero .underline-accent { text-decoration-color: currentColor; }
 
-.hero-inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; width: 100%; padding: 0 0 calc(3rem * var(--space-scale)); }
-/* 2026-09-21, THIRD redesign of hero readability (Abdirahman: "the
+/* 2026-09-21, FOURTH redesign of hero readability (Abdirahman: "the
    gradient is positioned behind the big headline but not the text
-   underneath it"). The previous round anchored the scrim to a fixed
-   fraction of the HERO's own height (0%-34%) -- wrong unit. .hero-
-   content is one group (eyebrow/rating chip, h1, lede, CTA row, and in
-   the split layout the stats aside too -- all of them, see the
-   templates: hero-stats/.hero-split-aside is always a descendant of
-   .hero-content, never a sibling), and that group's real height varies
-   by content length, personality, and viewport (mobile wraps to more
-   lines and the split layout collapses to one column below 900px --
-   see .hero-split-aside below) -- a fraction of the HERO's height has
-   no relationship to where that group actually ends. Fixed by anchoring
-   the scrim to .hero-content's OWN box via ::before, sized with `inset`
-   relative to it (isolation:isolate makes this self-contained -- same
-   defensive reasoning as .hero's own isolation two redesigns ago: a
-   negative z-index child must never depend on assumptions about an
-   ancestor's stacking context). Because it's bound to the real box, not
-   a guessed percentage, this adapts automatically to however tall the
-   group actually renders -- including on mobile, with no separate
-   mobile-specific rule needed. */
-.hero-content { position: relative; isolation: isolate; margin-top: auto; max-width: 46rem; padding-top: 4rem; }
+   underneath it... size and position it from the bounding box of that
+   whole group"). The previous two attempts both failed for structural
+   reasons, not tuning:
+     - round 2 anchored the scrim to a fixed fraction of the HERO's own
+       height (0%-34%), which has no relationship to where the actual
+       eyebrow/h1/lede/CTA/stats GROUP ends.
+     - round 3 anchored the scrim to .hero-content's real box via a
+       ::before with `top:-8rem` (correct vertically) but bled it to
+       full viewport width via `left:50%; width:100vw;
+       transform:translateX(-50%)` -- a trick that ONLY centers
+       correctly when the CONTAINING BLOCK (.hero-content) is itself
+       centered in the viewport. .hero-content is a narrow, LEFT-aligned
+       column (max-width:46rem inside a padded .container), not
+       centered -- confirmed live at a real 1440px desktop width: the
+       scrim stopped in a hard vertical line right at .hero-content's
+       own right edge, full-strength wash on the left of it, completely
+       untouched photo on the right, exactly the "visible box edge" this
+       whole redesign exists to avoid. It happened to look fine at a
+       ~577px test viewport only because .hero-content's own width was
+       coincidentally close to full width there.
+   Fixed with CSS GRID STACKING instead of any vw/percentage-of-an-
+   unrelated-box math: .hero-inner is now a 2-row grid (1fr, auto) with
+   BOTH .hero-content-scrim and .hero-content placed in row 2.
+   .hero-content-scrim spans `grid-column: 1 / -1` -- the grid
+   CONTAINER's full width (.hero-inner has no horizontal padding, so
+   that's genuinely the hero's own full width, no vw trick needed at
+   all) -- while row 2's height is set by `grid-template-rows: 1fr auto`
+   to auto-size to its TALLEST item, which is always .hero-content (the
+   scrim div carries no content of its own). The scrim's negative
+   top/bottom margins then bleed OUTWARD from that auto-computed
+   height -- which is .hero-content's REAL rendered height, tracked
+   exactly, on every viewport, with no guessed percentage or vw math
+   anywhere. This is also what makes mobile correct automatically (a
+   taller, differently-stacked .hero-content on a narrow screen just
+   grows row 2, and the scrim grows with it) without a separate
+   mobile-specific rule. */
+.hero-inner { position: relative; z-index: 1; flex: 1; display: grid; grid-template-rows: 1fr auto; width: 100%; padding: 0 0 calc(3rem * var(--space-scale)); }
+.hero-content { grid-row: 2; grid-column: 1; position: relative; max-width: 46rem; padding-top: 4rem; }
 .hero-content.hero-split { max-width: none; display: grid; gap: 2.5rem; align-items: end; }
 @media (min-width: 900px) { .hero-content.hero-split { grid-template-columns: 3fr 2fr; } }
-/* The scrim itself: full viewport width (100vw, centered via the
-   left:50%/-50% translate trick) so there is NEVER a left/right edge to
-   see regardless of .hero-content's own (narrower, left-aligned) box --
-   only ever a soft top fade, which reads as a shadow falling across the
-   frame, not a panel behind the text. Vertically: solid from the box's
-   own bottom (3rem BELOW .hero-content's real bottom edge -- so the
-   last CTA button sits well inside the solid zone, not right at its
-   boundary) up through to 8rem below the box's top edge, which --
-   because `top: -8rem` pushes that top edge 8rem ABOVE .hero-content's
-   real top -- lands the fade's start line EXACTLY at .hero-content's
-   real top edge (the eyebrow/rating chip). Only that extra 8rem ABOVE
-   the real content fades to transparent; every actual text element
-   (eyebrow through the CTA row, and the stats aside in the split
-   layout) sits in the solid part, not the fade, by construction --
-   not by guessing a percentage that happens to line up. */
-.hero-content::before {
-  content: "";
-  position: absolute;
+/* The scrim: same grid row as .hero-content (so its auto height always
+   equals .hero-content's real height, see the comment above), spanning
+   the grid's full column width (genuinely edge-to-edge, no vw needed).
+   Bleeds 8rem above and 3rem below .hero-content's own box via negative
+   margins -- the 8rem above is where the fade to transparent happens
+   (see the gradient's `calc(100% - 8rem)` stop, which lands EXACTLY at
+   .hero-content's real top edge -- the eyebrow/rating chip -- by the
+   same reasoning as before, just now measured from a box that's
+   actually correctly sized); the 3rem below stays fully solid, so the
+   last CTA/stat sits well inside the dark part, not right at its
+   boundary. z-index:-1 within .hero-inner's own stacking context (it
+   has z-index:1, already a stacking context) paints this behind
+   .hero-content's normal-flow text -- no isolation needed on
+   .hero-content itself this time, the grid row relationship IS the
+   mechanism, not a nested pseudo-element. */
+.hero-content-scrim {
+  grid-row: 2;
+  grid-column: 1 / -1;
   z-index: -1;
-  top: -8rem;
-  bottom: -3rem;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
+  margin: -8rem 0 -3rem;
   pointer-events: none;
   background: linear-gradient(to top,
     color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
@@ -963,6 +977,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
   </div>
   
   <div class="container hero-inner">
+    <div class="hero-content-scrim" aria-hidden="true"></div>
     <div class="hero-content hero-split reveal">
       <div>
         
