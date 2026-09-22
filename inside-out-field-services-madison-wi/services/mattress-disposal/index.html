@@ -1,0 +1,1143 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mattress Disposal | Inside Out Field Services | Junk Removal in Madison, WI</title>
+<meta name="description" content="Mattress Disposal from Inside Out Field Services, junk removal in Madison, WI and the surrounding area. Call (608) 206-3442.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600;700;800&family=Karla:wght@400;500;600&display=swap">
+<style>
+/* skins/_personalities/jmj/tokens.css — color tokens only.
+   Base values extracted from the original reference build
+   (jmj-sewer-stars.lovable.app) — real hex values (this personality
+   never used oklch), navy primary on warm off-white. LIGHT default
+   (2026-09-20 ruling); a DARK palette is authored below (jmj was
+   light-only before this rebuild) so the hero tone-swap mechanism
+   works the same way it does for every other personality. */
+
+:root, .tone-light {
+  --background: #faf7f2;
+  --foreground: #0b1220;
+  --card: #faf7f2;
+  --card-foreground: #0b1220;
+  --primary: #14245c;
+  --primary-foreground: #faf7f2;
+  --primary-strong: #0d1740;
+  --secondary: #f0ebe1;
+  --secondary-foreground: #0b1220;
+  --muted: #f0ebe1;
+  --muted-foreground: #4b5568;
+  --accent: #c47a3c;
+  --accent-foreground: #faf7f2;
+  --border: #e5e0d5;
+  --input: #e5e0d5;
+  --ring: #14245c;
+}
+.tone-light { background: var(--background) !important; color: var(--foreground) !important; }
+
+:root[data-theme="dark"], .tone-dark {
+  --background: #0b1220;
+  --foreground: #faf7f2;
+  --card: #101a30;
+  --card-foreground: #faf7f2;
+  --primary: #c47a3c;
+  --primary-foreground: #0b1220;
+  --primary-strong: #d4924f;
+  --secondary: #1a2740;
+  --secondary-foreground: #faf7f2;
+  --muted: #17233a;
+  --muted-foreground: #b7c0d6;
+  --accent: #c47a3c;
+  --accent-foreground: #0b1220;
+  --border: #223151;
+  --input: #223151;
+  --ring: #c47a3c;
+}
+.tone-dark { background: var(--background) !important; color: var(--foreground) !important; }
+
+.tone-tint { background: color-mix(in oklch, var(--secondary) 55%, var(--background)) !important; color: var(--foreground) !important; }
+/* skins/_sections/sections.css — the ONE shared structural stylesheet
+   for every section partial, used by all four (soon: more) personalities.
+
+   2026-09-20 rebuild. Every visual scale value below is a CSS custom
+   property, never a literal — sitegen._scale_tokens() computes concrete
+   values from each personality's type_scale/radius/spacing/motion label
+   in config/skins.yaml and injects them as :root custom properties
+   before this stylesheet is included (see skins/base.html.j2):
+
+     --radius        component corner radius (cards, images, panels)
+     --space-scale    unitless multiplier on every section's padding
+     --type-scale     unitless multiplier on every clamp() headline size
+     --motion-scale   unitless multiplier on reveal distance + decorative
+                       flourish speed/intensity
+
+   Color, font, and image values are ALSO never literals here — they come
+   from tokens.css (per-trade palette + font_pairs.yaml, injected the
+   same way) via --primary/--background/--font-display/etc.
+
+   tests/test_zero_hardcoded_visual_values.py greps this file (and every
+   skins/_personalities/*.css flourish file) for hex colors, rgb()/oklch()
+   literals, and quoted font-family names outside a :root block, and
+   fails the build if it finds one — a value that isn't a token is a bug,
+   not a style choice (Abdirahman, 2026-09-20: this is exactly how a
+   green-themed site quietly picked up hardcoded black/blue sections
+   before this rebuild). */
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+.container { max-width: 76rem; margin: 0 auto; padding: 0 1.25rem; }
+@media (min-width: 640px) { .container { padding: 0 2rem; } }
+
+/* Every anchor-link target on the page (nav dropdown -> #service-N,
+   nav links -> #why/#area/#contact) needs this, now that the nav is a
+   fixed 4rem bar overlapping the top of the viewport — otherwise a
+   jump-to lands the target right under the bar instead of below it.
+   Universal [id] rule rather than repeating it per section class, so a
+   future section/slot gets it for free. */
+[id] { scroll-margin-top: 5.5rem; }
+
+.section-label {
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--primary);
+}
+
+/* Scroll reveal (CLAUDE.md design system — common to every personality).
+   Distance scales with --motion-scale so a "bold" personality's reveal
+   is more dramatic without any personality CSS touching this rule. */
+.reveal {
+  opacity: 0;
+  transform: translateY(calc(24px * var(--motion-scale, 1)));
+  transition: opacity .6s ease-out, transform .6s ease-out;
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Nav (routing header — 2026-09-20 addition) ─────────────────────
+   Sticky, fixed above everything including the hero (floats over the
+   hero photo rather than pushing it down — every hero variant's own
+   content is bottom-anchored, so there's nothing at the top of the
+   hero for this to collide with). Two variants share this markup and
+   differ only in .nav-actions styling: minimal_bar (plain pill
+   buttons) and boxed_cta (a bordered/boxed CTA cluster) — see the
+   ".site-nav-boxed" rules below. */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklch, var(--background) 72%, transparent);
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 55%, transparent);
+}
+.site-nav .nav-inner { max-width: 76rem; margin: 0 auto; padding: 0 1.25rem; height: 4rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+@media (min-width: 640px) { .site-nav .nav-inner { padding: 0 2rem; } }
+/* Two flexbox truncation gotchas fixed together here, both found live
+   at 375px on a real business name (2026-09-20) -- min-width:0 alone
+   (first attempted fix) was NOT enough:
+     1. min-width:0 on .brand -- a flex item's default min-width:auto
+        refuses to shrink below its own content's intrinsic width, so
+        the whole brand block wouldn't shrink at all without this.
+     2. text-overflow/white-space/overflow must go on the INNER text
+        span, not on .brand itself -- .brand is display:flex, and
+        text-overflow only truncates an element's OWN direct text
+        content; putting it on a flex container whose text lives in a
+        nested child span (needed for the separate .dot bullet) does
+        nothing; that child span needs the truncation properties (and
+        its own min-width:0, since it's itself now a flex item) --
+        confirmed by watching the name get silently covered by the
+        phone pill instead of eliding, even after fix #1 alone. */
+.site-nav .brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; min-width: 0; flex-shrink: 1; }
+.site-nav .brand span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.site-nav .brand .dot { height: .5rem; width: .5rem; border-radius: 999px; background: var(--primary); flex-shrink: 0; }
+.site-nav .nav-links { display: none; align-items: center; gap: 1.75rem; font-size: .875rem; color: var(--muted-foreground); }
+@media (min-width: 900px) { .site-nav .nav-links { display: flex; } }
+.site-nav .nav-links a:hover { color: var(--foreground); }
+
+.nav-dropdown { position: relative; }
+.nav-dropdown-trigger { display: inline-flex; align-items: center; gap: .3rem; background: none; border: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.nav-dropdown-trigger svg { width: .75rem; height: .75rem; transition: transform .15s ease; }
+.nav-dropdown.is-open .nav-dropdown-trigger svg { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  display: none; position: absolute; top: calc(100% + .75rem); left: 50%; transform: translateX(-50%);
+  min-width: 15rem; max-height: 70vh; overflow-y: auto;
+  background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 12px 32px -8px color-mix(in oklch, var(--foreground) 25%, transparent);
+  padding: .5rem; list-style: none;
+}
+.nav-dropdown.is-open .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu li a { display: block; padding: .5rem .75rem; border-radius: calc(var(--radius) - .25rem); font-size: .875rem; color: var(--card-foreground); }
+.nav-dropdown-menu li a:hover { background: var(--secondary); }
+
+.site-nav .nav-actions { display: flex; align-items: center; gap: .625rem; flex-shrink: 0; }
+.site-nav .phone-pill {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border-radius: 999px; background: var(--primary); color: var(--primary-foreground);
+  padding: .5rem 1rem; font-size: .875rem; font-weight: 600; white-space: nowrap;
+}
+.site-nav .phone-pill:hover { background: var(--primary-strong, var(--primary)); }
+.site-nav .phone-pill svg { width: 1rem; height: 1rem; flex-shrink: 0; }
+.site-nav .nav-quote-btn {
+  display: none; border-radius: 999px; border: 1px solid var(--border); background: transparent;
+  padding: .5rem 1.125rem; font-size: .875rem; font-weight: 600; white-space: nowrap;
+}
+.site-nav .nav-quote-btn:hover { background: var(--secondary); }
+@media (min-width: 640px) { .site-nav .nav-quote-btn { display: inline-flex; align-items: center; } }
+/* boxed_cta variant: the actions cluster reads as one bordered unit
+   rather than loose pills — clearpath/jmj's more graphic-button style. */
+.site-nav-boxed .nav-actions {
+  border: 1px solid var(--border); border-radius: 999px; padding: .25rem; background: var(--card);
+  box-shadow: 0 2px 8px color-mix(in oklch, var(--foreground) 8%, transparent);
+}
+.site-nav-boxed .phone-pill { padding: .5rem .875rem; }
+.site-nav-boxed .nav-quote-btn { border: none; background: var(--primary); color: var(--primary-foreground); }
+.site-nav-boxed .nav-quote-btn:hover { background: var(--primary-strong, var(--primary)); }
+
+.pulse-dot { height: .375rem; width: .375rem; border-radius: 999px; background: currentColor; animation: sg-pulse 2s cubic-bezier(.4,0,.6,1) infinite; }
+@keyframes sg-pulse { 50% { opacity: .5; } }
+
+/* Mobile hamburger + off-canvas panel */
+.nav-mobile-toggle {
+  display: grid; place-items: center; height: 2.5rem; width: 2.5rem; flex-shrink: 0;
+  border: none; background: none; cursor: pointer; color: var(--foreground);
+}
+.nav-mobile-toggle svg { width: 1.5rem; height: 1.5rem; }
+@media (min-width: 900px) { .nav-mobile-toggle { display: none; } }
+.nav-mobile-panel {
+  /* height: calc(...) explicitly, not top+bottom auto-stretch (found
+     live, 2026-09-20: the panel's computed height collapsed to just
+     its own padding instead of filling the viewport below the nav bar
+     -- top/bottom-driven fixed-element stretch has known cross-browser
+     inconsistencies, and real mobile browsers' dynamic address-bar
+     resizing makes it worse; an explicit height sidesteps the whole
+     class of quirk rather than chasing this one engine's specific
+     behavior). 100dvh (dynamic viewport height) tracks the real
+     visible viewport as a mobile browser's chrome shows/hides; svh as
+     a safety-net fallback for a browser that has one but not the
+     other, then a plain vh last-resort for anything older. */
+  display: none; position: fixed; top: 4rem; left: 0; right: 0; z-index: 99;
+  height: calc(100vh - 4rem); height: calc(100svh - 4rem); height: calc(100dvh - 4rem);
+  background: var(--background); color: var(--foreground); overflow-y: auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+.nav-mobile-panel.is-open { display: block; }
+@media (min-width: 900px) { .nav-mobile-panel { display: none !important; } }
+.nav-mobile-panel .mobile-link { display: block; padding: .875rem 0; font-size: 1.0625rem; font-weight: 600; border-bottom: 1px solid var(--border); }
+.nav-mobile-panel .mobile-services-head { margin-top: 1rem; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted-foreground); }
+.nav-mobile-panel .mobile-service-link { display: block; padding: .625rem 0; font-size: .9375rem; color: var(--foreground); }
+.nav-mobile-panel .mobile-actions { margin-top: 1.5rem; display: flex; flex-direction: column; gap: .75rem; }
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .625rem;
+  border-radius: var(--radius); font-family: var(--font-display); font-weight: 700;
+  font-size: 1rem; padding: 1rem 1.75rem; transition: background-color .15s ease;
+  border: none; cursor: pointer;
+}
+.btn svg { width: 1.125rem; height: 1.125rem; }
+.btn-primary { background: var(--primary); color: var(--primary-foreground); box-shadow: 0 8px 20px -6px color-mix(in oklch, var(--foreground) 35%, transparent); }
+.btn-primary:hover { background: var(--primary-strong, var(--primary)); }
+.btn-outline { border: 1px solid color-mix(in oklch, currentColor 30%, transparent); background: color-mix(in oklch, var(--card) 12%, transparent); backdrop-filter: blur(4px); }
+.btn-outline:hover { background: color-mix(in oklch, var(--card) 28%, transparent); }
+
+/* ── Hero ────────────────────────────────────────────────────────── */
+/* isolation:isolate is load-bearing, not decoration (found live,
+   2026-09-20): .tone-dark/.tone-light paint an !important opaque
+   background on .hero itself; .hero-bg sits behind it at z-index:-2.
+   Without a forced stacking context here, that negative-z-index child
+   paints BEHIND .hero's own background in every real browser.
+
+   2026-09-21, found live (second, deeper bug in the same family):
+   .hero-bg-scrim must be a DIRECT CHILD of .hero (a sibling of
+   .hero-bg), never nested INSIDE .hero-bg — see skins/_sections/hero/
+   full_bleed_photo.html.j2 and full_bleed_split.html.j2. .hero-bg
+   itself has a z-index (-2, right below), which makes IT a stacking
+   context too. Nesting the scrim inside .hero-bg used to put the
+   scrim's z-index:-1 in COMPETITION with .hero-bg's own plain,
+   non-positioned <img> child -- and a negative-z-index descendant
+   paints BEHIND normal-flow content within its own stacking context,
+   so the scrim was rendering behind the very photo it was supposed to
+   sit on top of. Every computed-style check agreed with the CSS
+   (`background: oklch(1 0 0 / .68)`, `opacity: 1`, correct rect) --
+   this was invisible to computed-style inspection and only surfaced by
+   comparing the real hero's photo against the identical photo+scrim
+   markup rendered flat (outside the nested context) side by side.
+   Confirmed this was NEVER actually working, on every personality and
+   theme, since the scrim was introduced 2026-09-20 -- it read as "fine"
+   on Jaro/Crawford/Journey purely because their specific photos/text
+   pairings didn't need the scrim's help as badly as Tilden Auto
+   Towing's did, not because the scrim was doing anything. */
+.hero { position: relative; overflow: hidden; isolation: isolate; min-height: 90svh; display: flex; }
+.hero-bg { position: absolute; inset: 0; z-index: -2; }
+/* 2026-09-21: NO filter on the photo itself anymore -- the photo is
+   what sells the site, so it renders at its own native brightness and
+   color, full stop (Abdirahman). Two earlier rounds both darkened the
+   whole image (a flat brightness() filter, then a whole-hero scrim) to
+   buy contrast everywhere; both made the photo worse to look at
+   everywhere to fix legibility in the one region text actually sits.
+   See .hero-content::before below for where readability comes from
+   instead. */
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero-no-image { background: linear-gradient(155deg, color-mix(in oklch, var(--primary) 30%, var(--background)), var(--background)); }
+/* Second layer of insurance on top of the scrim (2026-09-20 ask, kept
+   2026-09-21): every direct hero text element gets its own soft shadow
+   so it stays legible even over a locally bright patch of photo the
+   gradient alone doesn't fully cover. Uses the untinted
+   --hero-scrim-color (not --hero-scrim-base) -- a text outline doesn't
+   need the accent tint, it just needs to read as a shadow. */
+.hero-content, .hero-stats { text-shadow: 0 2px 16px oklch(var(--hero-scrim-color, 0% 0 0) / .45); }
+/* Hero text is neutral only, never the accent color (2026-09-20 fix):
+   a colored headline word can land directly over a same-hued patch of
+   the photo (dark green "Done Right." over dark green foliage was the
+   reported case) and disappear regardless of how good the scrim/
+   contrast math is, because the failure is a hue match, not a
+   luminance gap -- the WCAG contrast test alone can't catch this since
+   it only checks text against the scrim, not against the photo's own
+   color range. .accent/.italic/em ARE still accent-colored everywhere
+   OUTSIDE the hero (services headlines, area labels, etc., all on a
+   solid page background where this risk doesn't exist) -- these rules
+   are scoped to .hero specifically, not a global color change, and
+   `.hero .accent` naturally outranks the bare `.accent` rule by normal
+   CSS specificity (a descendant selector is more specific), no
+   !important needed. Applies to every personality's hero markup
+   uniformly, not just clearpath's -- meridian's .italic and jmj's
+   .underline-accent get the same treatment. The rating chip is exempt
+   on purpose: it has its own solid pill background
+   (color-mix(...,var(--card) 95%,transparent)), which is exactly the
+   "small UI element with its own solid background" the accent-on-text
+   ban doesn't apply to. */
+.hero .accent, .hero .italic, .hero em { color: inherit; }
+.hero .underline-accent { text-decoration-color: currentColor; }
+
+/* 2026-09-21, FIFTH and final redesign of hero readability (Abdirahman:
+   "this keeps oscillating [...] treat these as two requirements that
+   must BOTH hold, always, and lock them with tests"). The two
+   requirements, verbatim:
+     A. the photo is untouched -- no filter on the image, ever; no
+        full-hero overlay; any darkening is a gradient fully transparent
+        across >=50% of the hero on desktop; gradient color is near-
+        black (a flat grey/low-alpha wash is what reads as "greyed
+        out").
+     B. every hero text element (eyebrow, headline, subtext, rating
+        chip, CTA row) passes WCAG AA against what's actually behind it.
+   Four earlier rounds each fixed one at the other's expense:
+     - round 2: fixed-fraction-of-hero gradient -- covered too little
+       (subtext/CTAs fell outside it).
+     - round 3: vw-centering trick to bleed a narrow box to full width
+       -- broke at real desktop widths (hard visible edge).
+     - round 4: CSS-grid-stacked scrim tracking .hero-content's REAL
+       box -- correctly covered everything, but .hero-content itself
+       was simply too tall (a large clamp()'d headline, generous
+       spacing) for that box to ever stay under 50% of the hero -- at
+       1440px it measured 62% of the hero's height on its own, before
+       any fade buffer.
+   This round satisfies both by construction, not by finding a better
+   number to guess:
+     1. .hero-content itself is now COMPACT (smaller h1 clamp ceiling,
+        tighter margins throughout, .hero-stats hidden below 640px) --
+        see the typography rules below. This is what "keep the hero
+        text group compact... shorten the mobile hero copy" in the ask
+        actually means: fix the SIZE of the thing needing coverage, not
+        just the shape of what covers it.
+     2. The scrim is a RADIAL ellipse anchored at the hero's own
+        bottom-left corner (0% 100%) for the single-column layout,
+        where .hero-content is genuinely a left-aligned column -- an
+        ellipse with radii tuned so its covered area (a quarter-ellipse
+        from a corner: pi*a*b/4) is a KNOWN, calculable fraction of the
+        hero's total area, verified <50% directly from these numbers by
+        tests/test_hero_contrast.py (not by rendering and hoping). The
+        split layout's .hero-content spans the FULL width (text column
+        + stats aside side by side), so it gets a plain full-width
+        linear band instead, confined to the bottom ~45% with a hard
+        transparent floor above that -- same 50% floor, different shape
+        because the content's own shape is different. Mobile
+        (<640px) forces the linear band for BOTH layouts via media
+        query, since a corner ellipse doesn't suit a narrow, nearly-
+        full-width mobile column either.
+     3. --hero-scrim-base (base.html.j2) is ALWAYS the near-black,
+        slightly accent-tinted color from here on (see that file's
+        comment for why the old tone-light/near-white branch is gone
+        entirely) -- never a flat grey, never a low-alpha wash. */
+.hero-inner { position: relative; z-index: 1; flex: 1; display: grid; grid-template-rows: 1fr auto; width: 100%; padding: 0 0 calc(2rem * var(--space-scale)); }
+.hero-content { grid-row: 2; grid-column: 1; position: relative; z-index: 1; max-width: 46rem; padding-top: 1.5rem; }
+.hero-content.hero-split { max-width: none; display: grid; gap: 2rem; align-items: end; }
+@media (min-width: 900px) { .hero-content.hero-split { grid-template-columns: 3fr 2fr; } }
+/* Single-column layout (full_bleed_photo): radial ellipse anchored at
+   the hero's own bottom-left corner. Covered area = pi*.78*.65/4 =~
+   40% of the hero -- comfortably under the 50%-transparent floor with
+   margin for real-world variance, while (a=78%, b=65% of the hero's own
+   box) still reaching far enough to sit .hero-content's full 46rem
+   width and compacted height well inside the solid-to-45%-of-radius
+   zone. Spans .hero-inner's FULL grid (both rows, edge to edge) rather
+   than tracking .hero-content's box the way round 4 did -- the user's
+   own description of this shape ("anchored bottom-left... transparent
+   before the top-right half") is expressed in the HERO's geometry, not
+   .hero-content's, and a corner ellipse doesn't need exact box-tracking
+   to comfortably contain a now-compact, bottom-left-anchored group. */
+.hero-content-scrim {
+  grid-row: 1 / -1;
+  grid-column: 1 / -1;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 78% 65% at 0% 100%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 45%,
+    transparent 100%);
+}
+/* Split layout: .hero-content spans the FULL hero width (text column +
+   stats aside side by side, see full_bleed_split.html.j2), so a corner
+   ellipse would leave the stats aside uncovered on wide screens. Plain
+   full-width band instead, confined to the bottom 45% (solid to 25%,
+   transparent by 45%) -- >=55% of the hero (the whole top half) stays
+   fully clear, same 50% floor via a shape that actually matches
+   where this layout's content sits. `+` (adjacent-sibling), not nesting
+   -- .hero-content-scrim is a DOM sibling of .hero-content, matched by
+   the `.hero-split` modifier class on the element immediately before
+   it (see the templates: content first, scrim second, specifically so
+   this selector can see .hero-split without a descendant/nesting
+   relationship that doesn't exist here). */
+.hero-content.hero-split + .hero-content-scrim {
+  background: linear-gradient(to top,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+    color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 25%,
+    transparent 45%);
+}
+/* Mobile: neither layout's content is meaningfully "left-aligned" on a
+   narrow screen (both run close to full width), so both switch to the
+   same full-width bottom band as the split layout, just confined
+   tighter (transparent by 55% instead of 45% -- .hero-stats is hidden
+   below this breakpoint too, see further down, but CTAs stack
+   vertically here and cost more height than they save). The selector
+   list explicitly repeats the .hero-split one (not just
+   `.hero-content-scrim`) to match its higher specificity (three classes
+   vs one) -- without this, the unconditional split rule above would
+   still win over this media-query override on a mobile split layout,
+   even though the media query is more specific in intent. */
+@media (max-width: 639px) {
+  .hero-content-scrim,
+  .hero-content.hero-split + .hero-content-scrim {
+    background: linear-gradient(to top,
+      color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 0%,
+      color-mix(in oklch, var(--hero-scrim-base, black) calc(var(--hero-scrim, .9) * 100%), transparent) 35%,
+      transparent 55%);
+  }
+}
+
+.rating-chip {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: color-mix(in oklch, var(--card) 95%, transparent); color: var(--foreground);
+  border-radius: 999px; padding: .375rem .75rem .375rem .875rem;
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--foreground) 10%, transparent);
+  font-size: .875rem; font-weight: 600;
+}
+.stars { color: var(--star, var(--primary)); display: inline-flex; gap: 1px; }
+.stars svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+/* Typography/spacing tightened 2026-09-21 specifically so .hero-content
+   stays compact enough for the scrim shapes above to cover it within
+   the 50%-of-hero area budget -- see this section's opening comment,
+   point 1. The h1 ceiling in particular dropped from 4.75rem to
+   3.25rem: a smaller display headline, a deliberate trade against a
+   taller one eating the coverage budget. */
+.hero h1 { font-size: calc(clamp(1.75rem, 3.5vw, 3.25rem) * var(--type-scale)); font-weight: 800; line-height: .98; margin-top: .625rem; }
+/* Solid --foreground, not a color-mix toward transparent (2026-09-20
+   contrast fix) -- a translucent lede actively worked against the
+   scrim/shadow fix by letting the photo show through the text color
+   itself, on top of everything else fighting for legibility here. */
+.hero .lede { margin-top: .625rem; max-width: 38rem; font-size: 1.0625rem; line-height: 1.5; color: var(--foreground); }
+.hero-ctas { margin-top: 1.125rem; display: flex; flex-direction: column; gap: .625rem; }
+@media (min-width: 640px) { .hero-ctas { flex-direction: row; align-items: center; } }
+.hero-stats { margin-top: 1.125rem; display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; }
+.hero-stats .stat .value { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; }
+.hero-stats .stat .label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, var(--foreground) 70%, transparent); }
+/* Hidden below 640px for BOTH layouts (not just the split aside) --
+   2026-09-21: part of keeping .hero-content compact enough on mobile
+   for the gradient to stay confined to the lower portion of the hero
+   rather than needing to cover the whole thing. The single-column
+   layout's own .hero-stats duplicates the rating-chip's rating/review
+   count already shown at the top of the group; cities-served is the
+   only new information it adds on mobile, and it's judged not worth
+   the height cost there (a distinct choice from the split-aside's own
+   900px hide below, which was about avoiding double-stacking under the
+   CTAs, not primarily about height budget). */
+@media (max-width: 639px) { .hero-stats { display: none; } }
+/* Hidden below 900px, not just visually de-emphasized: at mobile width
+   the grid falls back to single-column stacking, so this block would
+   otherwise land BELOW the CTAs, making the hero very tall and
+   repeating the rating the hero-content's own rating-chip already
+   shows at the top — a real mobile-layout bug caught by testing the
+   live deployed page at a real phone width (2026-09-20), not by a
+   computed-style check. */
+.hero-split-aside { display: none; }
+@media (min-width: 900px) { .hero-split-aside { display: block; align-self: end; } }
+
+/* ── Trust ───────────────────────────────────────────────────────── */
+/* No background/color set here on purpose: the section partial applies
+   a tone-dark/tone-light/tone-tint utility class (see tokens.css in
+   each personality) directly on .trust-strip, and that utility's
+   !important background/color wins — see the hero comment above for
+   why !important is load-bearing here, not decorative (confirmed live
+   2026-09-20 against .testimonial-section's own background rule). */
+.trust-strip .stats-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem 2.5rem; padding: calc(2rem * var(--space-scale)) 0; }
+.trust-strip .stat { display: flex; flex-direction: column; align-items: center; gap: .25rem; text-align: center; min-width: 8rem; }
+.trust-strip .stat .value { font-family: var(--font-display); font-weight: 700; font-size: calc(1.375rem * var(--type-scale)); }
+.trust-strip .stat .label { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: color-mix(in oklch, currentColor 72%, transparent); }
+
+.trust-badges { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.trust-badges .trust-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem 2.5rem; padding: calc(1.5rem * var(--space-scale)) 0; font-size: .875rem; font-weight: 600; }
+.trust-badges .trust-item { display: flex; align-items: center; gap: .625rem; color: var(--foreground); }
+.trust-badges .trust-item svg { width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0; }
+
+/* ── Section shell ───────────────────────────────────────────────── */
+.section { padding: calc(4rem * var(--space-scale)) 0; }
+@media (min-width: 640px) { .section { padding: calc(6rem * var(--space-scale)) 0; } }
+.section-intro { max-width: 42rem; }
+.section-intro h2 { font-size: calc(clamp(1.875rem, 3.4vw, 2.75rem) * var(--type-scale)); font-weight: 700; margin-top: .5rem; }
+.section-intro p.intro { margin-top: .75rem; color: var(--muted-foreground); font-size: 1.0625rem; line-height: 1.65; }
+.section-split-head { display: grid; gap: 2rem; margin-bottom: calc(2.5rem * var(--space-scale)); }
+@media (min-width: 1024px) { .section-split-head { grid-template-columns: 5fr 7fr; align-items: end; } }
+.section-split-head h2 { font-size: calc(clamp(2rem, 4vw, 3.25rem) * var(--type-scale)); line-height: 1.02; }
+
+/* ── Services: card_grid ─────────────────────────────────────────── */
+.services-card-grid { margin-top: calc(2.5rem * var(--space-scale)); display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .services-card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .services-card-grid { grid-template-columns: repeat(3, 1fr); } }
+/* display:block on these three (2026-09-20, service pages): each card
+   became an <a> linking to its own service page, and an anchor's
+   default display is inline -- without this the grid cell wouldn't
+   size to the card content the way the <div>/<article> it replaced
+   did. */
+.service-card { display: block; border: 1px solid var(--border); background: var(--card); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 1px 2px color-mix(in oklch, var(--foreground) 6%, transparent); transition: box-shadow .15s ease; }
+.service-card:hover { box-shadow: 0 4px 14px color-mix(in oklch, var(--foreground) 10%, transparent); }
+.service-num { display: grid; place-items: center; height: 3rem; width: 3rem; border-radius: var(--radius); background: var(--secondary); color: var(--primary); font-family: var(--font-display); font-weight: 700; }
+.service-card h3 { margin-top: 1rem; font-size: calc(1.0625rem * var(--type-scale)); font-weight: 700; }
+.service-card p { margin-top: .5rem; font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+.service-card.cta-card { background: var(--primary); color: var(--primary-foreground); display: flex; flex-direction: column; justify-content: space-between; }
+.service-card.cta-card h3, .service-card.cta-card p { color: inherit; }
+.service-card.cta-card p { opacity: .85; }
+.service-card.cta-card .cta-link { margin-top: 1.5rem; display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-weight: 600; }
+.service-card.cta-card .cta-link svg { width: 1rem; height: 1rem; }
+
+/* ── Services: numbered_list ─────────────────────────────────────── */
+.services-numbered-list { display: grid; gap: 1px; background: var(--border); margin-top: calc(2.5rem * var(--space-scale)); }
+@media (min-width: 768px) { .services-numbered-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .services-numbered-list { grid-template-columns: repeat(3, 1fr); } }
+.article-card { display: block; background: var(--background); padding: 2rem; transition: background-color .15s ease; }
+.article-card:hover { background: color-mix(in oklch, var(--secondary) 40%, transparent); }
+.article-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2rem; font-family: var(--font-mono, var(--font-sans)); font-size: .75rem; color: var(--primary); }
+.article-card h3 { font-size: calc(1.5rem * var(--type-scale)); margin-bottom: .75rem; font-weight: 400; }
+.article-card p { color: var(--muted-foreground); line-height: 1.6; }
+
+/* ── Services: photo_cards ───────────────────────────────────────── */
+.services-photo-cards { margin-top: calc(2.5rem * var(--space-scale)); display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .services-photo-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .services-photo-cards { grid-template-columns: repeat(4, 1fr); } }
+.photo-card { display: block; border-radius: var(--radius); overflow: hidden; background: var(--card); border: 1px solid var(--border); }
+.photo-card .media { position: relative; aspect-ratio: 4/3; isolation: isolate; }
+.photo-card .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.photo-card .media .scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, color-mix(in oklch, var(--foreground) 65%, transparent) 0%, transparent 60%); }
+.photo-card .media .num { position: absolute; top: .875rem; left: .875rem; font-family: var(--font-display); font-weight: 700; color: var(--card); font-size: .875rem; }
+.photo-card .media h3 { position: absolute; bottom: .875rem; left: .875rem; right: .875rem; color: var(--card); font-size: 1.0625rem; }
+.photo-card .body { padding: 1.25rem; }
+.photo-card .body p { font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+.photo-card-no-image .media { background: linear-gradient(155deg, var(--secondary), var(--muted)); }
+
+/* ── Services: "Also" strip (depth without a wall of text) ───────── */
+.services-also { margin-top: calc(2rem * var(--space-scale)); padding-top: calc(2rem * var(--space-scale)); border-top: 1px solid var(--border); }
+.services-also .also-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted-foreground); margin-bottom: .875rem; }
+.services-also .also-list { display: flex; flex-wrap: wrap; gap: .5rem .625rem; list-style: none; padding: 0; margin: 0; }
+.services-also .also-list li { display: inline-block; }
+.services-also .also-list a { display: inline-block; padding: .4375rem .875rem; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground); font-size: .8125rem; font-weight: 500; }
+.services-also .also-list a:hover { background: color-mix(in oklch, var(--primary) 15%, var(--secondary)); }
+
+/* ── Why: photo_left ─────────────────────────────────────────────── */
+.why-photo-grid { display: grid; gap: calc(2.25rem * var(--space-scale)); align-items: center; }
+@media (min-width: 1024px) { .why-photo-grid { grid-template-columns: 1fr 1fr; } }
+.why-photo-grid img { aspect-ratio: 4/5; width: 100%; border-radius: var(--radius); object-fit: cover; box-shadow: 0 8px 24px color-mix(in oklch, var(--foreground) 14%, transparent); }
+.why-photo-grid .why-photo-empty { aspect-ratio: 4/5; width: 100%; border-radius: var(--radius); background: linear-gradient(155deg, color-mix(in oklch, var(--primary) 22%, var(--background)), var(--background)); }
+.why-list { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem; padding: 0; list-style: none; }
+.why-list li { display: flex; gap: 1rem; }
+.why-list .check { flex-shrink: 0; margin-top: .125rem; display: grid; place-items: center; height: 1.75rem; width: 1.75rem; border-radius: 999px; background: var(--primary); color: var(--primary-foreground); }
+.why-list .check svg { width: 1rem; height: 1rem; }
+.why-list h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
+.why-list p { margin-top: .125rem; font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+
+/* ── Why: checklist (no photo, denser) ───────────────────────────── */
+.why-checklist-wrap { max-width: 44rem; }
+.why-checklist-wrap .why-list { margin-top: calc(2rem * var(--space-scale)); }
+
+/* ── Gallery: before_after (Tier 3 gated) ────────────────────────── */
+.slider-frame { position: relative; aspect-ratio: 4/3; border-radius: var(--radius); overflow: hidden; isolation: isolate; box-shadow: 0 8px 24px color-mix(in oklch, var(--foreground) 14%, transparent); }
+.slider-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slider-clip { position: absolute; inset: 0; overflow: hidden; }
+.slider-clip .tint { position: absolute; inset: 0; background: color-mix(in oklch, var(--foreground) 8%, transparent); }
+.slider-tag { position: absolute; top: 1rem; z-index: 2; background: color-mix(in oklch, var(--foreground) 70%, transparent); color: var(--card); font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .375rem .75rem; border-radius: 999px; }
+.slider-tag.before { left: 1rem; }
+.slider-tag.after { right: 1rem; }
+.slider-input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; }
+.slider-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: var(--card); pointer-events: none; transform: translateX(-50%); z-index: 2; }
+.slider-grip { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 2.5rem; width: 2.5rem; border-radius: 999px; background: var(--card); display: grid; place-items: center; box-shadow: 0 4px 12px color-mix(in oklch, var(--foreground) 30%, transparent); }
+
+/* ── Process: numbered_steps ─────────────────────────────────────── */
+.process-steps-grid { margin-top: calc(2.5rem * var(--space-scale)); display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .process-steps-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .process-steps-grid { grid-template-columns: repeat(4, 1fr); } }
+.process-card { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+.process-num { font-family: var(--font-display); font-weight: 700; font-size: calc(1.5rem * var(--type-scale)); color: var(--primary); }
+.process-card h3 { margin-top: .75rem; font-size: 1.0625rem; }
+.process-card p { margin-top: .5rem; font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+
+/* ── Process: timeline (connecting line signature move) ──────────── */
+.process-timeline-grid { position: relative; margin-top: calc(2.5rem * var(--space-scale)); display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .process-timeline-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .process-timeline-grid { grid-template-columns: repeat(4, 1fr); } }
+.process-timeline-grid .process-line { display: none; }
+@media (min-width: 1024px) {
+  .process-timeline-grid .process-line { display: block; position: absolute; top: 1.6rem; left: 12.5%; right: 12.5%; height: 2px; background: var(--border); z-index: 0; }
+}
+.process-timeline-grid .process-card { position: relative; z-index: 1; text-align: center; border: none; background: transparent; padding: 0; }
+.process-timeline-grid .process-badge { margin: 0 auto; display: grid; place-items: center; height: 3.25rem; width: 3.25rem; border-radius: 999px; background: var(--primary); color: var(--primary-foreground); font-family: var(--font-display); font-weight: 700; }
+.process-timeline-grid h3 { margin-top: 1rem; font-size: 1.0625rem; }
+.process-timeline-grid p { margin-top: .5rem; font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+
+/* ── Area: chip_cloud ─────────────────────────────────────────────── */
+.area-chip-cloud { text-align: center; }
+.area-chip-cloud h2 { margin: .5rem auto 0; max-width: 36rem; font-size: calc(clamp(1.875rem, 3.4vw, 2.75rem) * var(--type-scale)); }
+.area-chip-cloud p { margin: .75rem auto 0; max-width: 30rem; color: var(--muted-foreground); }
+.area-chips { margin: calc(2rem * var(--space-scale)) auto 0; max-width: 46rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .625rem; }
+.area-chips span { border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: .625rem 1.25rem; font-size: .875rem; font-weight: 600; box-shadow: 0 1px 2px color-mix(in oklch, var(--foreground) 5%, transparent); }
+
+/* ── Area: mono_list (understated, editorial) ────────────────────── */
+.area-mono-list h2 { font-size: calc(clamp(2rem, 4vw, 3.25rem) * var(--type-scale)); line-height: 1.02; }
+.area-mono-list .mono-cities { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-family: var(--font-mono, var(--font-sans)); font-size: .875rem; color: var(--muted-foreground); }
+.area-mono-list .mono-cities span::before { content: "·"; margin-right: .5rem; color: var(--primary); }
+.area-mono-list .mono-cities span:first-child::before { content: none; }
+
+/* ── Testimonials: grid ───────────────────────────────────────────── */
+.testimonials-grid-wrap { margin-top: calc(2.5rem * var(--space-scale)); display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .testimonials-grid-wrap { grid-template-columns: repeat(2, 1fr); } }
+.testimonial-card { border: 1px solid var(--border); background: var(--card); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 1px 2px color-mix(in oklch, var(--foreground) 4%, transparent); }
+.testimonial-card p.quote { font-size: .9375rem; line-height: 1.6; }
+.testimonial-card .attr { margin-top: 1rem; font-family: var(--font-display); font-weight: 700; font-size: .875rem; }
+.testimonial-card .attr span { font-family: var(--font-sans); font-weight: 400; color: var(--muted-foreground); }
+
+/* ── Testimonials: single_quote (editorial pull-quote) ───────────── */
+/* Background/color come from an applied tone utility class (tinted
+   personalities use .tone-tint here; "dark" personalities don't use
+   this variant today but the rule is tone-neutral either way). */
+.testimonial-single { text-align: center; }
+.testimonial-single .mark { font-family: var(--font-display); font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; }
+.testimonial-single blockquote { max-width: 48rem; margin: 0 auto; font-family: var(--font-display); font-size: calc(clamp(1.5rem, 3vw, 2.25rem) * var(--type-scale)); line-height: 1.3; }
+.testimonial-single .attr { margin-top: calc(2rem * var(--space-scale)); font-family: var(--font-mono, var(--font-sans)); font-size: .875rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted-foreground); }
+
+/* ── Contact: inline_fields ──────────────────────────────────────── */
+.contact-inline-grid { display: grid; gap: 3rem; }
+@media (min-width: 1024px) { .contact-inline-grid { grid-template-columns: 1fr 1fr; } }
+.call-card { margin-top: 2rem; display: inline-flex; align-items: center; gap: .75rem; background: var(--card); color: var(--card-foreground); border-radius: var(--radius); padding: 1rem 1.5rem; box-shadow: 0 8px 20px -6px color-mix(in oklch, var(--foreground) 30%, transparent); }
+.call-card .icon { display: grid; place-items: center; height: 2.75rem; width: 2.75rem; border-radius: var(--radius); background: var(--primary); color: var(--primary-foreground); }
+.call-card .icon svg { width: 1.25rem; height: 1.25rem; }
+.call-card .label { display: block; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted-foreground); }
+.call-card .number { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; }
+
+.quote-form, .contact-form { background: var(--card); color: var(--card-foreground); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 20px 50px -12px color-mix(in oklch, var(--foreground) 35%, transparent); display: flex; flex-direction: column; gap: 1.25rem; }
+.quote-form h3 { font-size: 1.25rem; font-weight: 700; }
+.quote-form .sub { font-size: .875rem; color: var(--muted-foreground); }
+.form-field label, .contact-form label { display: block; font-size: .875rem; font-weight: 600; margin-bottom: .375rem; }
+.form-field input, .form-field textarea, .form-field select,
+.contact-form input, .contact-form textarea, .contact-form select {
+  width: 100%; border: 1px solid var(--input); background: var(--background);
+  border-radius: var(--radius); padding: .75rem 1rem; font: inherit; color: inherit;
+}
+.form-field textarea, .contact-form textarea { resize: none; }
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus,
+.contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.form-submit { width: 100%; }
+.form-note { text-align: center; font-size: .75rem; color: var(--muted-foreground); }
+
+/* sms:/mailto:-free fallback shown after a zero-backend form submit
+   (2026-09-20): sms: composes a prefilled text immediately on a phone,
+   which covers the large majority of visitors, but does nothing
+   visible on desktop (no error, just silently no-ops) or on a device
+   with no SMS capability — this panel is ALWAYS shown right after
+   submit, not conditionally feature-detected (protocol-handler
+   detection via timeouts is notoriously unreliable across browsers),
+   so there's always a manual path forward. No mailto: fallback: the
+   data model has no email address anywhere (Tier 1 is Google Business
+   data — business_name/rating/review_count/city/phone/maps_url only),
+   so a "call or text us" prompt with the number large is the honest
+   substitute the brief's own alternative phrasing allows for, rather
+   than inventing a destination that doesn't exist. */
+.sms-fallback { margin-top: 1.5rem; padding: 1.75rem; border-radius: var(--radius); background: var(--card); color: var(--card-foreground); text-align: center; box-shadow: 0 20px 50px -12px color-mix(in oklch, var(--foreground) 35%, transparent); }
+.sms-fallback p { color: var(--muted-foreground); font-size: .9375rem; }
+.sms-fallback .btn { margin-top: 1rem; }
+
+/* ── Contact: stacked_card (centered) ────────────────────────────── */
+/* Background/color come from an applied tone utility class, same as
+   .trust-strip above — not set here. */
+.contact-stacked { border-radius: var(--radius); text-align: center; padding: calc(3rem * var(--space-scale)) 1.5rem; }
+@media (min-width: 640px) { .contact-stacked { padding: calc(4.5rem * var(--space-scale)) 3rem; } }
+.contact-stacked h2 { font-size: calc(clamp(2rem, 5vw, 3.25rem) * var(--type-scale)); }
+.contact-stacked p.lede { margin: 1rem auto 0; max-width: 32rem; color: color-mix(in oklch, currentColor 82%, transparent); }
+.contact-stacked .quote-form { margin: calc(2rem * var(--space-scale)) auto 0; max-width: 28rem; text-align: left; }
+.contact-stacked .sms-fallback { margin: calc(2rem * var(--space-scale)) auto 0; max-width: 28rem; }
+
+/* ── Footer: minimal ──────────────────────────────────────────────── */
+.footer-minimal { padding: calc(2.5rem * var(--space-scale)) 0; }
+.footer-minimal .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+@media (min-width: 640px) { .footer-minimal .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; } }
+.footer-minimal .name { font-family: var(--font-display); font-weight: 700; font-size: .875rem; }
+.footer-minimal .meta { font-size: .75rem; color: var(--muted-foreground); }
+.footer-minimal .footer-phone { font-family: var(--font-display); font-weight: 600; font-size: .875rem; color: var(--primary); }
+.footer-minimal .footer-phone:hover { text-decoration: underline; }
+
+/* ── Service page (2026-09-20 addition) ──────────────────────────────
+   One shared, personality-agnostic layout (skins/service_page.html.j2)
+   rather than a variant matrix — colors/fonts/radius/nav/footer still
+   come through per-personality via the same tokens/section includes
+   every other page uses, so it doesn't look generic, it just doesn't
+   have its own hero-photo/scrim treatment (a secondary page doesn't
+   need the same drama the homepage hero does — deliberately simpler,
+   not an oversight). Sits directly on the page background, not inside
+   .hero, so none of the hero-specific accent-neutralizing rules apply
+   here — a service page's headline CAN use the accent color safely,
+   since it's never sitting on a photo. */
+.service-header { padding-top: calc(7rem * var(--space-scale)); padding-bottom: calc(2rem * var(--space-scale)); }
+.service-back { display: inline-flex; align-items: center; gap: .375rem; font-size: .875rem; font-weight: 600; color: var(--muted-foreground); }
+.service-back:hover { color: var(--foreground); }
+.service-h1 { margin-top: .5rem; font-size: calc(clamp(2rem, 4.5vw, 3.5rem) * var(--type-scale)); line-height: 1.03; color: var(--primary); }
+.service-lede { margin-top: 1rem; max-width: 42rem; font-size: 1.0625rem; line-height: 1.6; color: var(--muted-foreground); }
+
+/* 2026-09-21: service pages never draw a header image from the trade
+   stock pool anymore (demo mode never gets one at all; real mode only
+   ever gets a client photo explicitly assigned to that exact service —
+   see sitegen._resolve_service_page_images). Most service headers are
+   text-only now, so they get a full-bleed solid accent panel instead of
+   sitting bare on the page background — `.service-header` has no
+   max-width of its own (only `.container` inside it does), so the
+   background spans edge to edge. Text color switches to
+   `--primary-foreground`, the SAME hand-tuned per-personality token
+   already used everywhere else text sits on a solid `--primary` fill
+   (.btn-primary, .service-card.cta-card, .why-list .check, etc.) — reusing
+   an already-proven-safe pairing rather than inventing new contrast math
+   for this one case. */
+.service-header.no-image { background: var(--primary); color: var(--primary-foreground); }
+.service-header.no-image .service-back,
+.service-header.no-image .service-h1,
+.service-header.no-image .service-lede { color: inherit; }
+.service-header.no-image .service-back:hover { color: inherit; opacity: .75; }
+
+.service-header-image { border-radius: var(--radius); overflow: hidden; aspect-ratio: 16/8; margin-bottom: calc(1rem * var(--space-scale)); }
+.service-header-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.service-grid { display: grid; gap: calc(2.5rem * var(--space-scale)); align-items: start; }
+@media (min-width: 1024px) { .service-grid { grid-template-columns: 2fr 1fr; } }
+
+.service-detail { font-size: 1.0625rem; line-height: 1.7; color: var(--foreground); max-width: 42rem; }
+.service-process { margin-top: calc(2.5rem * var(--space-scale)); }
+.service-process h2 { font-size: calc(1.625rem * var(--type-scale)); }
+.service-process-steps { list-style: none; margin: calc(1.5rem * var(--space-scale)) 0 0; padding: 0; display: grid; gap: 1.25rem; }
+.service-process-steps li { display: flex; gap: 1rem; align-items: flex-start; }
+.service-process-steps .num { flex-shrink: 0; display: grid; place-items: center; height: 2.5rem; width: 2.5rem; border-radius: var(--radius); background: var(--secondary); color: var(--primary); font-family: var(--font-display); font-weight: 700; font-size: .9375rem; }
+.service-process-steps h3 { font-size: 1.0625rem; }
+.service-process-steps p { margin-top: .25rem; font-size: .875rem; line-height: 1.6; color: var(--muted-foreground); }
+
+.service-pricing { margin-top: calc(2.5rem * var(--space-scale)); padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); max-width: 24rem; }
+.service-price-value { margin-top: .375rem; font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; color: var(--primary); }
+
+.service-sidebar-card { position: sticky; top: 5.5rem; background: var(--card); color: var(--card-foreground); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; box-shadow: 0 20px 50px -12px color-mix(in oklch, var(--foreground) 25%, transparent); display: flex; flex-direction: column; gap: 1.25rem; }
+.service-sidebar-card h3 { font-size: 1.125rem; }
+.service-sidebar-card .sub { margin-top: -.5rem; font-size: .8125rem; color: var(--muted-foreground); }
+.service-sidebar-phone { display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .75rem; border-radius: var(--radius); border: 1px solid var(--border); font-weight: 600; font-size: .9375rem; }
+.service-sidebar-phone svg { width: 1rem; height: 1rem; }
+.service-sidebar-phone:hover { background: var(--secondary); }
+
+/* ── Footer: columns ──────────────────────────────────────────────── */
+.footer-columns { padding: calc(3.5rem * var(--space-scale)) 0 0; }
+.footer-columns .footer-grid { display: grid; gap: 2.5rem; padding-bottom: calc(2.5rem * var(--space-scale)); }
+@media (min-width: 768px) { .footer-columns .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+.footer-columns h4 { font-family: var(--font-display); font-size: .875rem; margin-bottom: .75rem; }
+.footer-columns ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; font-size: .875rem; color: var(--muted-foreground); }
+.footer-columns li { display: flex; align-items: center; gap: .5rem; }
+.footer-columns li svg { width: 1rem; height: 1rem; flex-shrink: 0; }
+.footer-columns .footer-brand p { margin-top: .75rem; font-size: .875rem; color: var(--muted-foreground); max-width: 26rem; }
+.footer-columns .footer-bottom { border-top: 1px solid var(--border); padding: 1.25rem 0; font-size: .8125rem; color: var(--muted-foreground); }
+.footer-columns .footer-bottom-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
+
+/* ── Demo badge ──────────────────────────────────────────────────── */
+.demo-badge {
+  position: fixed; bottom: 1rem; left: 1rem; z-index: 1000;
+  background: var(--primary); color: var(--primary-foreground);
+  font-size: .75rem; font-weight: 600; letter-spacing: .04em;
+  padding: .5rem .875rem; border-radius: 999px; box-shadow: 0 4px 12px color-mix(in oklch, var(--foreground) 30%, transparent);
+}
+/* skins/_personalities/jmj/flourish.css
+   Signature move: motion. Infinite marquee ticker, ping dots on live
+   indicators, numbered process cards with a connecting line (CLAUDE.md).
+   The connecting line itself is shared structure
+   (skins/_sections/process/timeline.html.j2) — jmj is simply the
+   personality whose config picks that variant; the marquee and ping
+   dots below are the true jmj-only decoration layered on top. */
+
+.underline-accent { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: .1em; text-underline-offset: .12em; }
+
+/* Infinite marquee ticker — the original site drove this with JS; a
+   pure-CSS duplicated-track animation is the self-contained equivalent
+   for a no-build-step static site. */
+@keyframes jmj-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-wrap { overflow: hidden; background: var(--secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: jmj-marquee calc(28s / var(--motion-scale, 1)) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+.marquee-item { display: inline-flex; align-items: center; gap: .625rem; padding: .875rem 1.5rem; font-size: .875rem; font-weight: 600; white-space: nowrap; }
+.marquee-item svg { width: 1rem; height: 1rem; color: var(--accent); flex-shrink: 0; }
+
+/* Ping dots (Tailwind's animate-ping, used verbatim in the source). */
+@keyframes jmj-ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+.ping-dot, .ping-dot-sm { position: relative; display: inline-flex; }
+.ping-dot::before, .ping-dot-sm::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: .6;
+  animation: jmj-ping calc(1.6s / var(--motion-scale, 1)) cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) { .ping-dot::before, .ping-dot-sm::before { animation: none; } }
+:root {
+  --font-display: "Libre Franklin", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Karla", ui-sans-serif, system-ui, sans-serif;
+  
+  --radius: .75rem;
+  --space-scale: 1;
+  --type-scale: 1;
+  --motion-scale: 1.35;
+}
+
+:root, .tone-dark, .tone-light, .tone-tint { --primary: oklch(0.52 0.11 36); --ring: oklch(0.52 0.11 36); --accent: oklch(0.52 0.11 36); }
+
+</style>
+</head>
+<body>
+
+<nav class="site-nav site-nav-boxed">
+  <div class="nav-inner">
+    <a href="../../" class="brand"><span class="dot"></span><span>Inside Out Field Services</span></a>
+    <div class="nav-links">
+      <div class="nav-dropdown">
+        <button type="button" class="nav-dropdown-trigger">Services
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <ul class="nav-dropdown-menu">
+  
+    <li><a href="../../services/furniture-removal/">Furniture Removal</a></li>
+    
+  
+    <li><a href="../../services/appliance-removal/">Appliance Removal</a></li>
+    
+  
+    <li><a href="../../services/garage-basement-cleanouts/">Garage & Basement Cleanouts</a></li>
+    
+  
+    <li><a href="../../services/construction-debris-removal/">Construction Debris Removal</a></li>
+    
+  
+  
+    <li><a href="../../services/estate-cleanouts/">Estate Cleanouts</a></li>
+    
+  
+    <li><a href="../../services/yard-waste-removal/">Yard Waste Removal</a></li>
+    
+  
+    <li><a href="../../services/hot-tub-removal/">Hot Tub Removal</a></li>
+    
+  
+    <li><a href="../../services/office-cleanouts/">Office Cleanouts</a></li>
+    
+  
+    <li><a href="../../services/hoarding-cleanup-assistance/">Hoarding Cleanup Assistance</a></li>
+    
+  
+    <li><a href="../../services/storage-unit-cleanouts/">Storage Unit Cleanouts</a></li>
+    
+  
+    <li><a href="../../services/mattress-disposal/">Mattress Disposal</a></li>
+    
+  
+    <li><a href="../../services/e-waste-recycling/">E-Waste Recycling</a></li>
+    
+  
+</ul>
+      </div>
+      <a href="../../#why">Why Us</a>
+      <a href="../../#area">Service Area</a>
+      <a href="../../#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a class="phone-pill" href="tel:+16082063442">
+        <span class="ping-dot-sm"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>(608) 206-3442</span>
+      </a>
+      <a class="nav-quote-btn" href="../../#contact">Get a Quote</a>
+    </div>
+    <button type="button" class="nav-mobile-toggle" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-panel">
+    <a class="mobile-link" href="../../#why">Why Us</a>
+    <a class="mobile-link" href="../../#area">Service Area</a>
+    <a class="mobile-link" href="../../#contact">Contact</a>
+    <div class="mobile-services-head">Services</div>
+    
+  
+    <a class="mobile-service-link" href="../../services/furniture-removal/">Furniture Removal</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/appliance-removal/">Appliance Removal</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/garage-basement-cleanouts/">Garage & Basement Cleanouts</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/construction-debris-removal/">Construction Debris Removal</a>
+    
+  
+  
+    <a class="mobile-service-link" href="../../services/estate-cleanouts/">Estate Cleanouts</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/yard-waste-removal/">Yard Waste Removal</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/hot-tub-removal/">Hot Tub Removal</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/office-cleanouts/">Office Cleanouts</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/hoarding-cleanup-assistance/">Hoarding Cleanup Assistance</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/storage-unit-cleanouts/">Storage Unit Cleanouts</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/mattress-disposal/">Mattress Disposal</a>
+    
+  
+    <a class="mobile-service-link" href="../../services/e-waste-recycling/">E-Waste Recycling</a>
+    
+  
+
+    <div class="mobile-actions">
+      <a class="btn btn-primary" href="tel:+16082063442">Call (608) 206-3442</a>
+      <a class="btn btn-outline" href="../../#contact">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<header class="service-header section no-image">
+  <div class="container">
+    <a class="service-back" href="../../">&larr; Junk Removal in Madison, WI</a>
+    <p class="section-label" style="margin-top:1.25rem">Service</p>
+    <h1 class="service-h1">Mattress Disposal</h1>
+    
+  </div>
+</header>
+
+
+
+<section class="section service-body">
+  <div class="container service-grid">
+    <div class="service-main">
+      <p class="service-detail reveal">Old mattresses and box springs are hauled away and taken to a facility equipped to dispose of or recycle them properly.</p>
+
+      <div class="service-process reveal">
+        <h2>What to expect</h2>
+        <ol class="service-process-steps">
+          <li><span class="num">01</span><div><h3>Request a quote</h3><p>We look at the job and give you a clear price before we start.</p></div></li>
+          <li><span class="num">02</span><div><h3>Prep the site</h3><p>We protect your property and get everything ready for the work.</p></div></li>
+          <li><span class="num">03</span><div><h3>Do the work</h3><p>Careful, professional junk removal &mdash; done right the first time.</p></div></li>
+          <li><span class="num">04</span><div><h3>Final walkthrough</h3><p>We walk the job with you before we call it done.</p></div></li>
+        </ol>
+      </div>
+
+      
+    </div>
+
+    <aside class="service-sidebar reveal">
+      <div class="service-sidebar-card">
+        <h3>Request a quote</h3>
+        <p class="sub">Sends a text to (608) 206-3442 with these details.</p>
+        <form class="quote-form" data-contact-form data-sms-phone="+16082063442" data-fallback-id="sms-fallback-mattress-disposal"
+              >
+          
+          <input type="hidden" name="service" value="Mattress Disposal">
+          <div class="form-field"><label for="sp-name-mattress-disposal">Name</label><input id="sp-name-mattress-disposal" name="name" data-label="Name" type="text" required autocomplete="name" placeholder="Your name"></div>
+          <div class="form-field"><label for="sp-phone-mattress-disposal">Phone</label><input id="sp-phone-mattress-disposal" name="phone" data-label="Phone" type="tel" required autocomplete="tel" placeholder="(555) 555-5555"></div>
+          <div class="form-field"><label for="sp-job-mattress-disposal">Details</label><textarea id="sp-job-mattress-disposal" name="message" data-label="Job" rows="3" placeholder="Anything we should know?"></textarea></div>
+          <button type="submit" class="btn btn-primary form-submit">Send my request</button>
+        </form>
+        <div id="sms-fallback-mattress-disposal" class="sms-fallback" hidden>
+          <p>Opening your messages app&hellip;</p>
+          <a class="btn btn-primary" href="tel:+16082063442">Call or text us: (608) 206-3442</a>
+        </div>
+        <a class="service-sidebar-phone" href="tel:+16082063442">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (608) 206-3442
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer class="footer-columns ">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <span style="font-family:var(--font-display);font-weight:700;font-size:1.0625rem">Inside Out Field Services</span>
+      <p>Junk Removal for homeowners in Madison, WI and the surrounding area.</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg><a href="tel:+16082063442">(608) 206-3442</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg><a href="sms:+16082063442">Text us anytime</a></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>Madison, WI</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul><li>Furniture Removal</li><li>Appliance Removal</li><li>Garage & Basement Cleanouts</li><li>Construction Debris Removal</li></ul>
+      
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <div>&copy; 2026 Inside Out Field Services</div>
+      
+    </div>
+  </div>
+</footer>
+<div class="demo-badge">Demo preview</div>
+
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || !els.length) {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+<script>
+(function () {
+  var dropdown = document.querySelector('.nav-dropdown');
+  if (dropdown) {
+    var trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = dropdown.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    dropdown.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        dropdown.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  var toggle = document.querySelector('.nav-mobile-toggle');
+  var panel = document.querySelector('.nav-mobile-panel');
+  if (toggle && panel) {
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.addEventListener('click', function () {
+      var open = panel.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+    panel.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        panel.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  document.querySelectorAll('form[data-contact-form]').forEach(function (form) {
+    if (form.hasAttribute('action')) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var lines = [];
+      form.querySelectorAll('[data-label]').forEach(function (el) {
+        var val = (el.value || '').trim();
+        if (val) lines.push(el.dataset.label + ': ' + val);
+      });
+      var body = encodeURIComponent(lines.join('\n'));
+      var phone = form.dataset.smsPhone;
+      var fallback = document.getElementById(form.dataset.fallbackId);
+      form.hidden = true;
+      if (fallback) fallback.hidden = false;
+      window.location.href = 'sms:' + phone + '?body=' + body;
+    });
+  });
+})();
+</script>
+</body>
+</html>
